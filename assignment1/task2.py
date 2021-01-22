@@ -5,7 +5,6 @@ from task2a import cross_entropy_loss, BinaryModel, pre_process_images
 from trainer import BaseTrainer
 np.random.seed(0)
 
-# Does jupyter save this comment?
 
 def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: BinaryModel) -> float:
     """
