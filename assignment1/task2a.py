@@ -27,16 +27,14 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray) -> float:
     Returns:
         Cross entropy error (float)
     """
-    #C = -np.multiply(self.targets, np.log(self.y)) + (1 - self.y)
-    cross_entropies = -targets * \
-        np.log(outputs) + (1 - targets) * np.log(1 - outputs)
+    cross_entropies = -(targets *
+                        np.log(outputs) + (1 - targets) * np.log(1 - outputs))
 
     cross_entropy_error = np.average(cross_entropies)
 
     assert targets.shape == outputs.shape,\
         f"Targets shape: {targets.shape}, outputs: {outputs.shape}"
 
-    print("Cross entropy error: ", cross_entropy_error)
     return cross_entropy_error
 
 
@@ -44,7 +42,7 @@ class BinaryModel:
 
     def __init__(self):
         # Define number of input nodes
-        self.I = 785  # This is bad -> change later
+        self.I = 785
         self.w = np.zeros((self.I, 1))
         self.grad = None
 
@@ -70,8 +68,7 @@ class BinaryModel:
 
         grads = -(targets - outputs) * X
         avg_grads = np.average(grads, 0)
-        self.grad = avg_grads.reshape(self.w.shape[0], 1) / targets.shape[0]
-        print("Grad shape: ", self.grad.shape)
+        self.grad = avg_grads.reshape(self.w.shape[0], 1)
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
         #self.grad = np.zeros_like(self.w)
