@@ -13,7 +13,7 @@ def pre_process_images(X: np.ndarray):
     assert X.shape[1] == 784,\
         f"X.shape[1]: {X.shape[1]}, should be 784"
 
-    X = X / 127.5 - 1  # Normalize to [0,2], then subtract 1
+    X = X / 127.5 - 1
     bias_trick = np.zeros(shape=(X.shape[0], 1)) + 1
     X = np.append(X, bias_trick, axis=1)
     return X
