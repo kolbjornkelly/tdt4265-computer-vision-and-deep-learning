@@ -93,10 +93,9 @@ class BaseTrainer:
                     # TODO (Task 2d): Implement early stopping here.
                     # You can access the validation loss in val_history["loss"]
                     # Comment this out before creating plots for 2b and 2c
-                    # print(val_history['loss'])
+
                     if lowest_loss > min(val_history["loss"].values()):
                         lowest_loss = min(val_history["loss"].values())
-                        print("lowest loss: ", lowest_loss)
                         early_stop_counter = 0
                     else:
                         early_stop_counter += 1
