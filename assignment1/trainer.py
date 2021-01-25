@@ -73,6 +73,8 @@ class BaseTrainer:
         )
 
         global_step = 0
+        lowest_loss = 1
+        early_stop_counter = 0
         for epoch in range(num_epochs):
             train_loader = utils.batch_loader(
                 self.X_train, self.Y_train, self.batch_size, shuffle=self.shuffle_dataset)
@@ -90,5 +92,17 @@ class BaseTrainer:
 
                     # TODO (Task 2d): Implement early stopping here.
                     # You can access the validation loss in val_history["loss"]
+                    # Comment this out before creating plots for 2b and 2c
+                    # print(val_history['loss'])
+                    if lowest_loss > min(val_history["loss"].values()):
+                        lowest_loss = min(val_history["loss"].values())
+                        print("lowest loss: ", lowest_loss)
+                        early_stop_counter = 0
+                    else:
+                        early_stop_counter += 1
+                        if early_stop_counter >= 10:
+                            print("Early stop at epoch ", epoch)
+                            return train_history, val_history
+
                 global_step += 1
         return train_history, val_history
