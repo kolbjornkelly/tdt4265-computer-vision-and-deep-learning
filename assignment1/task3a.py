@@ -15,7 +15,6 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
     # TODO implement this function (Task 3a)
 
     cross_entropies = -targets * np.log(outputs)
-    print(cross_entropies.shape)
     cross_entropy_error = np.sum(cross_entropies) / targets.shape[0]
 
     assert targets.shape == outputs.shape,\
