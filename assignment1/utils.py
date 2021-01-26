@@ -23,12 +23,12 @@ def batch_loader(
     num_batches = len(X) // batch_size
     if not drop_last:
         num_batches = int(np.ceil(len(X) / batch_size))
-    #indices = list(range(len(X)))
+    indices = list(range(len(X)))
 
     # TODO (task 2e) implement dataset shuffling here.
     # Shuffling random before every epoch
     # This may leave some training data unused - is there a better solution?
-    indices = np.random.permutation(len(X))
+    #indices = np.random.permutation(len(X))
 
     for i in range(num_batches):
         # select a set of indices for each batch of samples

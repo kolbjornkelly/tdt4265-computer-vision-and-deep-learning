@@ -73,7 +73,7 @@ class BaseTrainer:
         )
 
         global_step = 0
-        lowest_loss = 1
+        lowest_loss = 1  # Check if max_int() exists
         early_stop_counter = 0
         for epoch in range(num_epochs):
             train_loader = utils.batch_loader(

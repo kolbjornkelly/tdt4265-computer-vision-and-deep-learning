@@ -54,7 +54,6 @@ class SoftmaxModel:
         for i in range(batch_size):
             for j in range(self.num_outputs):
                 y[i][j] = ez[i][j] / ez_sum[i]
-
         return y
 
     def backward(self, X: np.ndarray, outputs: np.ndarray, targets: np.ndarray) -> None:
@@ -69,25 +68,20 @@ class SoftmaxModel:
         # TODO implement this function (Task 3a)
         # To implement L2 regularization task (4b) you can get the lambda value in self.l2_reg_lambda
         # which is defined in the constructor.
-        # TODO try t solve this without loops
+        # TODO try to solve this without loops
         batch_size = X.shape[0]
-        grads = np.zeros_like(X)
+        grads = np.zeros(shape=(batch_size, self.I, self.num_outputs))
 
         for i in range(batch_size):
-            for k in range(self.num_outputs):
-                for j in range(self.I):
-                    grads[i][j] = -X[i][j] * (targets[i][k] - outputs[i][k])
+            for j in range(self.I):
+                for k in range(self.num_outputs):
+                    grads[i][j][k] = -X[i][j] * (targets[i][k] - outputs[i][k])
 
-        print("Shape grads: ", grads.shape,
-              " [should be (", batch_size, ",", self.I, ")]")
-        avg_grads = np.average(grads, 0)
-        print("Shape avg_grads: ", avg_grads.shape,
-              " [should be (", batch_size, ",", self.num_outputs, ")]")
-        self.grad = avg_grads.reshape(self.w.shape[0], 1)
+        self.grad = grads.mean(axis=(0))
 
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
-        self.grad = np.zeros_like(self.w)
+        #self.grad = np.zeros_like(self.w)
         assert self.grad.shape == self.w.shape,\
             f"Grad shape: {self.grad.shape}, w: {self.w.shape}"
 

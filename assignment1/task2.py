@@ -17,8 +17,8 @@ def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: BinaryModel) -
     """
     # TODO Implement this function (Task 2c)
     accuracy = 0.0
-    binary_outputs = np.around(model.forward(X))  # Is this neccessary?
-    binary_targets = np.around(targets)
+    binary_outputs = np.around(model.forward(X))  # Is this legal?
+    binary_targets = np.around(targets)  # Remove around()
     # Bruke bitwise operator instead?
     correct = 1 - np.abs(binary_outputs - binary_targets)
     accuracy = np.sum(correct)/X.shape[0]
