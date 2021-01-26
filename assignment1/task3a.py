@@ -15,8 +15,8 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
     # TODO implement this function (Task 3a)
 
     cross_entropies = -targets*np.log(outputs)
-
-    cross_entropy_error = np.average(cross_entropies)
+    print(cross_entropies.shape)
+    cross_entropy_error = np.average(cross_entropies) * 10
 
     assert targets.shape == outputs.shape,\
         f"Targets shape: {targets.shape}, outputs: {outputs.shape}"
