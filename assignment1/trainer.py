@@ -76,6 +76,7 @@ class BaseTrainer:
         lowest_loss = 1  # Check if max_int() exists
         early_stop_counter = 0
         for epoch in range(num_epochs):
+            print("Epoch{", epoch, "/", num_epochs, "}")
             train_loader = utils.batch_loader(
                 self.X_train, self.Y_train, self.batch_size, shuffle=self.shuffle_dataset)
             for X_batch, Y_batch in iter(train_loader):

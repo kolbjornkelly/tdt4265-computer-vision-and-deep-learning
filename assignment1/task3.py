@@ -17,7 +17,11 @@ def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: SoftmaxModel) 
         Accuracy (float)
     """
     # TODO: Implement this function (task 3c)
-    accuracy = 0
+    accuracy = 0.0
+    binary_outputs = np.around(model.forward(X))  # Is this legal?
+    # Bruke bitwise operator instead?
+    correct = 1 - np.abs(binary_outputs - targets)
+    accuracy = np.sum(correct)/X.shape[0]
     return accuracy
 
 

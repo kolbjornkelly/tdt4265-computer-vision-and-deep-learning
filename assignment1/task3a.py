@@ -16,7 +16,7 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
 
     cross_entropies = -targets * np.log(outputs)
     cross_entropy_error = np.sum(cross_entropies) / targets.shape[0]
-
+    #cross_entropy_error = np.average(cross_entropies)
     assert targets.shape == outputs.shape,\
         f"Targets shape: {targets.shape}, outputs: {outputs.shape}"
 
@@ -46,13 +46,18 @@ class SoftmaxModel:
         # TODO implement this function (Task 3a)
         # TODO try to achieve this without the for-loops
         batch_size = X.shape[0]
-
+        """
+        # Connsider using the following:
         ez = np.exp(X.dot(self.w))
         ez_sum = ez.sum(axis=1).reshape(batch_size, 1)
         y = np.zeros(shape=(batch_size, self.num_outputs))
         for i in range(batch_size):
             for j in range(self.num_outputs):
                 y[i][j] = ez[i][j] / ez_sum[i]
+        """
+        ez = np.exp(X.dot(self.w))
+        ez_sum = ez.sum(axis=1).reshape(batch_size, 1)
+        y = np.divide(ez, ez_sum)
         return y
 
     def backward(self, X: np.ndarray, outputs: np.ndarray, targets: np.ndarray) -> None:
@@ -68,15 +73,18 @@ class SoftmaxModel:
         # To implement L2 regularization task (4b) you can get the lambda value in self.l2_reg_lambda
         # which is defined in the constructor.
         # TODO try to solve this without loops
-        batch_size = X.shape[0]
+
+        """
+        # Consider using the following code instead
         grads = np.zeros(shape=(batch_size, self.I, self.num_outputs))
 
         for i in range(batch_size):
             for j in range(self.I):
                 for k in range(self.num_outputs):
                     grads[i][j][k] = -X[i][j] * (targets[i][k] - outputs[i][k])
-
-        self.grad = grads.mean(axis=(0))
+        """
+        diff = targets - outputs
+        self.grad = -np.transpose(X).dot(diff) / targets.shape[0]
 
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
