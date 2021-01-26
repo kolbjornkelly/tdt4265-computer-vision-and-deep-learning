@@ -18,10 +18,12 @@ def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: SoftmaxModel) 
     """
     # TODO: Implement this function (task 3c)
     accuracy = 0.0
-    binary_outputs = np.around(model.forward(X))  # Is this legal?
-    # Bruke bitwise operator instead?
-    correct = 1 - np.abs(binary_outputs - targets)
-    accuracy = np.sum(correct)/X.shape[0]
+    outputs = model.forward(X)
+    predictions = one_hot_encode(np.argmax(outputs, axis=1), targets.shape[1])
+    # TODO make this work
+
+    accuracy = np.sum(predictions * targets) / targets.shape[0]
+    print("Accuracy: ", accuracy)
     return accuracy
 
 
@@ -132,7 +134,7 @@ if __name__ == "__main__":
     # You can finish the rest of task 4 below this point.
 
     # Plotting of softmax weights (Task 4b)
-    #plt.imsave("task4b_softmax_weight.png", weight, cmap="gray")
+    # plt.imsave("task4b_softmax_weight.png", weight, cmap="gray")
 
     # Plotting of accuracy for difference values of lambdas (task 4c)
     l2_lambdas = [1, .1, .01, .001]
