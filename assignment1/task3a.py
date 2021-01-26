@@ -14,9 +14,9 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
     """
     # TODO implement this function (Task 3a)
 
-    cross_entropies = -targets*np.log(outputs)
+    cross_entropies = -targets * np.log(outputs)
     print(cross_entropies.shape)
-    cross_entropy_error = np.average(cross_entropies) * 10
+    cross_entropy_error = np.sum(cross_entropies) / targets.shape[0]
 
     assert targets.shape == outputs.shape,\
         f"Targets shape: {targets.shape}, outputs: {outputs.shape}"
@@ -130,6 +130,8 @@ def gradient_approximation_test(model: SoftmaxModel, X: np.ndarray, Y: np.ndarra
             logits = model.forward(X)
             model.backward(X, logits, Y)
             difference = gradient_approximation - model.grad[i, j]
+            print("Progress:", i, "/",
+                  model.w.shape[0], ", ", j, "/", model.w.shape[1])
             assert abs(difference) <= epsilon**2,\
                 f"Calculated gradient is incorrect. " \
                 f"Approximation: {gradient_approximation}, actual gradient: {model.grad[i, j]}\n" \
