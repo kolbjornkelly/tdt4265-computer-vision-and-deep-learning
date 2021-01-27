@@ -20,10 +20,7 @@ def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: SoftmaxModel) 
     accuracy = 0.0
     outputs = model.forward(X)
     predictions = one_hot_encode(np.argmax(outputs, axis=1), targets.shape[1])
-    # TODO make this work
-
     accuracy = np.sum(predictions * targets) / targets.shape[0]
-    print("Accuracy: ", accuracy)
     return accuracy
 
 
@@ -75,7 +72,7 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = 0.01
     batch_size = 128
-    l2_reg_lambda = 0
+    l2_reg_lambda = 0.1
     shuffle_dataset = True
 
     # Load dataset

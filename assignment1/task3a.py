@@ -55,6 +55,8 @@ class SoftmaxModel:
             for j in range(self.num_outputs):
                 y[i][j] = ez[i][j] / ez_sum[i]
         """
+        # Something is probably wrong here
+        # Keeps throwing divide by 0/NaN errors
         ez = np.exp(X.dot(self.w))
         ez_sum = ez.sum(axis=1).reshape(batch_size, 1)
         y = np.divide(ez, ez_sum)
