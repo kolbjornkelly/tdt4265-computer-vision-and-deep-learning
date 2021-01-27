@@ -84,7 +84,10 @@ class SoftmaxModel:
                     grads[i][j][k] = -X[i][j] * (targets[i][k] - outputs[i][k])
         """
         diff = targets - outputs
-        self.grad = -np.transpose(X).dot(diff) / targets.shape[0]
+
+        # Last term gives L2-reg
+        self.grad = -np.transpose(X).dot(diff) / \
+            targets.shape[0] + 2 * self.l2_reg_lambda * self.w.sum()
 
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
