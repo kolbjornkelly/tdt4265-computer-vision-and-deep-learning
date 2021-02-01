@@ -87,7 +87,8 @@ class SoftmaxModel:
         diff = targets - outputs
 
         #l2_term = 0
-        l2_term = self.l2_reg_lambda * np.sum(self.w, axis=1, keepdims=True)
+
+        l2_term = 2 * self.l2_reg_lambda * self.w
 
         #print("Shape: ", np.transpose(X).dot(diff).shape)
         self.grad = -np.transpose(X).dot(diff) / targets.shape[0] + l2_term

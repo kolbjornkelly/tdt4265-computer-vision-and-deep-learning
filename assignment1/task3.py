@@ -73,7 +73,7 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = 0.01
     batch_size = 128
-    l2_reg_lambda = 1
+    l2_reg_lambda = 0
     shuffle_dataset = True
 
     # Load dataset
@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
     # Train a model with L2 regularization (task 4b)
 
-    model1 = SoftmaxModel(l2_reg_lambda=1.0)
+    model1 = SoftmaxModel(l2_reg_lambda=1)
     trainer = SoftmaxTrainer(
         model1, learning_rate, batch_size, shuffle_dataset,
         X_train, Y_train, X_val, Y_val,
@@ -132,8 +132,10 @@ if __name__ == "__main__":
     # You can finish the rest of task 4 below this point.
 
     # Plotting of softmax weights (Task 4b)
+    weights = model1.w[:784, 8]
+    weights = np.reshape(weights, (28, 28))
     plt.imsave("task4b_softmax_weight.png",
-               model1.w[0][0:784].reshape(28, 28), cmap="gray")
+               weights, cmap="gray")
 
     # Plotting of accuracy for difference values of lambdas (task 4c)
     l2_lambdas = [1, .1, .01, .001]
