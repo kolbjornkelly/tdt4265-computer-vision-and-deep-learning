@@ -42,7 +42,8 @@ class SoftmaxTrainer(BaseTrainer):
         loss = 0
         logits = self.model.forward(X_batch)
         self.model.backward(X_batch, logits, Y_batch)
-        self.model.w = self.model.w - self.learning_rate*self.model.grad
+        self.model.w = self.model.w - self.learning_rate * self.model.grad
+        # Why not add R to the cost function"
         loss = cross_entropy_loss(Y_batch, logits)
         return loss
 
@@ -72,7 +73,7 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = 0.01
     batch_size = 128
-    l2_reg_lambda = 0.1
+    l2_reg_lambda = 1
     shuffle_dataset = True
 
     # Load dataset
@@ -131,7 +132,8 @@ if __name__ == "__main__":
     # You can finish the rest of task 4 below this point.
 
     # Plotting of softmax weights (Task 4b)
-    # plt.imsave("task4b_softmax_weight.png", weight, cmap="gray")
+    plt.imsave("task4b_softmax_weight.png",
+               model1.w[0][0:784].reshape(28, 28), cmap="gray")
 
     # Plotting of accuracy for difference values of lambdas (task 4c)
     l2_lambdas = [1, .1, .01, .001]

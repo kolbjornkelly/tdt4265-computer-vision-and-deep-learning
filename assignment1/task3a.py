@@ -33,7 +33,6 @@ class SoftmaxModel:
         self.num_outputs = 10
         self.w = np.zeros((self.I, self.num_outputs))
         self.grad = None
-
         self.l2_reg_lambda = l2_reg_lambda
 
     def forward(self, X: np.ndarray) -> np.ndarray:
@@ -58,7 +57,8 @@ class SoftmaxModel:
         # Something is probably wrong here
         # Keeps throwing divide by 0/NaN errors
         ez = np.exp(X.dot(self.w))
-        ez_sum = ez.sum(axis=1).reshape(batch_size, 1)
+        ez_sum = ez.sum(axis=1, keepdims=True)
+        # print(ez_sum)
         y = np.divide(ez, ez_sum)
         return y
 
@@ -74,7 +74,6 @@ class SoftmaxModel:
         # TODO implement this function (Task 3a)
         # To implement L2 regularization task (4b) you can get the lambda value in self.l2_reg_lambda
         # which is defined in the constructor.
-        # TODO try to solve this without loops
 
         """
         # Consider using the following code instead
@@ -87,9 +86,11 @@ class SoftmaxModel:
         """
         diff = targets - outputs
 
-        # Last term gives L2-reg
-        self.grad = -np.transpose(X).dot(diff) / \
-            targets.shape[0] + 2 * self.l2_reg_lambda * self.w.sum()
+        #l2_term = 0
+        l2_term = self.l2_reg_lambda * np.sum(self.w, axis=1, keepdims=True)
+
+        #print("Shape: ", np.transpose(X).dot(diff).shape)
+        self.grad = -np.transpose(X).dot(diff) / targets.shape[0] + l2_term
 
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
