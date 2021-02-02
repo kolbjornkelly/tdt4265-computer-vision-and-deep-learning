@@ -74,7 +74,7 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = 0.01
     batch_size = 128
-    l2_reg_lambda = 1
+    l2_reg_lambda = 0
     shuffle_dataset = True
 
     # Load dataset
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Cross Entropy Loss - Average")
     plt.savefig("task3b_softmax_train_loss.png")
-    plt.show()
+    # plt.show()
 
     # Plot accuracy
     plt.ylim([0.89, .93])
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     plt.ylabel("Accuracy")
     plt.legend()
     plt.savefig("task3b_softmax_train_accuracy.png")
-    plt.show()
+    # plt.show()
 
     # Train a model with L2 regularization (task 4b)
 
@@ -135,17 +135,19 @@ if __name__ == "__main__":
     # Plotting of softmax weights (Task 4b)
 
     weights = np.zeros((28, 280))
-    weights2 = np.zeros((28, 280))
+    l2_weights = np.zeros((28, 280))
 
     for i in range(10):
         weights[:28, 28*i: 28*(i+1)] = np.reshape(model.w[:784, i], (28, 28))
         #weights[28:, 28*i: 28*(i+1)] = np.reshape(model1.w[:784, i], (28, 28))
-        weights2[:28, 28*i: 28*(i+1)] = np.reshape(model1.w[:784, i], (28, 28))
+        l2_weights[:28, 28*i: 28 *
+                   (i+1)] = np.reshape(model1.w[:784, i], (28, 28))
 
     plt.imsave("task4b_softmax_weight.png",
                weights, cmap="gray")
-    plt.imsave("task4b_softmax_weight2.png",
-               weights2, cmap="gray")
+
+    plt.imsave("task4b_softmax_l2_weight.png",
+               l2_weights, cmap="gray")
 
     # Plotting of accuracy for difference values of lambdas (task 4c)
 

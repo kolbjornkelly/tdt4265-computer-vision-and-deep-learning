@@ -101,7 +101,7 @@ if __name__ == "__main__":
     print("Validation accuracy:", calculate_accuracy(X_val, Y_val, model))
 
     # Plot loss for first model (task 2b)
-    plt.ylim([0., 1])
+    plt.ylim([0., .2])
     utils.plot_loss(train_history["loss"],
                     "Training Loss", npoints_to_average=10)
     utils.plot_loss(val_history["loss"], "Validation Loss")
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     plt.show()
 
     # Plot accuracy
-    plt.ylim([0.93, 1.01])
+    plt.ylim([.93, .99])
     utils.plot_loss(train_history["accuracy"], "Training Accuracy")
     utils.plot_loss(val_history["accuracy"], "Validation Accuracy")
     plt.xlabel("Number of Training Steps")
