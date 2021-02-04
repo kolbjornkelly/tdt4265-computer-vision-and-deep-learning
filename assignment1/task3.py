@@ -18,7 +18,6 @@ def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: SoftmaxModel) 
         Accuracy (float)
     """
     # TODO: Implement this function (task 3c)
-    accuracy = 0.0
     outputs = model.forward(X)
     predictions = one_hot_encode(np.argmax(outputs, axis=1), targets.shape[1])
     accuracy = np.sum(predictions * targets) / targets.shape[0]
@@ -40,11 +39,10 @@ class SoftmaxTrainer(BaseTrainer):
             loss value (float) on batch
         """
         # TODO: Implement this function (task 3b)
-        loss = 0
+
         logits = self.model.forward(X_batch)
         self.model.backward(X_batch, logits, Y_batch)
         self.model.w = self.model.w - self.learning_rate * self.model.grad
-        # Why not add R to the cost function"
         loss = cross_entropy_loss(Y_batch, logits)
         return loss
 
@@ -110,7 +108,7 @@ if __name__ == "__main__":
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Cross Entropy Loss - Average")
     plt.savefig("task3b_softmax_train_loss.png")
-    # plt.show()
+    plt.show()
 
     # Plot accuracy
     plt.ylim([0.89, .93])
@@ -120,7 +118,7 @@ if __name__ == "__main__":
     plt.ylabel("Accuracy")
     plt.legend()
     plt.savefig("task3b_softmax_train_accuracy.png")
-    # plt.show()
+    plt.show()
 
     # Train a model with L2 regularization (task 4b)
 
@@ -139,7 +137,6 @@ if __name__ == "__main__":
 
     for i in range(10):
         weights[:28, 28*i: 28*(i+1)] = np.reshape(model.w[:784, i], (28, 28))
-        #weights[28:, 28*i: 28*(i+1)] = np.reshape(model1.w[:784, i], (28, 28))
         l2_weights[:28, 28*i: 28 *
                    (i+1)] = np.reshape(model1.w[:784, i], (28, 28))
 

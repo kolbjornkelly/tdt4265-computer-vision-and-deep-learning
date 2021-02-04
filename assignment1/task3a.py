@@ -16,7 +16,6 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
 
     cross_entropies = -targets * np.log(outputs)
     cross_entropy_error = np.sum(cross_entropies) / targets.shape[0]
-    #cross_entropy_error = np.average(cross_entropies)
     assert targets.shape == outputs.shape,\
         f"Targets shape: {targets.shape}, outputs: {outputs.shape}"
 
@@ -44,21 +43,9 @@ class SoftmaxModel:
         """
         # TODO implement this function (Task 3a)
         # TODO try to achieve this without the for-loops
-        batch_size = X.shape[0]
-        """
-        # Connsider using the following:
-        ez = np.exp(X.dot(self.w))
-        ez_sum = ez.sum(axis=1).reshape(batch_size, 1)
-        y = np.zeros(shape=(batch_size, self.num_outputs))
-        for i in range(batch_size):
-            for j in range(self.num_outputs):
-                y[i][j] = ez[i][j] / ez_sum[i]
-        """
-        # Something is probably wrong here
-        # Keeps throwing divide by 0/NaN errors
+
         ez = np.exp(X.dot(self.w))
         ez_sum = ez.sum(axis=1, keepdims=True)
-        # print(ez_sum)
         y = np.divide(ez, ez_sum)
         return y
 
@@ -75,23 +62,13 @@ class SoftmaxModel:
         # To implement L2 regularization task (4b) you can get the lambda value in self.l2_reg_lambda
         # which is defined in the constructor.
 
-        """
-        # Consider using the following code instead
-        grads = np.zeros(shape=(batch_size, self.I, self.num_outputs))
-
-        for i in range(batch_size):
-            for j in range(self.I):
-                for k in range(self.num_outputs):
-                    grads[i][j][k] = -X[i][j] * (targets[i][k] - outputs[i][k])
-        """
         diff = targets - outputs
         l2_term = 2 * self.l2_reg_lambda * self.w
-
         self.grad = -np.transpose(X).dot(diff) / targets.shape[0] + l2_term
 
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
-        #self.grad = np.zeros_like(self.w)
+
         assert self.grad.shape == self.w.shape,\
             f"Grad shape: {self.grad.shape}, w: {self.w.shape}"
 
@@ -107,7 +84,7 @@ def one_hot_encode(Y: np.ndarray, num_classes: int):
     Returns:
         Y: shape [Num examples, num classes]
     """
-    # This can probably be improved
+
     out = np.zeros(shape=(Y.shape[0], num_classes))
     for i in range(Y.shape[0]):
         out[i][Y[i]] = 1
@@ -140,8 +117,6 @@ def gradient_approximation_test(model: SoftmaxModel, X: np.ndarray, Y: np.ndarra
             logits = model.forward(X)
             model.backward(X, logits, Y)
             difference = gradient_approximation - model.grad[i, j]
-            print("Progress:", i, "/",
-                  model.w.shape[0], ", ", j, "/", model.w.shape[1])
             assert abs(difference) <= epsilon**2,\
                 f"Calculated gradient is incorrect. " \
                 f"Approximation: {gradient_approximation}, actual gradient: {model.grad[i, j]}\n" \

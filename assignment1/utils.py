@@ -25,8 +25,6 @@ def batch_loader(
         num_batches = int(np.ceil(len(X) / batch_size))
 
     # TODO (task 2e) implement dataset shuffling here.
-    # Shuffling random before every epoch
-    # This may leave some training data unused - is there a better solution?
     #indices = list(range(len(X)))
     indices = np.random.permutation(len(X))
 
