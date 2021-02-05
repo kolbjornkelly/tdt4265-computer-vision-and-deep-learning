@@ -12,7 +12,6 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
     Returns:
         Cross entropy error (float)
     """
-    # TODO implement this function (Task 3a)
 
     cross_entropies = -targets * np.log(outputs)
     cross_entropy_error = np.sum(cross_entropies) / targets.shape[0]
@@ -41,8 +40,6 @@ class SoftmaxModel:
         Returns:
             y: output of model with shape [batch size, num_outputs]
         """
-        # TODO implement this function (Task 3a)
-        # TODO try to achieve this without the for-loops
 
         ez = np.exp(X.dot(self.w))
         ez_sum = ez.sum(axis=1, keepdims=True)
@@ -58,9 +55,6 @@ class SoftmaxModel:
             outputs: outputs of model of shape: [batch size, num_outputs]
             targets: labels/targets of each image of shape: [batch size, num_classes]
         """
-        # TODO implement this function (Task 3a)
-        # To implement L2 regularization task (4b) you can get the lambda value in self.l2_reg_lambda
-        # which is defined in the constructor.
 
         diff = targets - outputs
         l2_term = 2 * self.l2_reg_lambda * self.w

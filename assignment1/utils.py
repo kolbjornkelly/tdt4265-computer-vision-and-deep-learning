@@ -24,8 +24,6 @@ def batch_loader(
     if not drop_last:
         num_batches = int(np.ceil(len(X) / batch_size))
 
-    # TODO (task 2e) implement dataset shuffling here.
-    #indices = list(range(len(X)))
     indices = np.random.permutation(len(X))
 
     for i in range(num_batches):

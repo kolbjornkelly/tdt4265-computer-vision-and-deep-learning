@@ -17,7 +17,7 @@ def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: SoftmaxModel) 
     Returns:
         Accuracy (float)
     """
-    # TODO: Implement this function (task 3c)
+
     outputs = model.forward(X)
     predictions = one_hot_encode(np.argmax(outputs, axis=1), targets.shape[1])
     accuracy = np.sum(predictions * targets) / targets.shape[0]
@@ -38,7 +38,6 @@ class SoftmaxTrainer(BaseTrainer):
         Returns:
             loss value (float) on batch
         """
-        # TODO: Implement this function (task 3b)
 
         logits = self.model.forward(X_batch)
         self.model.backward(X_batch, logits, Y_batch)
