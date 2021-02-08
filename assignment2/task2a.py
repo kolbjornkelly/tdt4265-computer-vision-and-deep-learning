@@ -14,6 +14,12 @@ def pre_process_images(X: np.ndarray):
     assert X.shape[1] == 784,\
         f"X.shape[1]: {X.shape[1]}, should be 784"
     # TODO implement this function (Task 2a)
+
+    X -= np.mean(X)
+    X /= X.std()
+
+    bias_trick = np.zeros(shape=(X.shape[0], 1)) + 1
+    X = np.append(X, bias_trick, axis=1)
     return X
 
 
