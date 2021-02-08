@@ -25,6 +25,9 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
     Returns:
         Cross entropy error (float)
     """
+
+    cross_entropies = -targets * np.log(outputs)
+    cross_entropy_error = np.sum(cross_entropies) / targets.shape[0]
     assert targets.shape == outputs.shape,\
         f"Targets shape: {targets.shape}, outputs: {outputs.shape}"
     # TODO: Implement this function (copy from last assignment)
@@ -107,7 +110,12 @@ def one_hot_encode(Y: np.ndarray, num_classes: int):
         Y: shape [Num examples, num classes]
     """
     # TODO: Implement this function (copy from last assignment)
-    raise NotImplementedError
+
+    out = np.zeros(shape=(Y.shape[0], num_classes))
+    for i in range(Y.shape[0]):
+        out[i][Y[i]] = 1
+    Y = out
+    return Y
 
 
 def gradient_approximation_test(

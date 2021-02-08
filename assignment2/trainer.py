@@ -71,7 +71,8 @@ class BaseTrainer:
             loss={},
             accuracy={}
         )
-
+        global_step = 0
+        lowest_loss = float('inf')
         global_step = 0
         for epoch in range(num_epochs):
             train_loader = utils.batch_loader(
@@ -87,6 +88,17 @@ class BaseTrainer:
                     train_history["accuracy"][global_step] = accuracy_train
                     val_history["loss"][global_step] = val_loss
                     val_history["accuracy"][global_step] = accuracy_val
+
                     # TODO: Implement early stopping (copy from last assignment)
+
+                    if lowest_loss > min(val_history["loss"].values()):
+                        lowest_loss = min(val_history["loss"].values())
+                        early_stop_counter = 0
+                    else:
+                        early_stop_counter += 1
+                        if early_stop_counter >= 50:
+                            print("Early stop at epoch ", epoch)
+                            return train_history, val_history
+
                 global_step += 1
         return train_history, val_history
