@@ -14,7 +14,7 @@ def pre_process_images(X: np.ndarray):
     assert X.shape[1] == 784,\
         f"X.shape[1]: {X.shape[1]}, should be 784"
     # TODO implement this function (Task 2a)
-
+    X = X.astype(np.float64)
     X -= np.mean(X)
     X /= X.std()
 
@@ -37,7 +37,7 @@ def cross_entropy_loss(targets: np.ndarray, outputs: np.ndarray):
     assert targets.shape == outputs.shape,\
         f"Targets shape: {targets.shape}, outputs: {outputs.shape}"
     # TODO: Implement this function (copy from last assignment)
-    raise NotImplementedError
+    return cross_entropy_error
 
 
 class SoftmaxModel:
@@ -51,7 +51,7 @@ class SoftmaxModel:
         # Always reset random seed before weight init to get comparable results.
         np.random.seed(1)
         # Define number of input nodes
-        self.I = None
+        self.I = 785
         self.use_improved_sigmoid = use_improved_sigmoid
 
         # Define number of output nodes
@@ -60,6 +60,7 @@ class SoftmaxModel:
         self.neurons_per_layer = neurons_per_layer
 
         # Initialize the weights
+        # OBS: endrer denne til numpy-array
         self.ws = []
         prev = self.I
         for size in self.neurons_per_layer:
@@ -80,7 +81,15 @@ class SoftmaxModel:
         # TODO implement this function (Task 2b)
         # HINT: For peforming the backward pass, you can save intermediate activations in varialbes in the forward pass.
         # such as self.hidden_layer_ouput = ...
-        return None
+
+        w_ji = np.array(self.ws[0])
+        w_kj = np.array(self.ws[1])
+
+        self.hidden_layer_output = 1 / (1 + np.exp(-X.dot(w_ji)))
+        ez = np.exp(self.hidden_layer_output.dot(w_kj))
+        ez_sum = ez.sum(axis=1, keepdims=True)
+        y = np.divide(ez, ez_sum)
+        return y
 
     def backward(self, X: np.ndarray, outputs: np.ndarray,
                  targets: np.ndarray) -> None:
@@ -97,7 +106,12 @@ class SoftmaxModel:
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
         # A list of gradients.
         # For example, self.grads[0] will be the gradient for the first hidden layer
-        self.grads = []
+
+        delta_k = outputs - targets
+        self.grads[1] = np.transpose(self.hidden_layer_output).dot(
+            delta_k) / targets.shape[0]
+
+        delta_j =
 
         for grad, w in zip(self.grads, self.ws):
             assert grad.shape == w.shape,\
@@ -127,7 +141,7 @@ def one_hot_encode(Y: np.ndarray, num_classes: int):
 def gradient_approximation_test(
         model: SoftmaxModel, X: np.ndarray, Y: np.ndarray):
     """
-        Numerical approximation for gradients. Should not be edited. 
+        Numerical approximation for gradients. Should not be edited.
         Details about this test is given in the appendix in the assignment.
     """
     epsilon = 1e-3
