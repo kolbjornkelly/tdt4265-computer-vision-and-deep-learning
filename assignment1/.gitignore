@@ -3,5 +3,5 @@
 !.gitignore
 !*.pdf
 !*.py
-!data
-!__pycache__
+!data/
+!__pycache__/
