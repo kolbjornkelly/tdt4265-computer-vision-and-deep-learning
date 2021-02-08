@@ -3,3 +3,4 @@
 !.gitignore
 !*.pdf
 !*.py
+!data
