@@ -1,7 +1,5 @@
 *
 
-!.gitignore
-!*.pdf
+!data
+!__pycache__
 !*.py
-!data/
-!__pycache__/
