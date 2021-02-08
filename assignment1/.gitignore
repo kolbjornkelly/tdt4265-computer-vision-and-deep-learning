@@ -1,1 +1,5 @@
-data/
+*
+
+!.gitignore
+!*.pdf
+!*.py
