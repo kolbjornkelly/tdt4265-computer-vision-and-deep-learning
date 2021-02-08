@@ -4,3 +4,4 @@
 !*.pdf
 !*.py
 !data
+!__pycache__
