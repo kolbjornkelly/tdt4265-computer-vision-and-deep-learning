@@ -108,10 +108,16 @@ class SoftmaxModel:
         # For example, self.grads[0] will be the gradient for the first hidden layer
 
         delta_k = outputs - targets
+
         self.grads[1] = np.transpose(self.hidden_layer_output).dot(
             delta_k) / targets.shape[0]
 
-        delta_j =
+        delta_j = self.hidden_layer_output * \
+            (1 - self.hidden_layer_output) * \
+            delta_k.dot(np.transpose(self.ws[1]))
+
+        self.grads[0] = np.transpose(X).dot(
+            delta_j) / self.hidden_layer_output.shape[0]
 
         for grad, w in zip(self.grads, self.ws):
             assert grad.shape == w.shape,\
