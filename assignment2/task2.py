@@ -48,8 +48,15 @@ class SoftmaxTrainer(BaseTrainer):
         """
         # TODO: Implement this function (task 2c)
 
-        loss = 0
+        # Initialize weights to be normally distributed
+        self.model.ws[0] = np.random.uniform(
+            -1, 1, (self.model.ws[0].shape[0], self.model.ws[0].shape[1]))
 
+        self.model.ws[1] = np.random.uniform(
+            -1, 1, (self.model.ws[1].shape[0], self.model.ws[1].shape[1]))
+
+        logits = self.model.forward(X_batch)
+        self.model.backward(X_batch, logits, Y_batch)
         loss = cross_entropy_loss(Y_batch, logits)  # sol
 
         return loss
