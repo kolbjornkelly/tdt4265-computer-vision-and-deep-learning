@@ -53,18 +53,17 @@ class SoftmaxTrainer(BaseTrainer):
         logits = self.model.forward(X_batch)
         self.model.backward(X_batch, logits, Y_batch)
 
+        # TODO finn ut greia med momentum
 
-"""
         if self.use_momentum:
-            momentum = self.previous_grads + self.momentum_gamma
-        else:
-            momentum = 0
-"""
-        self.model.ws[0] -= self.learning_rate * \
-            (self.model.grads[0] + self.previous_grads*momentum)
-        self.model.ws[1] -= self.learning_rate * \
-            (self.model.grads[1] + self.previous_grads*momentum)
-        # print("Weights1: ", self.model.ws[0])
+            self.model.grads[0] += self.momentum_gamma * self.previous_grads[0]
+            self.model.grads[1] += self.momentum_gamma * self.previous_grads[1]
+            self.previous_grads[0] = self.model.grads[0]
+            self.previous_grads[1] = self.model.grads[1]
+
+        self.model.ws[0] -= self.learning_rate * self.model.grads[0]
+        self.model.ws[1] -= self.learning_rate * self.model.grads[1]
+
         loss = cross_entropy_loss(Y_batch, logits)
 
         return loss
