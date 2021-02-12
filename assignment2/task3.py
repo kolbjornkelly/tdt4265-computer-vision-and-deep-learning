@@ -13,8 +13,8 @@ if __name__ == "__main__":
     momentum_gamma = .9  # Task 3 hyperparameter
     shuffle_data = True
 
-    use_improved_sigmoid = False
-    use_improved_weight_init = False
+    use_improved_sigmoid = True
+    use_improved_weight_init = True
     use_momentum = False
 
     # Load dataset
@@ -35,6 +35,27 @@ if __name__ == "__main__":
     )
     train_history, val_history = trainer.train(num_epochs)
 
+    plt.figure(figsize=(20, 12))
+    plt.subplot(1, 2, 1)
+    plt.ylim([0., .5])
+    utils.plot_loss(train_history["loss"],
+                    "Training Loss", npoints_to_average=10)
+    utils.plot_loss(val_history["loss"], "Validation Loss")
+    plt.legend()
+    plt.xlabel("Number of Training Steps")
+    plt.ylabel("Cross Entropy Loss - Average")
+    # Plot accuracy
+    plt.subplot(1, 2, 2)
+    plt.ylim([.7, 1.1])
+    utils.plot_loss(train_history["accuracy"], "Training Accuracy")
+    utils.plot_loss(val_history["accuracy"], "Validation Accuracy")
+    plt.xlabel("Number of Training Steps")
+    plt.ylabel("Accuracy")
+    plt.legend()
+    plt.savefig("task3a_improved_weights.png")
+    plt.show()
+
+"""
     # Example created in assignment text - Comparing with and without shuffling.
     # YOU CAN DELETE EVERYTHING BELOW!
     shuffle_data = False
@@ -65,3 +86,4 @@ if __name__ == "__main__":
     plt.ylabel("Validation Accuracy")
     plt.legend()
     plt.show()
+"""
