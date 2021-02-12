@@ -47,7 +47,7 @@ class BaseTrainer:
         Returns:
             loss value (float) on batch
         """
-        pass
+        return 1
 
     def train(
             self,

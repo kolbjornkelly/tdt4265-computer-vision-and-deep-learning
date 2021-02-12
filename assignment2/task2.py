@@ -16,7 +16,9 @@ def calculate_accuracy(X: np.ndarray, targets: np.ndarray, model: SoftmaxModel) 
         Accuracy (float)
     """
     # TODO: Implement this function (copy from last assignment)
-    accuracy = 0
+    outputs = model.forward(X)
+    predictions = one_hot_encode(np.argmax(outputs, axis=1), targets.shape[1])
+    accuracy = np.sum(predictions * targets) / targets.shape[0]
     return accuracy
 
 
@@ -48,16 +50,12 @@ class SoftmaxTrainer(BaseTrainer):
         """
         # TODO: Implement this function (task 2c)
 
-        # Initialize weights to be normally distributed
-        self.model.ws[0] = np.random.uniform(
-            -1, 1, (self.model.ws[0].shape[0], self.model.ws[0].shape[1]))
-
-        self.model.ws[1] = np.random.uniform(
-            -1, 1, (self.model.ws[1].shape[0], self.model.ws[1].shape[1]))
-
         logits = self.model.forward(X_batch)
         self.model.backward(X_batch, logits, Y_batch)
-        loss = cross_entropy_loss(Y_batch, logits)  # sol
+        self.model.ws[0] -= self.learning_rate * self.model.grads[0]
+        self.model.ws[1] -= self.learning_rate * self.model.grads[1]
+        #print("Weights1: ", self.model.ws[0])
+        loss = cross_entropy_loss(Y_batch, logits)
 
         return loss
 
@@ -127,7 +125,7 @@ if __name__ == "__main__":
     # Plot loss for first model (task 2c)
     plt.figure(figsize=(20, 12))
     plt.subplot(1, 2, 1)
-    plt.ylim([0., .5])
+    plt.ylim([0., .99])
     utils.plot_loss(train_history["loss"],
                     "Training Loss", npoints_to_average=10)
     utils.plot_loss(val_history["loss"], "Validation Loss")
@@ -136,10 +134,11 @@ if __name__ == "__main__":
     plt.ylabel("Cross Entropy Loss - Average")
     # Plot accuracy
     plt.subplot(1, 2, 2)
-    plt.ylim([0.90, .99])
+    plt.ylim([0, .99])
     utils.plot_loss(train_history["accuracy"], "Training Accuracy")
     utils.plot_loss(val_history["accuracy"], "Validation Accuracy")
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Accuracy")
     plt.legend()
     plt.savefig("task2c_train_loss.png")
+    plt.show()

@@ -60,7 +60,8 @@ class SoftmaxModel:
         self.neurons_per_layer = neurons_per_layer
 
         # Initialize the weights
-        # OBS: endrer denne til numpy-array
+        # Can probably do this better
+
         self.ws = []
         prev = self.I
         for size in self.neurons_per_layer:
@@ -70,6 +71,12 @@ class SoftmaxModel:
             self.ws.append(w)
             prev = size
         self.grads = [None for i in range(len(self.ws))]
+
+        self.ws[0] = np.random.uniform(
+            -1, 1, (self.I, neurons_per_layer[0]))
+
+        self.ws[1] = np.random.uniform(
+            -1, 1, (neurons_per_layer[0], neurons_per_layer[1]))
 
     def forward(self, X: np.ndarray) -> np.ndarray:
         """
@@ -85,10 +92,14 @@ class SoftmaxModel:
         w_ji = np.array(self.ws[0])
         w_kj = np.array(self.ws[1])
 
+        # Hidden layer outputs
         self.hidden_layer_output = 1 / (1 + np.exp(-X.dot(w_ji)))
+
+        # Model output
         ez = np.exp(self.hidden_layer_output.dot(w_kj))
         ez_sum = ez.sum(axis=1, keepdims=True)
         y = np.divide(ez, ez_sum)
+
         return y
 
     def backward(self, X: np.ndarray, outputs: np.ndarray,
@@ -109,12 +120,17 @@ class SoftmaxModel:
 
         delta_k = outputs - targets
 
+        # Minus foran denne?
         self.grads[1] = np.transpose(self.hidden_layer_output).dot(
             delta_k) / targets.shape[0]
 
+        # TODO Usikker på denne:
         delta_j = self.hidden_layer_output * \
             (1 - self.hidden_layer_output) * \
             delta_k.dot(np.transpose(self.ws[1]))
+
+        #print("Hidden layer: ", self.hidden_layer_output.shape)
+        # print("Delta_j:, ", delta_j.shape)
 
         self.grads[0] = np.transpose(X).dot(
             delta_j) / self.hidden_layer_output.shape[0]
