@@ -82,6 +82,7 @@ class SoftmaxModel:
                 self.ws[i] = np.random.normal(
                     0, 1 / np.sqrt(fan_in[i]), (fan_in[i], fan_in[i+1]))
 
+            # Implementation for one hidden layer
             """
             fan_in = [self.I, neurons_per_layer[0]]
             self.ws[0] = np.random.normal(
@@ -111,14 +112,31 @@ class SoftmaxModel:
         # such as self.hidden_layer_ouput = ...
 
         # Hidden layer outputs
+        self.hidden_layer_output = []
+        if self.use_improved_sigmoid:
+            self.hidden_layer_output.append(
+                1.7159*np.tanh(2*X.dot(self.ws[0])/3))
+            for i in range(1, len(self.neurons_per_layer)):
+                self.hidden_layer_output.append(1.7159 *
+                                                np.tanh(2*self.hidden_layer_output[i-1].dot(self.ws[i])/3))
+        else:
+            self.hidden_layer_output.append(
+                1 / (1 + np.exp(-X.dot(self.ws[0]))))
+            for i in range(1, len(self.neurons_per_layer)-1):
+                print(i)
+                self.hidden_layer_output.append(1 /
+                                                (1 +
+                                                    np.exp(-self.hidden_layer_output[i-1].dot(self.ws[i]))))
 
+        print("Hidden layer: ", len(self.hidden_layer_output))
+        """
         if self.use_improved_sigmoid:
             self.hidden_layer_output = 1.7159*np.tanh(2*X.dot(self.ws[0])/3)
         else:
             self.hidden_layer_output = 1 / (1 + np.exp(-X.dot(self.ws[0])))
-
+        """
         # Model output
-        ez = np.exp(self.hidden_layer_output.dot(self.ws[1]))
+        ez = np.exp(self.hidden_layer_output[-1].dot(self.ws[-1]))
         ez_sum = ez.sum(axis=1, keepdims=True)
         y = np.divide(ez, ez_sum)
 
@@ -143,14 +161,14 @@ class SoftmaxModel:
         delta_k = outputs - targets
 
         # Minus foran denne?
-        self.grads[1] = np.transpose(self.hidden_layer_output).dot(
+        self.grads[1] = np.transpose(self.hidden_layer_output[0]).dot(
             delta_k) / targets.shape[0]
 
         if self.use_improved_sigmoid:
-            sigmoid_dot = 2.28787/(np.cosh(2*self.hidden_layer_output)+1)
+            sigmoid_dot = 2.28787/(np.cosh(2*self.hidden_layer_output[0])+1)
         else:
             sigmoid_dot = self.hidden_layer_output * \
-                (1 - self.hidden_layer_output)
+                (1 - self.hidden_layer_output[0])
 
         delta_j = sigmoid_dot * delta_k.dot(np.transpose(self.ws[1]))
 
