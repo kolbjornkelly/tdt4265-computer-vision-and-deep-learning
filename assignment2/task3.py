@@ -9,7 +9,7 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = .02
     batch_size = 32
-    neurons_per_layer = [64, 10]
+    neurons_per_layer = [64, 32, 10]
     momentum_gamma = .9  # Task 3 hyperparameter
     shuffle_data = True
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
     plt.figure(figsize=(20, 12))
     plt.subplot(1, 2, 1)
-    plt.ylim([0., .5])
+    plt.ylim([0, 1])
     utils.plot_loss(train_history["loss"],
                     "Training Loss", npoints_to_average=10)
     utils.plot_loss(val_history["loss"], "Validation Loss")
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     plt.ylabel("Cross Entropy Loss - Average")
     # Plot accuracy
     plt.subplot(1, 2, 2)
-    plt.ylim([.7, 1.1])
+    plt.ylim([0, 1])
     utils.plot_loss(train_history["accuracy"], "Training Accuracy")
     utils.plot_loss(val_history["accuracy"], "Validation Accuracy")
     plt.xlabel("Number of Training Steps")
