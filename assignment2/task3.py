@@ -9,7 +9,7 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = .02
     batch_size = 32
-    neurons_per_layer = [128, 10]
+    neurons_per_layer = [64, 10]
     momentum_gamma = .9  # Task 3 hyperparameter
     shuffle_data = True
 
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Accuracy")
     plt.legend()
-    plt.savefig("task4_128_hidden_units.png")
+    # plt.savefig("task4_64_hidden_units.png")
     plt.show()
 
 

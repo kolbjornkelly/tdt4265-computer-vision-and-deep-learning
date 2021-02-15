@@ -72,13 +72,24 @@ class SoftmaxModel:
             prev = size
 
         if use_improved_weight_init:
+
+            fan_in = [self.I]
+            for i in neurons_per_layer:
+                fan_in.append(i)
+            print("Fan-in: ", fan_in)
+            for i in range(len(fan_in) - 1):
+                print("i: ", i)
+                self.ws[i] = np.random.normal(
+                    0, 1 / np.sqrt(fan_in[i]), (fan_in[i], fan_in[i+1]))
+
+            """
             fan_in = [self.I, neurons_per_layer[0]]
             self.ws[0] = np.random.normal(
                 0, 1/np.sqrt(fan_in[0]), (self.I, neurons_per_layer[0]))
 
-            self.ws[1] = np.random.uniform(
+            self.ws[1] = np.random.normal(
                 0, 1/np.sqrt(fan_in[1]), (neurons_per_layer[0], neurons_per_layer[1]))
-
+            """
         else:
             self.ws[0] = np.random.uniform(
                 -1, 1, (self.I, neurons_per_layer[0]))
