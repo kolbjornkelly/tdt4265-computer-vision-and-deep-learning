@@ -7,15 +7,15 @@ from task2 import SoftmaxTrainer
 if __name__ == "__main__":
     # hyperparameters DO NOT CHANGE IF NOT SPECIFIED IN ASSIGNMENT TEXT
     num_epochs = 50
-    learning_rate = .1
+    learning_rate = .02
     batch_size = 32
-    neurons_per_layer = [64, 10]
+    neurons_per_layer = [128, 10]
     momentum_gamma = .9  # Task 3 hyperparameter
-    shuffle_data = False
+    shuffle_data = True
 
-    use_improved_sigmoid = False
-    use_improved_weight_init = False
-    use_momentum = False
+    use_improved_sigmoid = True
+    use_improved_weight_init = True
+    use_momentum = True
 
     # Load dataset
     X_train, Y_train, X_val, Y_val = utils.load_full_mnist()
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         X_train, Y_train, X_val, Y_val,
     )
     train_history, val_history = trainer.train(num_epochs)
-"""
+
     plt.figure(figsize=(20, 12))
     plt.subplot(1, 2, 1)
     plt.ylim([0., .5])
@@ -52,13 +52,14 @@ if __name__ == "__main__":
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Accuracy")
     plt.legend()
-    plt.savefig("task3a_improved_weights.png")
+    plt.savefig("task4_128_hidden_units.png")
     plt.show()
-"""
+
 
 # Example created in assignment text - Comparing with and without shuffling.
-# YOU CAN DELETE EVERYTHING BELOW!
+# Everythin bellow is used to make plots for task 3
 
+"""
 # Compare with shuffling
 
 shuffle_data = True
@@ -227,3 +228,5 @@ utils.plot_loss(
 plt.ylabel("Validation Accuracy")
 plt.legend()
 plt.savefig("task3_w_wo_all.png")
+
+"""
