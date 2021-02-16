@@ -7,15 +7,15 @@ from task2 import SoftmaxTrainer
 if __name__ == "__main__":
     # hyperparameters DO NOT CHANGE IF NOT SPECIFIED IN ASSIGNMENT TEXT
     num_epochs = 50
-    learning_rate = .1
+    learning_rate = .02
     batch_size = 32
-    neurons_per_layer = [64, 10]
+    neurons_per_layer = [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 10]
     momentum_gamma = .9  # Task 3 hyperparameter
     shuffle_data = True
 
-    use_improved_sigmoid = False
-    use_improved_weight_init = False
-    use_momentum = False
+    use_improved_sigmoid = True
+    use_improved_weight_init = True
+    use_momentum = True
 
     # Load dataset
     X_train, Y_train, X_val, Y_val = utils.load_full_mnist()
@@ -35,13 +35,13 @@ if __name__ == "__main__":
     )
     train_history, val_history = trainer.train(num_epochs)
 
-"""
     plt.figure(figsize=(20, 12))
     plt.subplot(1, 2, 1)
-    plt.ylim([0, 1])
+    plt.ylim([0, 20])
     utils.plot_loss(train_history["loss"],
                     "Training Loss", npoints_to_average=10)
-    utils.plot_loss(val_history["loss"], "Validation Loss")
+    utils.plot_loss(val_history["loss"],
+                    "Validation Loss", npoints_to_average=10)
     plt.legend()
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Cross Entropy Loss - Average")
@@ -53,47 +53,15 @@ if __name__ == "__main__":
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Accuracy")
     plt.legend()
-    # plt.savefig("task4_64_hidden_units.png")
-    # plt.show()
-"""
+    plt.savefig("task4e.png")
+    plt.show()
+
 
 # Example created in assignment text - Comparing with and without shuffling.
 # Everythin bellow is used to make plots for task 3
 
 
-# Compare with shuffling
 """
-shuffle_data = True
-model_shuffle = SoftmaxModel(
-    neurons_per_layer,
-    use_improved_sigmoid,
-    use_improved_weight_init)
-trainer_shuffle = SoftmaxTrainer(
-    momentum_gamma, use_momentum,
-    model_shuffle, learning_rate, batch_size, shuffle_data,
-    X_train, Y_train, X_val, Y_val,
-)
-train_history_shuffle, val_history_shuffle = trainer_shuffle.train(
-    num_epochs)
-shuffle_data = False
-
-plt.figure(figsize=(20, 12))
-plt.subplot(1, 2, 1)
-utils.plot_loss(train_history["loss"],
-                "Task 2 Model", npoints_to_average=10)
-utils.plot_loss(
-    train_history_shuffle["loss"], "Task 2 Model - No dataset shuffling", npoints_to_average=10)
-plt.ylim([0, .9])
-plt.subplot(1, 2, 2)
-plt.ylim([0.1, 1.1])
-utils.plot_loss(val_history["accuracy"], "Task 2 Model")
-utils.plot_loss(
-    val_history_shuffle["accuracy"], "Task 2 Model - No Dataset Shuffling")
-plt.ylabel("Validation Accuracy")
-plt.legend()
-plt.savefig("task3_w_wo_shuffle.png")
-"""
-
 # Compare with weight init
 use_improved_weight_init = True
 model_weight = SoftmaxModel(
@@ -221,41 +189,5 @@ plt.xlabel("Number of Training Steps")
 plt.ylabel("Accuracy")
 plt.legend()
 plt.savefig("task3c_momentum.png")
-
-
-# Compare with all
-"""
-shuffle_data = True
-use_improved_sigmoid = True
-use_improved_weight_init = True
-use_momentum = True
-
-model_all = SoftmaxModel(
-    neurons_per_layer,
-    use_improved_sigmoid,
-    use_improved_weight_init)
-trainer_all = SoftmaxTrainer(
-    momentum_gamma, use_momentum,
-    model_all, learning_rate, batch_size, shuffle_data,
-    X_train, Y_train, X_val, Y_val,
-)
-train_history_all, val_history_all = trainer_momentum.train(
-    num_epochs)
-
-plt.figure(figsize=(20, 12))
-plt.subplot(1, 2, 1)
-utils.plot_loss(train_history["loss"],
-                "Task 2 Model", npoints_to_average=10)
-utils.plot_loss(
-    train_history_all["loss"], "All Tricks Enabled", npoints_to_average=10)
-plt.ylim([0, .9])
-plt.subplot(1, 2, 2)
-plt.ylim([0.1, 1.1])
-utils.plot_loss(val_history["accuracy"], "Task 2 Model")
-utils.plot_loss(
-    val_history_all["accuracy"], "All Tricks Enabled")
-plt.ylabel("Validation Accuracy")
-plt.legend()
-plt.savefig("task3_w_wo_all.png")
 
 """
