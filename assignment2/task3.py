@@ -10,7 +10,7 @@ if __name__ == "__main__":
     learning_rate = .02
     batch_size = 32
     neurons_per_layer3 = [64, 10]
-    neurons_per_layer = [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 10]
+    neurons_per_layer = [60, 60, 10]
     momentum_gamma = .9  # Task 3 hyperparameter
     shuffle_data = True
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     plt.figure(figsize=(20, 12))
     plt.subplot(1, 2, 1)
-    plt.ylim([0, 20])
+    plt.ylim([0, 1])
     utils.plot_loss(train_history["loss"],
                     "10 HL", npoints_to_average=10)
     utils.plot_loss(train_history3["loss"],
@@ -61,14 +61,14 @@ if __name__ == "__main__":
     # Plot accuracy
     plt.subplot(1, 2, 2)
     plt.ylim([0, 1])
-    utils.plot_loss(train_history["accuracy"], "Training, 10 HL")
-    utils.plot_loss(val_history["accuracy"], "Validation, 10 HL")
+    utils.plot_loss(train_history["accuracy"], "Training, 2 HL")
+    utils.plot_loss(val_history["accuracy"], "Validation, 2 HL")
     utils.plot_loss(train_history3["accuracy"], "Training, 1 HL")
     utils.plot_loss(val_history3["accuracy"], "Validation, 1 HL")
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Accuracy")
     plt.legend()
-    plt.savefig("task4c.png")
+    plt.savefig("testing2.png")
     plt.show()
 
 

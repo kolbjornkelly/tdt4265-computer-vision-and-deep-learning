@@ -76,11 +76,10 @@ class SoftmaxModel:
             fan_in.append(i)
 
         if use_improved_weight_init:
-            self.ws[0] = np.random.normal(
-                0, 1 / np.sqrt(fan_in[0]), (fan_in[0], fan_in[1]))
-            for i in range(1, len(fan_in) - 1):
-                self.ws[i] = np.random.uniform(
-                    -1, 1, (fan_in[i], fan_in[i+1]))
+            # self.ws[0] = np.random.normal(0, 1 / np.sqrt(fan_in[0]), (fan_in[0], fan_in[1]))
+            for i in range(0, len(fan_in) - 1):
+                self.ws[i] = np.random.normal(
+                    0, 1 / np.sqrt(fan_in[i+1]), (fan_in[i], fan_in[i+1]))
                 """
                 self.ws[i] = np.random.normal(
                     0, 1 / np.sqrt(fan_in[i]), (fan_in[i], fan_in[i+1]))
