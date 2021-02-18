@@ -9,6 +9,7 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = .02
     batch_size = 32
+    neurons_per_layer3 = [64, 10]
     neurons_per_layer = [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 10]
     momentum_gamma = .9  # Task 3 hyperparameter
     shuffle_data = True
@@ -35,33 +36,46 @@ if __name__ == "__main__":
     )
     train_history, val_history = trainer.train(num_epochs)
 
+    model3 = SoftmaxModel(
+        neurons_per_layer3,
+        use_improved_sigmoid,
+        use_improved_weight_init)
+    trainer3 = SoftmaxTrainer(
+        momentum_gamma, use_momentum,
+        model3, learning_rate, batch_size, shuffle_data,
+        X_train, Y_train, X_val, Y_val,
+    )
+    train_history3, val_history3 = trainer3.train(num_epochs)
+
     plt.figure(figsize=(20, 12))
     plt.subplot(1, 2, 1)
     plt.ylim([0, 20])
     utils.plot_loss(train_history["loss"],
-                    "Training Loss", npoints_to_average=10)
-    utils.plot_loss(val_history["loss"],
-                    "Validation Loss", npoints_to_average=10)
+                    "10 HL", npoints_to_average=10)
+    utils.plot_loss(train_history3["loss"],
+                    "1 HL", npoints_to_average=10)
+
     plt.legend()
     plt.xlabel("Number of Training Steps")
-    plt.ylabel("Cross Entropy Loss - Average")
+    plt.ylabel("Training loss")
     # Plot accuracy
     plt.subplot(1, 2, 2)
     plt.ylim([0, 1])
-    utils.plot_loss(train_history["accuracy"], "Training Accuracy")
-    utils.plot_loss(val_history["accuracy"], "Validation Accuracy")
+    utils.plot_loss(train_history["accuracy"], "Training, 10 HL")
+    utils.plot_loss(val_history["accuracy"], "Validation, 10 HL")
+    utils.plot_loss(train_history3["accuracy"], "Training, 1 HL")
+    utils.plot_loss(val_history3["accuracy"], "Validation, 1 HL")
     plt.xlabel("Number of Training Steps")
     plt.ylabel("Accuracy")
     plt.legend()
-    plt.savefig("task4e.png")
+    plt.savefig("task4c.png")
     plt.show()
 
 
 # Example created in assignment text - Comparing with and without shuffling.
 # Everythin bellow is used to make plots for task 3
-
-
 """
+
 # Compare with weight init
 use_improved_weight_init = True
 model_weight = SoftmaxModel(
@@ -89,7 +103,7 @@ plt.ylabel("Training Loss")
 plt.legend()
 
 plt.subplot(1, 2, 2)
-plt.ylim([.6, 1])
+plt.ylim([.7, 1])
 utils.plot_loss(val_history["accuracy"], "Validation, no weight init")
 utils.plot_loss(train_history["accuracy"], "Training, no weight init")
 utils.plot_loss(
@@ -130,7 +144,7 @@ plt.ylabel("Training Loss")
 plt.legend()
 
 plt.subplot(1, 2, 2)
-plt.ylim([.6, 1])
+plt.ylim([.7, 1])
 utils.plot_loss(
     val_history_weight["accuracy"], "Validation, no improved sigmoid")
 utils.plot_loss(
@@ -138,7 +152,7 @@ utils.plot_loss(
 utils.plot_loss(
     val_history_sigmoid["accuracy"], "Validation w/ improved sigmoid")
 utils.plot_loss(
-    train_history_sigmoid["accuracy"], "Validation w/ improved sigmoid")
+    train_history_sigmoid["accuracy"], "Training w/ improved sigmoid")
 plt.xlabel("Number of Training Steps")
 plt.ylabel("Accuracy")
 plt.legend()
@@ -175,7 +189,7 @@ plt.ylabel("Training Loss")
 plt.legend()
 
 plt.subplot(1, 2, 2)
-plt.ylim([.6, 1])
+plt.ylim([.7, 1])
 utils.plot_loss(
     val_history_sigmoid["accuracy"], "Validation, no momentum")
 utils.plot_loss(
@@ -189,5 +203,4 @@ plt.xlabel("Number of Training Steps")
 plt.ylabel("Accuracy")
 plt.legend()
 plt.savefig("task3c_momentum.png")
-
 """
