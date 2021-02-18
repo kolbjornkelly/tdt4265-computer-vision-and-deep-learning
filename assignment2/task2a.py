@@ -76,14 +76,10 @@ class SoftmaxModel:
             fan_in.append(i)
 
         if use_improved_weight_init:
-            # self.ws[0] = np.random.normal(0, 1 / np.sqrt(fan_in[0]), (fan_in[0], fan_in[1]))
-            for i in range(0, len(fan_in) - 1):
+            for i in range(len(fan_in) - 1):
                 self.ws[i] = np.random.normal(
                     0, 1 / np.sqrt(fan_in[i+1]), (fan_in[i], fan_in[i+1]))
-                """
-                self.ws[i] = np.random.normal(
-                    0, 1 / np.sqrt(fan_in[i]), (fan_in[i], fan_in[i+1]))
-                """
+
             # Implementation for one hidden layer
             """
             fan_in = [self.I, neurons_per_layer[0]]
@@ -116,17 +112,15 @@ class SoftmaxModel:
         if self.use_improved_sigmoid:
             self.hidden_layer_output.append(
                 1.7159*np.tanh(2*X.dot(self.ws[0])/3))
-            for i in range(len(self.neurons_per_layer)-2):
+            for i in range(len(self.neurons_per_layer) - 2):
                 self.hidden_layer_output.append(1.7159 *
                                                 np.tanh(2*self.hidden_layer_output[i].dot(self.ws[i+1])/3))
         else:
             self.hidden_layer_output.append(
                 1 / (1 + np.exp(-X.dot(self.ws[0]))))
-
             for i in range(len(self.neurons_per_layer) - 2):
-                self.hidden_layer_output.append(1 /
-                                                (1 +
-                                                    np.exp(-self.hidden_layer_output[i].dot(self.ws[i+1]))))
+                self.hidden_layer_output.append(
+                    1 / (1 + np.exp(-self.hidden_layer_output[i].dot(self.ws[i+1]))))
 
         """
         if self.use_improved_sigmoid:
@@ -164,14 +158,26 @@ class SoftmaxModel:
 
         # Compute gradient for last->output layer
         self.grads[-1] = np.transpose(self.hidden_layer_output[-1]).dot(
-            delta_k) / targets.shape[0]
+            delta_k) / X.shape[0]
 
         # Compute sigmoid derivatives
         sigmoid_dot = []
+        """
         if self.use_improved_sigmoid:
             for i in range(len(self.neurons_per_layer) - 1):
                 sigmoid_dot.append(2.28787 /
-                                   (np.cosh(2*self.hidden_layer_output[i])+1))
+                                   (np.cosh(4 * self.hidden_layer_output[i]/3) + 1))
+
+        """
+        if self.use_improved_sigmoid:
+            z = X.dot(self.ws[0])
+            sigmoid_dot.append(
+                (1.7159 * 2) / (3*(np.power(np.cosh(2*z / 3), 2))))
+            for i in range(len(self.neurons_per_layer) - 2):
+                z = self.hidden_layer_output[i].dot(self.ws[i+1])
+                sigmoid_dot.append(
+                    (1.7159 * 2) / (3*(np.power(np.cosh(2*z / 3), 2))))
+
         else:
             for i in range(len(self.neurons_per_layer) - 1):
                 sigmoid_dot.append(self.hidden_layer_output[i] *
@@ -179,7 +185,7 @@ class SoftmaxModel:
 
         # sigmoid_dot2 = self.hidden_layer_output[0] * \
         #    (1 - self.hidden_layer_output[0])
-        #print(sigmoid_dot[0] == sigmoid_dot2)
+        # print(sigmoid_dot[0] == sigmoid_dot2)
         """
         if self.use_improved_sigmoid:
             sigmoid_dot = 2.28787/(np.cosh(2*self.hidden_layer_output[0])+1)
@@ -194,6 +200,7 @@ class SoftmaxModel:
                        delta_k.dot(np.transpose(self.ws[-1])))
 
         """
+        Implementation for 1 HL:
         for i in range(1, len(self.neurons_per_layer) - 1):
             delta_j.insert(0,
                            sigmoid_dot[-(i + 1)]*delta_j[1].dot(np.transpose(self.ws[-(i + 1)])))
@@ -201,11 +208,9 @@ class SoftmaxModel:
         for i in range(1, len(self.neurons_per_layer) - 1):
             delta_j.append(
                 sigmoid_dot[-(i+1)]*delta_j[i-1].dot(np.transpose(self.ws[-(i+1)])))
-
-        #delta_j = sigmoid_dot * delta_k.dot(np.transpose(self.ws[1]))
         delta_j.reverse()
+
         # Compute gradients
-        #print("Grad shape 1: ", self.grads[1].shape)
 
         # Gradient for input->first_hidden layer
         self.grads[0] = np.transpose(X).dot(

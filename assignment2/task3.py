@@ -9,9 +9,9 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = .02
     batch_size = 32
-    neurons_per_layer3 = [64, 10]
-    neurons_per_layer = [60, 60, 10]
-    momentum_gamma = .9  # Task 3 hyperparameter
+    neurons_per_layer10 = [60, 60, 10]
+    neurons_per_layer = [64, 10]
+    momentum_gamma = 0.9  # Task 3 hyperparameter
     shuffle_data = True
 
     use_improved_sigmoid = True
@@ -36,43 +36,67 @@ if __name__ == "__main__":
     )
     train_history, val_history = trainer.train(num_epochs)
 
-    model3 = SoftmaxModel(
-        neurons_per_layer3,
+    model10 = SoftmaxModel(
+        neurons_per_layer10,
         use_improved_sigmoid,
         use_improved_weight_init)
-    trainer3 = SoftmaxTrainer(
+    trainer10 = SoftmaxTrainer(
         momentum_gamma, use_momentum,
-        model3, learning_rate, batch_size, shuffle_data,
+        model10, learning_rate, batch_size, shuffle_data,
         X_train, Y_train, X_val, Y_val,
     )
-    train_history3, val_history3 = trainer3.train(num_epochs)
+    train_history10, val_history10 = trainer10.train(num_epochs)
 
-    plt.figure(figsize=(20, 12))
-    plt.subplot(1, 2, 1)
-    plt.ylim([0, 1])
-    utils.plot_loss(train_history["loss"],
-                    "10 HL", npoints_to_average=10)
-    utils.plot_loss(train_history3["loss"],
-                    "1 HL", npoints_to_average=10)
+"""
+plt.figure(figsize=(20, 12))
+plt.subplot(1, 2, 1)
+plt.ylim([0, .7])
+utils.plot_loss(train_history["loss"],
+                "Training", npoints_to_average=10)
+utils.plot_loss(val_history["loss"],
+                "Validation", npoints_to_average=10)
+plt.legend()
+plt.xlabel("Number of Training Steps")
+plt.ylabel("Cross Entropy Loss")
+# Plot accuracy
+plt.subplot(1, 2, 2)
+plt.ylim([.7, 1])
+utils.plot_loss(train_history["accuracy"], "Training")
+utils.plot_loss(val_history["accuracy"], "Validation")
+plt.xlabel("Number of Training Steps")
+plt.ylabel("Accuracy")
+plt.legend()
+plt.savefig("task4d.png")
+plt.show()
+"""
 
-    plt.legend()
-    plt.xlabel("Number of Training Steps")
-    plt.ylabel("Training loss")
-    # Plot accuracy
-    plt.subplot(1, 2, 2)
-    plt.ylim([0, 1])
-    utils.plot_loss(train_history["accuracy"], "Training, 2 HL")
-    utils.plot_loss(val_history["accuracy"], "Validation, 2 HL")
-    utils.plot_loss(train_history3["accuracy"], "Training, 1 HL")
-    utils.plot_loss(val_history3["accuracy"], "Validation, 1 HL")
-    plt.xlabel("Number of Training Steps")
-    plt.ylabel("Accuracy")
-    plt.legend()
-    plt.savefig("testing2.png")
-    plt.show()
+# Plot for 4e:
+
+plt.figure(figsize=(20, 12))
+plt.subplot(1, 2, 1)
+plt.ylim([0, .7])
+utils.plot_loss(train_history["loss"],
+                "1 HL", npoints_to_average=10)
+utils.plot_loss(train_history10["loss"],
+                "10 HL", npoints_to_average=10)
+
+plt.legend()
+plt.xlabel("Number of Training Steps")
+plt.ylabel("Training loss")
+# Plot accuracy
+plt.subplot(1, 2, 2)
+plt.ylim([.7, 1])
+utils.plot_loss(train_history["accuracy"], "Training, 1 HL")
+utils.plot_loss(val_history["accuracy"], "Validation, 1 HL")
+utils.plot_loss(train_history10["accuracy"], "Training, 10 HL")
+utils.plot_loss(val_history10["accuracy"], "Validation, 10 HL")
+plt.xlabel("Number of Training Steps")
+plt.ylabel("Accuracy")
+plt.legend()
+plt.savefig("task4_good_grad.png")
+plt.show()
 
 
-# Example created in assignment text - Comparing with and without shuffling.
 # Everythin bellow is used to make plots for task 3
 """
 
@@ -180,7 +204,7 @@ train_history_momentum, val_history_momentum = trainer_momentum.train(
 plt.figure(figsize=(20, 12))
 plt.subplot(1, 2, 1)
 utils.plot_loss(
-    train_history_sigmoid["loss"], "No Sigmoid", npoints_to_average=10)
+    train_history_sigmoid["loss"], "No Momentum", npoints_to_average=10)
 utils.plot_loss(
     train_history_momentum["loss"], "With Momentum", npoints_to_average=10)
 plt.ylim([0, .7])
