@@ -49,6 +49,7 @@ if __name__ == "__main__":
 
 
 # Plot for 4a/b:
+# NB: Enable "tricks" before running task 4
 """
 neurons_per_layer = [128, 10]
 
@@ -132,7 +133,7 @@ plt.savefig("task4e_final.png")
 plt.show()
 """
 
-# Everythin bellow is used to make plots for task 3
+# Everything below is used to make plots for task 3
 """
 # Compare with weight init
 use_improved_weight_init = True
