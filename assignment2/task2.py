@@ -53,8 +53,6 @@ class SoftmaxTrainer(BaseTrainer):
         logits = self.model.forward(X_batch)
         self.model.backward(X_batch, logits, Y_batch)
 
-        # TODO finn ut greia med momentum
-
         if self.use_momentum:
             self.model.grads[0] += self.momentum_gamma * self.previous_grads[0]
             self.model.grads[1] += self.momentum_gamma * self.previous_grads[1]

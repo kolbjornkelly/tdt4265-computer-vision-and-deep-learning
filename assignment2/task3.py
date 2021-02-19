@@ -9,7 +9,6 @@ if __name__ == "__main__":
     num_epochs = 50
     learning_rate = .1
     batch_size = 32
-    neurons_per_layer10 = [60, 60, 10]
     neurons_per_layer = [64, 10]
     momentum_gamma = 0.9  # Task 3 hyperparameter
     shuffle_data = True
@@ -47,7 +46,12 @@ if __name__ == "__main__":
     )
     train_history10, val_history10 = trainer10.train(num_epochs)
 """
+
+
+# Plot for 4a/b:
 """
+neurons_per_layer = [128, 10]
+
 plt.figure(figsize=(20, 12))
 plt.subplot(1, 2, 1)
 plt.ylim([0, .7])
@@ -72,6 +76,8 @@ plt.show()
 
 # Plot for 4d:
 """
+neurons_per_layer10 = [60, 60 10]
+
 plt.figure(figsize=(20, 12))
 plt.subplot(1, 2, 1)
 plt.ylim([0, .7])
@@ -99,6 +105,8 @@ plt.show()
 
 # Plot for 4e:
 """
+neurons_per_layer10 = [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 10]
+
 plt.figure(figsize=(20, 12))
 plt.subplot(1, 2, 1)
 plt.ylim([0, .7])
@@ -125,8 +133,7 @@ plt.show()
 """
 
 # Everythin bellow is used to make plots for task 3
-
-
+"""
 # Compare with weight init
 use_improved_weight_init = True
 model_weight = SoftmaxModel(
@@ -254,3 +261,4 @@ plt.xlabel("Number of Training Steps")
 plt.ylabel("Accuracy")
 plt.legend()
 plt.savefig("task3c_momentum_final.png")
+"""

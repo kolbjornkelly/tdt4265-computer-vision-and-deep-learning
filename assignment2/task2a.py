@@ -60,8 +60,6 @@ class SoftmaxModel:
         self.neurons_per_layer = neurons_per_layer
 
         # Initialize the weights
-        # Can probably do this better
-
         self.ws = []
         prev = self.I
         for size in self.neurons_per_layer:
@@ -129,6 +127,7 @@ class SoftmaxModel:
         else:
             self.hidden_layer_output = 1 / (1 + np.exp(-X.dot(self.ws[0])))
         """
+
         # Model output
         ez = np.exp(self.hidden_layer_output[-1].dot(self.ws[-1]))
         ez_sum = ez.sum(axis=1, keepdims=True)
@@ -152,16 +151,8 @@ class SoftmaxModel:
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
 
-        # Compute delta_k
-        delta_k = outputs - targets
-
-        # Compute gradient for last->output layer
-        self.grads[-1] = np.transpose(self.hidden_layer_output[-1]).dot(
-            delta_k) / X.shape[0]
-
         # Compute sigmoid derivatives
         sigmoid_dot = []
-
         if self.use_improved_sigmoid:
             z = X.dot(self.ws[0])
             sigmoid_dot.append(
@@ -170,22 +161,26 @@ class SoftmaxModel:
                 z = self.hidden_layer_output[i].dot(self.ws[i+1])
                 sigmoid_dot.append(
                     (1.7159 * 2) / (3*(np.power(np.cosh(2*z / 3), 2))))
-
         else:
             for i in range(len(self.neurons_per_layer) - 1):
                 sigmoid_dot.append(self.hidden_layer_output[i] *
                                    (1 - self.hidden_layer_output[i]))
 
+        # Implementation for one HL:
         """
-        Implementation for one HL:
         if self.use_improved_sigmoid:
             sigmoid_dot = 2.28787/(np.cosh(2*self.hidden_layer_output[0])+1)
         else:
-            sigmoid_dot = self.hidden_layer_output * \
+            sigmoid_dot = self.hidden_layer_output *
                 (1 - self.hidden_layer_output[0])
         """
+
+        # Compute delta_k
+        delta_k = outputs - targets
+
         # Compute delta_j's
         delta_j = []
+
         # delta_{L-1}
         delta_j.append(sigmoid_dot[-1] *
                        delta_k.dot(np.transpose(self.ws[-1])))
@@ -196,6 +191,10 @@ class SoftmaxModel:
         delta_j.reverse()
 
         # Compute gradients
+
+        # Compute gradient for last->output layer
+        self.grads[-1] = np.transpose(self.hidden_layer_output[-1]).dot(
+            delta_k) / X.shape[0]
 
         # Gradient for input->first_hidden layer
         self.grads[0] = np.transpose(X).dot(
