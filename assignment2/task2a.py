@@ -123,6 +123,7 @@ class SoftmaxModel:
                     1 / (1 + np.exp(-self.hidden_layer_output[i].dot(self.ws[i+1]))))
 
         """
+        Implementation for one HL:
         if self.use_improved_sigmoid:
             self.hidden_layer_output = 1.7159*np.tanh(2*X.dot(self.ws[0])/3)
         else:
@@ -150,8 +151,6 @@ class SoftmaxModel:
         # TODO implement this function (Task 2b)
         assert targets.shape == outputs.shape,\
             f"Output shape: {outputs.shape}, targets: {targets.shape}"
-        # A list of gradients.
-        # For example, self.grads[0] will be the gradient for the first hidden layer
 
         # Compute delta_k
         delta_k = outputs - targets
@@ -162,13 +161,7 @@ class SoftmaxModel:
 
         # Compute sigmoid derivatives
         sigmoid_dot = []
-        """
-        if self.use_improved_sigmoid:
-            for i in range(len(self.neurons_per_layer) - 1):
-                sigmoid_dot.append(2.28787 /
-                                   (np.cosh(4 * self.hidden_layer_output[i]/3) + 1))
 
-        """
         if self.use_improved_sigmoid:
             z = X.dot(self.ws[0])
             sigmoid_dot.append(
@@ -183,10 +176,8 @@ class SoftmaxModel:
                 sigmoid_dot.append(self.hidden_layer_output[i] *
                                    (1 - self.hidden_layer_output[i]))
 
-        # sigmoid_dot2 = self.hidden_layer_output[0] * \
-        #    (1 - self.hidden_layer_output[0])
-        # print(sigmoid_dot[0] == sigmoid_dot2)
         """
+        Implementation for one HL:
         if self.use_improved_sigmoid:
             sigmoid_dot = 2.28787/(np.cosh(2*self.hidden_layer_output[0])+1)
         else:
@@ -199,12 +190,6 @@ class SoftmaxModel:
         delta_j.append(sigmoid_dot[-1] *
                        delta_k.dot(np.transpose(self.ws[-1])))
 
-        """
-        Implementation for 1 HL:
-        for i in range(1, len(self.neurons_per_layer) - 1):
-            delta_j.insert(0,
-                           sigmoid_dot[-(i + 1)]*delta_j[1].dot(np.transpose(self.ws[-(i + 1)])))
-        """
         for i in range(1, len(self.neurons_per_layer) - 1):
             delta_j.append(
                 sigmoid_dot[-(i+1)]*delta_j[i-1].dot(np.transpose(self.ws[-(i+1)])))
