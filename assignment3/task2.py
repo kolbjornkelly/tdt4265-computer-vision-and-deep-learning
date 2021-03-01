@@ -68,7 +68,7 @@ class ExampleModel(nn.Module):
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
         self.num_output_features = 4 * num_filters * 4 * 4
 
-        # Fully connected hidden layer
+        # Initialize fully connected hidden layer
         self.hidden_layer = nn.Sequential(
             nn.Linear(self.num_output_features, self.hidden_layer_units),
             nn.ReLU()
@@ -91,7 +91,11 @@ class ExampleModel(nn.Module):
         """
         # TODO: Implement this function (Task  2a)
         batch_size = x.shape[0]
-        out = x
+
+        features = self.feature_extractor(x)
+        hidden_layer_output = self.hidden_layer(features)
+        out = self.classifier(hidden_layer_output)
+
         expected_shape = (batch_size, self.num_classes)
         assert out.shape == (batch_size, self.num_classes),\
             f"Expected output of forward pass to be: {expected_shape}, but got: {out.shape}"
