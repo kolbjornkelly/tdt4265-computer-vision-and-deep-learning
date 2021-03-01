@@ -24,6 +24,8 @@ def compute_loss_and_accuracy(
     """
     loss = 0.0
     correct_preds = 0.0
+    num_batches = 0.0
+    num_samples = 0.0
     # TODO: Implement this function (Task  2a)
     with torch.no_grad():
         n = 0
@@ -35,15 +37,19 @@ def compute_loss_and_accuracy(
             output_probs = model(X_batch)
 
             # Compute Loss and Accuracy
-            loss += loss_criterion(output_probs, Y_batch)
+            loss1 = loss_criterion(output_probs, Y_batch)
+            loss += loss1.detach().cpu().item()
             prediction = output_probs.argmax(dim=1)
-            correct_preds += np.sum(prediction*Y_batch)
+            print(prediction)
+            temp = prediction*Y_batch
+            corr_pred = torch.sum(temp).item()
+            print("Corrects: ", corr_pred, " of ", X_batch.shape[0])
+            correct_preds += corr_pred
+            num_batches += 1
+            num_samples += X_batch.shape[0]
 
-    num_batches = len(dataloader.dataset)
-    num_samples = num_batches*X_batch.shape[0]
-
-    average_loss = loss / num_samples
-    accuracy = correct_preds / num_batches
+    average_loss = loss / num_batches
+    accuracy = correct_preds / num_samples
 
     return average_loss, accuracy
 

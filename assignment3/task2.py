@@ -1,6 +1,7 @@
 import pathlib
 import matplotlib.pyplot as plt
 import utils
+import torch
 from torch import nn
 from dataloaders import load_cifar10
 from trainer import Trainer, compute_loss_and_accuracy
@@ -67,19 +68,15 @@ class ExampleModel(nn.Module):
         )
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
         self.num_output_features = 4 * num_filters * 4 * 4
-
-        # Initialize fully connected hidden layer
-        self.hidden_layer = nn.Sequential(
-            nn.Linear(self.num_output_features, self.hidden_layer_units),
-            nn.ReLU()
-        )
-
+        print("Hei init")
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
         # Outputs num_classes predictions, 1 for each class.
         # There is no need for softmax activation function, as this is
         # included with nn.CrossEntropyLoss
         self.classifier = nn.Sequential(
+            nn.Linear(self.num_output_features, self.hidden_layer_units),
+            nn.ReLU(),
             nn.Linear(self.hidden_layer_units, num_classes),
         )
 
@@ -93,8 +90,10 @@ class ExampleModel(nn.Module):
         batch_size = x.shape[0]
 
         features = self.feature_extractor(x)
-        hidden_layer_output = self.hidden_layer(features)
-        out = self.classifier(hidden_layer_output)
+        # Flatten before classification layer
+        features = torch.reshape(
+            features, (x.shape[0], self.num_output_features))
+        out = self.classifier(features)
 
         expected_shape = (batch_size, self.num_classes)
         assert out.shape == (batch_size, self.num_classes),\
