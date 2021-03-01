@@ -19,6 +19,8 @@ class ExampleModel(nn.Module):
         """
         super().__init__()
         # TODO: Implement this function (Task  2a)
+
+        self.hidden_layer_units = 64
         num_filters = 32  # Set number of filters in first conv layer
         self.num_classes = num_classes
         # Define the convolutional layers
@@ -64,7 +66,13 @@ class ExampleModel(nn.Module):
             ),
         )
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
-        self.num_output_features = 32 * 32 * 32
+        self.num_output_features = 4 * num_filters * 4 * 4
+
+        # Fully connected hidden layer
+        self.hidden_layer = nn.Sequential(
+            nn.Linear(self.num_output_features, self.hidden_layer_units),
+            nn.ReLU()
+        )
 
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
@@ -72,7 +80,7 @@ class ExampleModel(nn.Module):
         # There is no need for softmax activation function, as this is
         # included with nn.CrossEntropyLoss
         self.classifier = nn.Sequential(
-            nn.Linear(self.num_output_features, num_classes),
+            nn.Linear(self.hidden_layer_units, num_classes),
         )
 
     def forward(self, x):
