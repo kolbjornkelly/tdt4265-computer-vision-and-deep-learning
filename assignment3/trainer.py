@@ -217,12 +217,8 @@ class Trainer:
                     self.validation_step()
                     self.save_model()
                     if self.should_early_stop():
-                        self.test_model()
-                        self.print_results()
                         print("Early stopping.")
                         return
-        self.test_model()
-        self.print_results()
 
     def save_model(self):
         def is_best_model():

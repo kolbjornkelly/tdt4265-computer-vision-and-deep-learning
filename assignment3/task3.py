@@ -19,11 +19,14 @@ class ModelX(nn.Module):
                 num_classes: Number of classes we want to predict (10)
         """
         super().__init__()
-        # TODO: Implement this function (Task  2a)
 
+        # Model Parameters
+        self.conv_stride = 1
+        self.pool_stride = 2
         self.hidden_layer_units = 64
         num_filters = 32  # Set number of filters in first conv layer
         self.num_classes = num_classes
+
         # Define the convolutional layers
         self.feature_extractor = nn.Sequential(
             # First layer
@@ -31,39 +34,39 @@ class ModelX(nn.Module):
                 in_channels=image_channels,
                 out_channels=num_filters,
                 kernel_size=5,
-                stride=1,
+                stride=self.conv_stride,
                 padding=2
             ),
             nn.ReLU(),
             nn.MaxPool2d(
                 kernel_size=2,
-                stride=2
+                stride=self.pool_stride
             ),
             # Second Layer
             nn.Conv2d(
                 in_channels=num_filters,
                 out_channels=2*num_filters,
                 kernel_size=5,
-                stride=1,
+                stride=self.conv_stride,
                 padding=2
             ),
             nn.ReLU(),
             nn.MaxPool2d(
                 kernel_size=2,
-                stride=2
+                stride=self.pool_stride
             ),
             # Third Layer
             nn.Conv2d(
                 in_channels=2*num_filters,
                 out_channels=4*num_filters,
                 kernel_size=5,
-                stride=1,
+                stride=self.conv_stride,
                 padding=2
             ),
             nn.ReLU(),
             nn.MaxPool2d(
                 kernel_size=2,
-                stride=2
+                stride=self.pool_stride
             ),
         )
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
@@ -112,11 +115,14 @@ class ModelY(nn.Module):
                 num_classes: Number of classes we want to predict (10)
         """
         super().__init__()
-        # TODO: Implement this function (Task  2a)
 
+        # Model Parameters
+        self.conv_stride = 1
+        self.pool_stride = 2
         self.hidden_layer_units = 64
         num_filters = 32  # Set number of filters in first conv layer
         self.num_classes = num_classes
+
         # Define the convolutional layers
         self.feature_extractor = nn.Sequential(
             # First layer
@@ -124,39 +130,39 @@ class ModelY(nn.Module):
                 in_channels=image_channels,
                 out_channels=num_filters,
                 kernel_size=5,
-                stride=1,
+                stride=self.conv_stride,
                 padding=2
             ),
             nn.ReLU(),
             nn.MaxPool2d(
                 kernel_size=2,
-                stride=2
+                stride=self.pool_stride
             ),
             # Second Layer
             nn.Conv2d(
                 in_channels=num_filters,
                 out_channels=2*num_filters,
                 kernel_size=5,
-                stride=1,
+                stride=self.conv_stride,
                 padding=2
             ),
             nn.ReLU(),
             nn.MaxPool2d(
                 kernel_size=2,
-                stride=2
+                stride=self.pool_stride
             ),
             # Third Layer
             nn.Conv2d(
                 in_channels=2*num_filters,
                 out_channels=4*num_filters,
                 kernel_size=5,
-                stride=1,
+                stride=self.conv_stride,
                 padding=2
             ),
             nn.ReLU(),
             nn.MaxPool2d(
                 kernel_size=2,
-                stride=2
+                stride=self.pool_stride
             ),
         )
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]

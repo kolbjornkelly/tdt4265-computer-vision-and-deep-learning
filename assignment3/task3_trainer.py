@@ -5,7 +5,7 @@ from dataloaders import load_cifar10
 import numpy as np
 
 from trainer import Trainer, compute_loss_and_accuracy
-from task2 import create_plots
+from task2 import create_plots, test_model, print_results
 from task3 import ModelX, ModelY
 
 
@@ -43,3 +43,9 @@ if __name__ == '__main__':
 
     trainer_x.train()
     trainer_y.train()
+
+    test_model(trainer_x)
+    test_model(trainer_y)
+
+    create_plots(trainer_x, "Trainer X")
+    create_plots(trainer_y, "Trainer Y")

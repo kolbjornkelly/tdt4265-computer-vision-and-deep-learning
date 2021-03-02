@@ -121,6 +121,29 @@ def create_plots(trainer: Trainer, name: str):
     plt.show()
 
 
+def test_model(trainer: Trainer):
+    trainer.model.eval()
+    trainer.test_loss, strainer.test_acc = compute_loss_and_accuracy(
+        trainer.dataloader_test, trainer.model, trainer.loss_criterion
+    )
+
+
+def print_results(trainer: Trainer):
+    # Extract values
+    train_loss = trainer.train_history["loss"]
+    train_acc = trainer.train_history["acc"]
+    val_loss = trainer.val_history["loss"]
+    val_acc = trainer.val_history["acc"]
+
+    print(f"Train Loss: {train_loss:.2f}",
+          f"Train Accuracy: {train_acc:.3f}",
+          f"Validation Loss: {val_loss:.2f}",
+          f"Validation Accuracy: {val_acc:.3f}",
+          f"Test Loss: {trainer.test_loss:.2f}",
+          f"Test Accuracy: {trainer.test_acc:.3f}",
+          sep=", ")
+
+
 if __name__ == "__main__":
     # Set the random generator seed (parameters, shuffling etc).
     # You can try to change this and check if you still get the same result!
@@ -140,4 +163,6 @@ if __name__ == "__main__":
         dataloaders
     )
     trainer.train()
+    test_model(trainer)
+    print_results(trainer)
     create_plots(trainer, "task2")
