@@ -33,7 +33,7 @@ class ModelX(nn.Module):
             nn.Conv2d(
                 in_channels=image_channels,
                 out_channels=num_filters,
-                kernel_size=5,
+                kernel_size=self.conv_kernel,
                 stride=self.conv_stride,
                 padding=2
             ),
@@ -46,7 +46,7 @@ class ModelX(nn.Module):
             nn.Conv2d(
                 in_channels=num_filters,
                 out_channels=2*num_filters,
-                kernel_size=5,
+                kernel_size=self.conv_kernel,
                 stride=self.conv_stride,
                 padding=2
             ),
@@ -59,7 +59,7 @@ class ModelX(nn.Module):
             nn.Conv2d(
                 in_channels=2*num_filters,
                 out_channels=4*num_filters,
-                kernel_size=5,
+                kernel_size=self.conv_kernel,
                 stride=self.conv_stride,
                 padding=2
             ),
@@ -119,8 +119,9 @@ class ModelY(nn.Module):
         # Model Parameters
         self.conv_stride = 1
         self.pool_stride = 2
+        self.conv_kernel = 3
         self.hidden_layer_units = 64
-        num_filters = 32  # Set number of filters in first conv layer
+        num_filters = 32  # Number of filters in first conv layer
         self.num_classes = num_classes
 
         # Define the convolutional layers
@@ -129,7 +130,7 @@ class ModelY(nn.Module):
             nn.Conv2d(
                 in_channels=image_channels,
                 out_channels=num_filters,
-                kernel_size=5,
+                kernel_size=self.conv_kernel,
                 stride=self.conv_stride,
                 padding=2
             ),
@@ -142,7 +143,7 @@ class ModelY(nn.Module):
             nn.Conv2d(
                 in_channels=num_filters,
                 out_channels=2*num_filters,
-                kernel_size=5,
+                kernel_size=self.conv_kernel,
                 stride=self.conv_stride,
                 padding=2
             ),
@@ -155,7 +156,7 @@ class ModelY(nn.Module):
             nn.Conv2d(
                 in_channels=2*num_filters,
                 out_channels=4*num_filters,
-                kernel_size=5,
+                kernel_size=self.conv_kernel,
                 stride=self.conv_stride,
                 padding=2
             ),
@@ -165,8 +166,13 @@ class ModelY(nn.Module):
                 stride=self.pool_stride
             ),
         )
+
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
-        self.num_output_features = 4 * num_filters * 4 * 4
+        self.num_output_features = 4 * num_filters * 5 * 5
+
+        # Spatial batch normalization
+        self.spatial_normalizer = nn.BatchNorm2d(4*num_filters)
+
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
         # Outputs num_classes predictions, 1 for each class.
@@ -178,6 +184,12 @@ class ModelY(nn.Module):
             nn.Linear(self.hidden_layer_units, num_classes),
         )
 
+        # 1d normalization
+        self.class_normalizer = nn.BatchNorm1d(num_classes)
+
+        # Dropout
+        self.dropout = nn.Dropout(0.25)
+
     def forward(self, x):
         """
         Performs a forward pass through the model
@@ -187,12 +199,26 @@ class ModelY(nn.Module):
 
         batch_size = x.shape[0]
 
+        # Extract features
         features = self.feature_extractor(x)
-        # Flatten before classification layer
-        features = torch.reshape(
-            features, (x.shape[0], self.num_output_features))
-        out = self.classifier(features)
 
+        # Normalize features
+        features_normalized = self.spatial_normalizer(features)
+
+        # Flatten before classification layer
+        features_normalized = torch.reshape(
+            features_normalized, (x.shape[0], self.num_output_features))
+
+        # Apply dropout
+        features_normalized = self.dropout(features_normalized)
+
+        # Pass through classification layer
+        out = self.classifier(features_normalized)
+
+        # Normalize output
+        #out_normalized = self.class_normalizer(out)
+
+        # TODO: change to out_normalized if this is used
         expected_shape = (batch_size, self.num_classes)
         assert out.shape == (batch_size, self.num_classes),\
             f"Expected output of forward pass to be: {expected_shape}, but got: {out.shape}"

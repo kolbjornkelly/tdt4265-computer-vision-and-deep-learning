@@ -13,35 +13,50 @@ def load_cifar10(batch_size: int, validation_fraction: float = 0.1, trans_opt: s
     # Note that transform train will apply the same transform for
     # validation!
 
-    # TODO optional: implement data augmentation here
+    transform_train = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(mean, std),
+    ])
 
+    data_train = datasets.CIFAR10('data/cifar10',
+                                  train=True,
+                                  download=True,
+                                  transform=transform_train)
+
+    # Conditional image transformation
     if trans_opt == 'x':
         print("Model X transform")
-        transform_train = transforms.Compose([
+        # Define transforms
+        p = 0.5
+        x_transforms = [transforms.RandomGrayscale(p),
+                        transforms.RandomHorizontalFlip(p)]
+        transform_train_x = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean, std),
+            transforms.RandomApply(x_transforms, p)
         ])
+        # Apply transforms
+        data_train_x = datasets.CIFAR10('data/cifar10',
+                                        train=True,
+                                        download=True,
+                                        transform=transform_train_x)
+        # Concatenate with base data
+        data_train = torch.utils.data.ConcatDataset((data_train, data_train_x))
+
     elif trans_opt == 'y':
         print("Model Y transform")
-        transform_train = transforms.Compose([
+        transform_train_y = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean, std),
         ])
+
     else:
         print("Default transform")
-        transform_train = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize(mean, std),
-        ])
 
     transform_test = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean, std)
     ])
-    data_train = datasets.CIFAR10('data/cifar10',
-                                  train=True,
-                                  download=True,
-                                  transform=transform_train)
 
     data_test = datasets.CIFAR10('data/cifar10',
                                  train=False,
