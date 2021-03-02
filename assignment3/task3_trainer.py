@@ -6,7 +6,7 @@ import numpy as np
 
 from trainer import Trainer, compute_loss_and_accuracy
 from task2 import create_plots, test_model, print_results
-from task3 import ModelX, ModelY
+from task3 import ModelX, ModelY, ModelZ
 
 
 def run():
@@ -21,6 +21,7 @@ if __name__ == '__main__':
     early_stop_count = 4
     dataloaders = load_cifar10(batch_size, trans_opt='x')
 
+    """
     model_x = ModelX(image_channels=3, num_classes=10)
     trainer_x = Trainer(
         batch_size,
@@ -48,3 +49,14 @@ if __name__ == '__main__':
 
     #create_plots(trainer_x, "Trainer X")
     create_plots(trainer_y, "Trainer Y")
+    """
+    model_z = ModelZ(image_channels=3, num_classes=10)
+    trainer_z = Trainer(
+        batch_size,
+        learning_rate,
+        early_stop_count,
+        epochs,
+        model_z,
+        dataloaders
+    )
+    trainer_z.train()
