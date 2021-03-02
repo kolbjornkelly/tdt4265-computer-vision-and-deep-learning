@@ -1,4 +1,3 @@
-
 import torch
 import typing
 import time
@@ -28,7 +27,6 @@ def compute_loss_and_accuracy(
     num_samples = 0.0
     # TODO: Implement this function (Task  2a)
     with torch.no_grad():
-        n = 0
         for (X_batch, Y_batch) in dataloader:
             # Transfer images/labels to GPU VRAM, if possible
             X_batch = utils.to_cuda(X_batch)
@@ -37,14 +35,10 @@ def compute_loss_and_accuracy(
             output_probs = model(X_batch)
 
             # Compute Loss and Accuracy
-            loss1 = loss_criterion(output_probs, Y_batch)
-            loss += loss1.detach().cpu().item()
+            loss += loss_criterion(output_probs, Y_batch).detach().cpu().item()
             prediction = output_probs.argmax(dim=1)
-            print(prediction)
-            temp = prediction*Y_batch
-            corr_pred = torch.sum(temp).item()
-            print("Corrects: ", corr_pred, " of ", X_batch.shape[0])
-            correct_preds += corr_pred
+            temp = prediction == Y_batch
+            correct_preds += torch.sum(temp).item()
             num_batches += 1
             num_samples += X_batch.shape[0]
 
@@ -101,6 +95,7 @@ class Trainer:
             loss=collections.OrderedDict(),
             accuracy=collections.OrderedDict()
         )
+
         self.checkpoint_dir = pathlib.Path("checkpoints")
 
     def validation_step(self):
@@ -171,6 +166,15 @@ class Trainer:
 
         return loss.detach().cpu().item()
 
+    def test_model(self):
+        self.model.eval()
+        test_loss, test_acc = compute_loss_and_accuracy(
+            self.dataloader_test, self.model, self.loss_criterion
+        )
+        print(
+            f"Test Loss: {test_loss:.2f}",
+            f"Test Accuracy: {test_acc:.3f}")
+
     def train(self):
         """
         Trains the model for [self.epochs] epochs.
@@ -190,8 +194,10 @@ class Trainer:
                     self.validation_step()
                     self.save_model()
                     if self.should_early_stop():
+                        self.test_model()
                         print("Early stopping.")
                         return
+        self.test_model()
 
     def save_model(self):
         def is_best_model():

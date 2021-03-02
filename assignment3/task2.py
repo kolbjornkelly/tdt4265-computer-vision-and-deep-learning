@@ -68,7 +68,6 @@ class ExampleModel(nn.Module):
         )
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
         self.num_output_features = 4 * num_filters * 4 * 4
-        print("Hei init")
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
         # Outputs num_classes predictions, 1 for each class.
