@@ -15,7 +15,7 @@ def run():
 
 if __name__ == '__main__':
     run()
-    epochs = 1
+    epochs = 0
     batch_size = 64
     learning_rate = 1e-2  # Should be 5e-5 for LeNet
     early_stop_count = 4
@@ -46,6 +46,9 @@ if __name__ == '__main__':
 
     test_model(trainer_x)
     test_model(trainer_y)
+
+    print_results(trainer_x)
+    print_results(trainer_y)
 
     create_plots(trainer_x, "Trainer X")
     create_plots(trainer_y, "Trainer Y")

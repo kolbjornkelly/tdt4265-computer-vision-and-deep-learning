@@ -123,17 +123,23 @@ def create_plots(trainer: Trainer, name: str):
 
 def test_model(trainer: Trainer):
     trainer.model.eval()
-    trainer.test_loss, strainer.test_acc = compute_loss_and_accuracy(
+    test_loss, test_acc = compute_loss_and_accuracy(
         trainer.dataloader_test, trainer.model, trainer.loss_criterion
     )
+    print(f"Test Loss: {test_loss:.2f}",
+          f"Test Accuracy: {test_acc:.3f}",
+          sep=", ")
 
 
 def print_results(trainer: Trainer):
+    # Currently not in use
+    # TODO: make this work
     # Extract values
-    train_loss = trainer.train_history["loss"]
-    train_acc = trainer.train_history["acc"]
-    val_loss = trainer.val_history["loss"]
-    val_acc = trainer.val_history["acc"]
+    train_loss = trainer.train_history["loss"][trainer.global_step].items()
+    train_acc = trainer.train_history["accuracy"][trainer.global_step].items()
+    val_loss = trainer.validation_history["loss"][trainer.global_step].items()
+    val_acc = trainer.validation_history["accuracy"][trainer.global_step].items(
+    )
 
     print(f"Train Loss: {train_loss:.2f}",
           f"Train Accuracy: {train_acc:.3f}",
@@ -164,5 +170,5 @@ if __name__ == "__main__":
     )
     trainer.train()
     test_model(trainer)
-    print_results(trainer)
+
     create_plots(trainer, "task2")

@@ -96,10 +96,6 @@ class Trainer:
             accuracy=collections.OrderedDict()
         )
 
-        # Test variables
-        self.test_loss = None
-        self.test_acc = None
-
         self.checkpoint_dir = pathlib.Path("checkpoints")
 
     def validation_step(self):
@@ -114,18 +110,13 @@ class Trainer:
         self.validation_history["loss"][self.global_step] = validation_loss
         self.validation_history["accuracy"][self.global_step] = validation_acc
         used_time = time.time() - self.start_time
-        """
+
         print(
             f"Epoch: {self.epoch:>1}",
             f"Batches per seconds: {self.global_step / used_time:.2f}",
             f"Global step: {self.global_step:>6}",
             f"Validation Loss: {validation_loss:.2f}",
             f"Validation Accuracy: {validation_acc:.3f}",
-            sep=", ")
-        """
-        print(
-            f"Epoch: {self.epoch:>1}",
-            f"Batches per seconds: {self.global_step / used_time:.2f}",
             sep=", ")
         self.model.train()
 
@@ -175,28 +166,6 @@ class Trainer:
         self.optimizer.zero_grad()
 
         return loss.detach().cpu().item()
-
-    def test_model(self):
-        self.model.eval()
-        self.test_loss, self.test_acc = compute_loss_and_accuracy(
-            self.dataloader_test, self.model, self.loss_criterion
-        )
-
-    def print_results(self):
-
-        # Extract values
-        train_loss = self.train_history["loss"]
-        train_acc = self.train_history["acc"]
-        val_loss = self.val_history["loss"]
-        val_acc = self.val_history["acc"]
-
-        print(f"Train Loss: {train_loss:.2f}",
-              f"Train Accuracy: {train_acc:.3f}",
-              f"Validation Loss: {val_loss:.2f}",
-              f"Validation Accuracy: {val_acc:.3f}",
-              f"Test Loss: {self.test_loss:.2f}",
-              f"Test Accuracy: {self.test_acc:.3f}",
-              sep=", ")
 
     def train(self):
         """
