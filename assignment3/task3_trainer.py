@@ -19,8 +19,8 @@ if __name__ == '__main__':
     batch_size = 64
     learning_rate = 1e-2  # Should be 5e-5 for LeNet
     early_stop_count = 4
-    dataloaders = load_cifar10(batch_size, trans_opt='y')
-    """
+    dataloaders = load_cifar10(batch_size, trans_opt='x')
+
     model_x = ModelX(image_channels=3, num_classes=10)
     trainer_x = Trainer(
         batch_size,
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         dataloaders
     )
     trainer_x.train()
-    """
+
     model_y = ModelY(image_channels=3, num_classes=10)
     trainer_y = Trainer(
         batch_size,

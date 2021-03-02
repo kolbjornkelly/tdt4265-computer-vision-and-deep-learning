@@ -35,7 +35,7 @@ def compute_loss_and_accuracy(
             output_probs = model(X_batch)
 
             # Compute Loss and Accuracy
-            loss += loss_criterion(output_probs, Y_batch).detach().cpu().item()
+            loss += loss_criterion(output_probs, Y_batch).item()
             prediction = output_probs.argmax(dim=1)
             temp = prediction == Y_batch
             correct_preds += torch.sum(temp).item()
@@ -72,9 +72,8 @@ class Trainer:
         # Transfer model to GPU VRAM, if possible.
         self.model = utils.to_cuda(self.model)
         print(self.model)
-
-        # Define our optimizer. SGD = Stochastich Gradient Descent
         """
+        # Define our optimizer. SGD = Stochastich Gradient Descent
         self.optimizer = torch.optim.SGD(self.model.parameters(),
                                          self.learning_rate)
         """

@@ -23,6 +23,7 @@ class ModelX(nn.Module):
         # Model Parameters
         self.conv_stride = 1
         self.pool_stride = 2
+        self.conv_kernel = 5
         self.hidden_layer_units = 64
         num_filters = 32  # Set number of filters in first conv layer
         self.num_classes = num_classes
@@ -71,6 +72,10 @@ class ModelX(nn.Module):
         )
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
         self.num_output_features = 4 * num_filters * 4 * 4
+
+        # Spatial batch normalization
+        self.spatial_normalizer = nn.BatchNorm2d(4 * num_filters)
+
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
         # Outputs num_classes predictions, 1 for each class.
@@ -91,10 +96,22 @@ class ModelX(nn.Module):
 
         batch_size = x.shape[0]
 
+        # Extract features
         features = self.feature_extractor(x)
+
+        # Normalize features
+        """
+        features_normalized = self.spatial_normalizer(features)
+
+        # Flatten before classification layer
+        features_normalized = torch.reshape(
+            features_normalized, (x.shape[0], self.num_output_features))
+        """
         # Flatten before classification layer
         features = torch.reshape(
             features, (x.shape[0], self.num_output_features))
+
+        # Classify
         out = self.classifier(features)
 
         expected_shape = (batch_size, self.num_classes)
@@ -119,7 +136,7 @@ class ModelY(nn.Module):
         # Model Parameters
         self.conv_stride = 1
         self.pool_stride = 2
-        self.conv_kernel = 3
+        self.conv_kernel = 5
         self.hidden_layer_units = 64
         num_filters = 32  # Number of filters in first conv layer
         self.num_classes = num_classes
@@ -168,7 +185,7 @@ class ModelY(nn.Module):
         )
 
         # The output of feature_extractor will be [batch_size, num_filters, 16, 16]
-        self.num_output_features = 4 * num_filters * 5 * 5
+        self.num_output_features = 4 * num_filters * 4 * 4
 
         # Spatial batch normalization
         self.spatial_normalizer = nn.BatchNorm2d(4*num_filters)

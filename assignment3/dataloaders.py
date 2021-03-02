@@ -28,20 +28,25 @@ def load_cifar10(batch_size: int, validation_fraction: float = 0.1, trans_opt: s
         print("Model X transform")
         # Define transforms
         p = 0.5
-        x_transforms = [transforms.RandomGrayscale(p),
-                        transforms.RandomHorizontalFlip(p)]
+        x_transforms = [transforms.RandomCrop((32, 32)),
+                        transforms.RandomHorizontalFlip(p),
+                        transforms.ColorJitter(),
+                        transforms.RandomGrayscale(p)]
         transform_train_x = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean, std),
             transforms.RandomApply(x_transforms, p)
         ])
+
         # Apply transforms
         data_train_x = datasets.CIFAR10('data/cifar10',
                                         train=True,
                                         download=True,
                                         transform=transform_train_x)
+
         # Concatenate with base data
-        data_train = torch.utils.data.ConcatDataset((data_train, data_train_x))
+        data_train = torch.utils.data.ConcatDataset(
+            (data_train, data_train_x))
 
     elif trans_opt == 'y':
         print("Model Y transform")
