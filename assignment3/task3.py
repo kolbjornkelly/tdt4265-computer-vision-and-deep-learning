@@ -3,13 +3,9 @@ import torch
 import torch.nn as nn
 from dataloaders import load_cifar10
 import numpy as np
-import task2
-import trainer
 
-"""
 from trainer import Trainer, compute_loss_and_accuracy
 from task2 import create_plots, ExampleModel
-"""
 
 
 def run():
