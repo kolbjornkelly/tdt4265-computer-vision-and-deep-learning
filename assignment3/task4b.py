@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 from PIL import Image
 import torchvision
+from torchvision.utils import save_image
 import torch
 import numpy as np
 image = Image.open("images/zebra.jpg")
@@ -17,7 +18,8 @@ print("First conv layer:", first_conv_layer)
 image_transform = torchvision.transforms.Compose([
     torchvision.transforms.Resize((224, 224)),
     torchvision.transforms.ToTensor(),
-    torchvision.transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    torchvision.transforms.Normalize(
+        [0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
 image = image_transform(image)[None]
 print("Image shape:", image.shape)
@@ -35,15 +37,32 @@ def torch_image_to_numpy(image: torch.Tensor):
         iamge: shape=[height, width, 3] in the range [0, 1]
     """
     # Normalize to [0 - 1.0]
-    image = image.detach().cpu() # Transform image to CPU memory (if on GPU VRAM)
+    image = image.detach().cpu()  # Transform image to CPU memory (if on GPU VRAM)
     image = image - image.min()
     image = image / image.max()
     image = image.numpy()
-    if len(image.shape) == 2: # Grayscale image, can just return
+    if len(image.shape) == 2:  # Grayscale image, can just return
         return image
-    assert image.shape[0] == 3, "Expected color channel to be on first axis. Got: {}".format(image.shape)
+    assert image.shape[0] == 3, "Expected color channel to be on first axis. Got: {}".format(
+        image.shape)
     image = np.moveaxis(image, 0, 2)
     return image
 
 
 indices = [14, 26, 32, 49, 52]
+
+# Task 4b)
+# TODO: plot filter values and activations together
+
+# TODO: Gjør dette i loop og få alle bilder i ett grid
+# NB: må lage images/4b først
+torchvision.utils.save_image(
+    activation[0][14], "images/4b/activations14.png")
+torchvision.utils.save_image(
+    activation[0][26], "images/4b/activations26.png")
+torchvision.utils.save_image(
+    activation[0][32], "images/4b/activations32.png")
+torchvision.utils.save_image(
+    activation[0][49], "images/4b/activations49.png")
+torchvision.utils.save_image(
+    activation[0][52], "images/4b/activations52.png")
