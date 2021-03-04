@@ -52,10 +52,12 @@ def torch_image_to_numpy(image: torch.Tensor):
 indices = [14, 26, 32, 49, 52]
 
 # Task 4b)
-# TODO: plot filter values and activations together
 
 # TODO: Gjør dette i loop og få alle bilder i ett grid
 # NB: må lage images/4b først
+
+# TODO: spør studass om disse bildene gir mening (særlig weights)
+
 torchvision.utils.save_image(
     activation[0][14], "images/4b/activations14.png")
 torchvision.utils.save_image(
@@ -66,3 +68,40 @@ torchvision.utils.save_image(
     activation[0][49], "images/4b/activations49.png")
 torchvision.utils.save_image(
     activation[0][52], "images/4b/activations52.png")
+
+
+img = torch_image_to_numpy(first_conv_layer.weight[14])
+plt.imsave("images/4b/weights14.png", img)
+
+img = torch_image_to_numpy(first_conv_layer.weight[26])
+plt.imsave("images/4b/weights26.png", img)
+
+img = torch_image_to_numpy(first_conv_layer.weight[32])
+plt.imsave("images/4b/weights32.png", img)
+
+img = torch_image_to_numpy(first_conv_layer.weight[49])
+plt.imsave("images/4b/weights49.png", img)
+
+img = torch_image_to_numpy(first_conv_layer.weight[52])
+plt.imsave("images/4b/weights52.png", img)
+
+
+# Task 4c)
+# TODO: spør studass om man skal visualiere alle lagene, eller bare det siste
+# TODO: Finner bare 10 lag totalt - skal alle med, eller skal
+#       man fortsatt droppe de to siste?
+layer_count = 1
+
+for layer in model.children():
+    if layer_count == 1:
+        # First layer is allready passed
+        layer_count += 1
+    elif layer_count <= 8:
+        activation = layer(activation)
+        layer_count += 1
+    else:
+        break
+
+torchvision.utils.save_image(
+    activation[0][511], "images/4c/activations.png")
+print("Activation_ten shape:", activation.shape)
