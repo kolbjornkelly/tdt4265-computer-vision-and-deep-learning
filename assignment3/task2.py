@@ -106,7 +106,7 @@ def create_plots(trainer: Trainer, name: str):
     # Save plots and show them
     plt.figure(figsize=(20, 8))
     plt.subplot(1, 2, 1)
-    plt.title("Cross Entropy Loss")
+    plt.title("Loss")
     plt.xlabel("Training steps")
     utils.plot_loss(
         trainer.train_history["loss"], label="Training loss", npoints_to_average=10)
