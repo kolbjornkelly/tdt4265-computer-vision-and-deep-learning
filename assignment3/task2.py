@@ -123,15 +123,21 @@ def create_plots(trainer: Trainer, name: str):
     plt.show()
 
 
-def plot_validation_accuracy(trainer: Trainer, name: str):
+def plot_comparison(trainer1: Trainer, trainer2: Trainer, name: str):
     plot_path = pathlib.Path("plots")
     plot_path.mkdir(exist_ok=True)
     # Save plots and show them
     plt.figure(figsize=(20, 8))
-    plt.title("Validation Accuracy")
+    plt.title("Loss")
     plt.xlabel("Training steps")
     utils.plot_loss(
-        trainer.validation_history["accuracy"], label="Validation Accuracy")
+        trainer1.train_history["loss"], label="Training loss, Model X", npoints_to_average=10)
+    utils.plot_loss(
+        trainer1.validation_history["loss"], label="Validation loss, Model X")
+    utils.plot_loss(
+        trainer2.train_history["loss"], label="Training loss, Base Model", npoints_to_average=10)
+    utils.plot_loss(
+        trainer2.validation_history["loss"], label="Validation loss, Base Model")
     plt.legend()
     plt.savefig(plot_path.joinpath(f"{name}_plot.png"))
     plt.show()
