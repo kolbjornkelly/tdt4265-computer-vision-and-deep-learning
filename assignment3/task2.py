@@ -122,11 +122,37 @@ def create_plots(trainer: Trainer, name: str):
 
 
 def test_model(trainer: Trainer):
+    # Computes final training-, validation- and test-results
+    # over their entire respective datasets
+
+    # Turn of training-spesicif parts of network training
     trainer.model.eval()
-    test_loss, test_acc = compute_loss_and_accuracy(
-        trainer.dataloader_test, trainer.model, trainer.loss_criterion
-    )
-    print(f"Test Loss: {test_loss:.2f}",
+
+    # Turn of gradient computation and calculate results
+    with torch.no_grad():
+        # Train data
+        train_loss, train_acc = compute_loss_and_accuracy(
+            trainer.dataloader_train, trainer.model, trainer.loss_criterion
+        )
+
+        # Validation data
+        val_loss, val_acc = compute_loss_and_accuracy(
+            trainer.dataloader_validation, trainer.model, trainer.loss_criterion
+        )
+
+        # Test data
+        test_loss, test_acc = compute_loss_and_accuracy(
+            trainer.dataloader_test, trainer.model, trainer.loss_criterion
+        )
+    # Turn on training mode
+    model.train()
+
+    # Print final results
+    print(f"Training Loss: {train_loss:.2f}",
+          f"Training Accuracy: {train_acc:.3f}",
+          f"Validation Loss: {val_loss:.2f}",
+          f"Validation Accuracy: {val_acc:.3f}",
+          f"Test Loss: {test_loss:.2f}",
           f"Test Accuracy: {test_acc:.3f}",
           sep=", ")
 
