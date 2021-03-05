@@ -107,6 +107,7 @@ def create_plots(trainer: Trainer, name: str):
     plt.figure(figsize=(20, 8))
     plt.subplot(1, 2, 1)
     plt.title("Cross Entropy Loss")
+    plt.xlabel("Training steps")
     utils.plot_loss(
         trainer.train_history["loss"], label="Training loss", npoints_to_average=10)
     utils.plot_loss(
@@ -114,6 +115,7 @@ def create_plots(trainer: Trainer, name: str):
     plt.legend()
     plt.subplot(1, 2, 2)
     plt.title("Accuracy")
+    plt.xlabel("Training steps")
     utils.plot_loss(
         trainer.validation_history["accuracy"], label="Validation Accuracy")
     plt.legend()
@@ -121,9 +123,9 @@ def create_plots(trainer: Trainer, name: str):
     plt.show()
 
 
-def test_model(trainer: Trainer):
+def print_final_results(trainer: Trainer):
     # Computes final training-, validation- and test-results
-    # over their entire respective datasets
+    # over their entire respective datasets and prints them
 
     # Turn of training-spesicif parts of network training
     trainer.model.eval()
@@ -144,8 +146,9 @@ def test_model(trainer: Trainer):
         test_loss, test_acc = compute_loss_and_accuracy(
             trainer.dataloader_test, trainer.model, trainer.loss_criterion
         )
-    # Turn on training mode
-    model.train()
+
+    # Turn training mode back on
+    trainer.model.train()
 
     # Print final results
     print(f"Training Loss: {train_loss:.2f}",
@@ -155,46 +158,3 @@ def test_model(trainer: Trainer):
           f"Test Loss: {test_loss:.2f}",
           f"Test Accuracy: {test_acc:.3f}",
           sep=", ")
-
-
-def print_results(trainer: Trainer):
-    # Currently not in use
-    # TODO: make this work
-    # Extract values
-    train_loss = trainer.train_history["loss"][trainer.global_step].items()
-    train_acc = trainer.train_history["accuracy"][trainer.global_step].items()
-    val_loss = trainer.validation_history["loss"][trainer.global_step].items()
-    val_acc = trainer.validation_history["accuracy"][trainer.global_step].items(
-    )
-
-    print(f"Train Loss: {train_loss:.2f}",
-          f"Train Accuracy: {train_acc:.3f}",
-          f"Validation Loss: {val_loss:.2f}",
-          f"Validation Accuracy: {val_acc:.3f}",
-          f"Test Loss: {trainer.test_loss:.2f}",
-          f"Test Accuracy: {trainer.test_acc:.3f}",
-          sep=", ")
-
-
-if __name__ == "__main__":
-    # Set the random generator seed (parameters, shuffling etc).
-    # You can try to change this and check if you still get the same result!
-    utils.set_seed(0)
-    epochs = 10
-    batch_size = 64
-    learning_rate = 5e-2
-    early_stop_count = 4
-    dataloaders = load_cifar10(batch_size)
-    model = ExampleModel(image_channels=3, num_classes=10)
-    trainer = Trainer(
-        batch_size,
-        learning_rate,
-        early_stop_count,
-        epochs,
-        model,
-        dataloaders
-    )
-    trainer.train()
-    test_model(trainer)
-
-    create_plots(trainer, "task2")
