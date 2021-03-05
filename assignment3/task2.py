@@ -139,7 +139,7 @@ def print_final_results(trainer: Trainer):
 
         # Validation data
         val_loss, val_acc = compute_loss_and_accuracy(
-            trainer.dataloader_validation, trainer.model, trainer.loss_criterion
+            trainer.dataloader_val, trainer.model, trainer.loss_criterion
         )
 
         # Test data
