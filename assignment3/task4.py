@@ -12,9 +12,6 @@ class Model(nn.Module):
         super().__init__()
         self.model = torchvision.models.resnet18(pretrained=True)
 
-        # Spatial batch normalization
-        # self.spatial_normalizer = nn.BatchNorm2d(512)
-
         self.model.fc = nn.Linear(512, 10)  # No need to apply softmax,
         # as this is done in nn.CrossEntropyLoss
         for param in self.model.parameters():  # Freeze all parameters
