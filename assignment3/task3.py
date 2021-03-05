@@ -99,14 +99,6 @@ class ModelX(nn.Module):
         # Extract features
         features = self.feature_extractor(x)
 
-        # Normalize features
-        """
-        features_normalized = self.spatial_normalizer(features)
-
-        # Flatten before classification layer
-        features_normalized = torch.reshape(
-            features_normalized, (x.shape[0], self.num_output_features))
-        """
         # Flatten before classification layer
         features = torch.reshape(
             features, (x.shape[0], self.num_output_features))
@@ -188,7 +180,10 @@ class ModelY(nn.Module):
         self.num_output_features = 4 * num_filters * 4 * 4
 
         # Spatial batch normalization
-        self.spatial_normalizer = nn.BatchNorm2d(4*num_filters)
+        self.spatial_normalizer = nn.BatchNorm2d(4 * num_filters)
+
+        # Dropout
+        self.dropout = nn.Dropout(0.25)
 
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
@@ -200,12 +195,6 @@ class ModelY(nn.Module):
             nn.ReLU(),
             nn.Linear(self.hidden_layer_units, num_classes),
         )
-
-        # 1d normalization
-        self.class_normalizer = nn.BatchNorm1d(num_classes)
-
-        # Dropout
-        self.dropout = nn.Dropout(0.25)
 
     def forward(self, x):
         """
@@ -232,10 +221,6 @@ class ModelY(nn.Module):
         # Pass through classification layer
         out = self.classifier(features_normalized)
 
-        # Normalize output
-        #out_normalized = self.class_normalizer(out)
-
-        # TODO: change to out_normalized if this is used
         expected_shape = (batch_size, self.num_classes)
         assert out.shape == (batch_size, self.num_classes),\
             f"Expected output of forward pass to be: {expected_shape}, but got: {out.shape}"
@@ -310,7 +295,10 @@ class ModelZ(nn.Module):
         self.num_output_features = 4 * num_filters * 4 * 4
 
         # Spatial batch normalization
-        self.spatial_normalizer = nn.BatchNorm2d(4*num_filters)
+        self.spatial_normalizer = nn.BatchNorm2d(4 * num_filters)
+
+        # Dropout
+        self.dropout = nn.Dropout(0.7)
 
         # Initialize our last fully connected layer
         # Inputs all extracted features from the convolutional layers
@@ -322,12 +310,6 @@ class ModelZ(nn.Module):
             nn.ReLU(),
             nn.Linear(self.hidden_layer_units, num_classes),
         )
-
-        # 1d normalization
-        self.class_normalizer = nn.BatchNorm1d(num_classes)
-
-        # Dropout
-        self.dropout = nn.Dropout(0.7)
 
     def forward(self, x):
         """
@@ -354,10 +336,6 @@ class ModelZ(nn.Module):
         # Pass through classification layer
         out = self.classifier(features_normalized)
 
-        # Normalize output
-        #out_normalized = self.class_normalizer(out)
-
-        # TODO: change to out_normalized if this is used
         expected_shape = (batch_size, self.num_classes)
         assert out.shape == (batch_size, self.num_classes),\
             f"Expected output of forward pass to be: {expected_shape}, but got: {out.shape}"
