@@ -17,10 +17,30 @@ def calculate_iou(prediction_box, gt_box):
     """
     # YOUR CODE HERE
 
-    # Compute intersection
+    # Find coordinates of intersection
+    ymax = np.minimum(prediction_box[3], gt_box[3])
+    xmax = np.minimum(prediction_box[2], gt_box[2])
+    ymin = np.maximum(prediction_box[1], gt_box[1])
+    xmin = np.maximum(prediction_box[0], gt_box[0])
+
+    # Compute area of intersection
+    intersec_width = np.maximum((xmax - xmin), 0)
+    intersec_height = np.maximum((ymax - ymin), 0)
+    intersection = intersec_width*intersec_height
 
     # Compute union
-    iou = 0
+    pred_width = prediction_box[2] - prediction_box[0]
+    pred_height = prediction_box[3] - prediction_box[1]
+    pred_area = pred_width * pred_height
+
+    gt_width = gt_box[2] - gt_box[0]
+    gt_height = gt_box[3] - gt_box[1]
+    gt_area = gt_width * gt_height
+
+    union = pred_area + gt_area - intersection
+
+    # Compute IoU
+    iou = intersection / union
     assert iou >= 0 and iou <= 1
     return iou
 
@@ -74,12 +94,9 @@ def get_all_box_matches(prediction_boxes, gt_boxes, iou_threshold):
     """
     # Find all possible matches with a IoU >= iou threshold
 
-
     # Sort all matches on IoU in descending order
 
     # Find all matches with the highest IoU threshold
-
-
 
     return np.array([]), np.array([])
 
@@ -106,7 +123,7 @@ def calculate_individual_image_result(prediction_boxes, gt_boxes, iou_threshold)
 
 
 def calculate_precision_recall_all_images(
-    all_prediction_boxes, all_gt_boxes, iou_threshold):
+        all_prediction_boxes, all_gt_boxes, iou_threshold):
     """Given a set of prediction boxes and ground truth boxes for all images,
        calculates recall and precision over all images
        for a single image.
@@ -158,7 +175,7 @@ def get_precision_recall_curve(
     confidence_thresholds = np.linspace(0, 1, 500)
     # YOUR CODE HERE
 
-    precisions = [] 
+    precisions = []
     recalls = []
     return np.array(precisions), np.array(recalls)
 
@@ -233,7 +250,8 @@ def mean_average_precision(ground_truth_boxes, predicted_boxes):
     precisions, recalls = get_precision_recall_curve(
         all_prediction_boxes, all_gt_boxes, confidence_scores, 0.5)
     plot_precision_recall_curve(precisions, recalls)
-    mean_average_precision = calculate_mean_average_precision(precisions, recalls)
+    mean_average_precision = calculate_mean_average_precision(
+        precisions, recalls)
     print("Mean average precision: {:.4f}".format(mean_average_precision))
 
 
