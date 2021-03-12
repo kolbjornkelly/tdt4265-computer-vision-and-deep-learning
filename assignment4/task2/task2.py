@@ -99,13 +99,25 @@ def get_all_box_matches(prediction_boxes, gt_boxes, iou_threshold):
             objects with shape: [number of box matches, 4].
             Each row includes [xmin, ymin, xmax, ymax]
     """
+    # TODO: kan finne en bedre måte enn å initialisere en rad
+    #       vi fjerner til slutt
+    pred_matches = np.zeros(shape=(1, 4))
+    gt_matches = np.zeros(shape=(1, 4))
+
     # Find all possible matches with a IoU >= iou threshold
-
-    # Sort all matches on IoU in descending order
-
-    # Find all matches with the highest IoU threshold
-
-    return np.array([]), np.array([])
+    for pred in prediction_boxes:
+        max_iou = 0
+        gt_match = None
+        for gt in gt_boxes:
+            iou = calculate_iou(pred, gt)
+            if (iou > max_iou) and (iou >= iou_threshold):
+                max_iou = iou
+                gt_match = gt
+        if (max_iou > 0):
+            pred_matches = np.append(pred_matches, pred.reshape(1, 4), axis=0)
+            gt_matches = np.append(gt_matches, gt_match.reshape(1, 4), axis=0)
+    #  Don't return the zero-row from the init
+    return pred_matches[1:], gt_matches[1:]
 
 
 def calculate_individual_image_result(prediction_boxes, gt_boxes, iou_threshold):
@@ -153,6 +165,8 @@ def calculate_precision_recall_all_images(
 
 def get_precision_recall_curve(
     all_prediction_boxes, all_gt_boxes, confidence_scores, iou_threshold
+
+
 ):
     """Given a set of prediction boxes and ground truth boxes for all images,
        calculates the recall-precision curve over all images.
