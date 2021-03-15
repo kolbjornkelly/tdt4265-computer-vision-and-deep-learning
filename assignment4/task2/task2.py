@@ -145,7 +145,7 @@ def calculate_individual_image_result(prediction_boxes, gt_boxes, iou_threshold)
     }
 
     # Find matches
-    matched_preds, matches_gts = get_all_box_matches(
+    matched_preds, matched_gts = get_all_box_matches(
         prediction_boxes, gt_boxes, iou_threshold)
 
     # Compute data
@@ -175,23 +175,37 @@ def calculate_precision_recall_all_images(
     Returns:
         tuple: (precision, recall). Both float.
     """
+    """
     precision = 0
     recall = 0
 
     # Loop over all images
     for pred, gt in all_prediction_boxes, all_gt_boxes:
         # Compute data
+        
         data = calculate_individual_image_result(pred, gt, iou_threshold)
         # Compute precision and recall
         precision += calculate_precision(
             data["true_pos"], data["false_pos"], data["false_neg"])
         recall += calculate_recall(
             data["true_pos"], data["false_pos"], data["false_neg"])
-
+        
     # Compute average
     precision /= len(all_prediction_boxes)
     recall /= len(all_prediction_boxes)
+    """
+    tps = 0
+    fps = 0
+    fns = 0
 
+    for pred, gt in zip(all_prediction_boxes, all_gt_boxes):
+        data = calculate_individual_image_result(pred, gt, iou_threshold)
+        tps += data["true_pos"]
+        fps += data["false_pos"]
+        fns += data["false_neg"]
+
+    precision = calculate_precision(tps, fps, fns)
+    recall = calculate_recall(tps, fps, fns)
     return (precision, recall)
 
 
@@ -225,14 +239,50 @@ def get_precision_recall_curve(
     confidence_thresholds = np.linspace(0, 1, 500)
     # YOUR CODE HERE
 
-    for threshold in confidence_thresholds:
-        for i in range(len(confidence_scores)):
-            for j in range(all_prediction_boxes[i].shape[0]):
-                if confidence_scores[i][j] > threshold:
-
     precisions = []
     recalls = []
 
+    # Loop over every threshold
+    for threshold in confidence_thresholds:
+
+        preds = []
+        # Loop over every image
+        for image, pred_boxes in enumerate(all_prediction_boxes):
+            conf_preds = []
+            # Loop over every prediction for the current image
+            for box_num, pred_box in enumerate(pred_boxes):
+                if confidence_scores[image][box_num] >= threshold:
+                    # Add prediction if confident
+                    conf_preds.append(pred_box)
+
+            preds.append(np.array(conf_preds))
+
+        # Compute average precision and recall
+        precision, recall = calculate_precision_recall_all_images(
+            preds, all_gt_boxes, iou_threshold)
+        # Append to final arrays
+        precisions.append(precision)
+        recalls.append(recall)
+        """
+        # Loop over every image
+        for i in range(len(confidence_scores)):
+            conf_preds = []
+            # Loop over every prediction for the current image
+            for j in range(all_prediction_boxes[i].shape[0]):
+                if confidence_scores[i][j] > threshold:
+                    # Add prediction if confident
+                    conf_preds.append(all_prediction_boxes[i][j])
+            if (len(conf_preds) > 0):
+                preds.append(np.array(conf_preds))
+
+        if len(preds) > 0:
+            # Compute average precision and recall
+            precision, recall = calculate_precision_recall_all_images(
+                preds, all_gt_boxes, iou_threshold)
+            # Append to final arrays
+            precisions.append(precision)
+            recalls.append(recall)
+        """
     return np.array(precisions), np.array(recalls)
 
 
