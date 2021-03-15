@@ -263,6 +263,8 @@ def get_precision_recall_curve(
         # Append to final arrays
         precisions.append(precision)
         recalls.append(recall)
+        # TODO: Dette er den gamle versjonen:
+        #       Finn ut om noe herfra er bedre
         """
         # Loop over every image
         for i in range(len(confidence_scores)):
@@ -319,7 +321,18 @@ def calculate_mean_average_precision(precisions, recalls):
     # Calculate the mean average precision given these recall levels.
     recall_levels = np.linspace(0, 1.0, 11)
     # YOUR CODE HERE
-    average_precision = 0
+
+    N = precisions.shape[0]
+    max_precs = []
+    area = 0
+    for r in recall_levels:
+        max_prec = 0
+        for i in range(N):
+            if precisions[i] > max_prec and recalls[i] >= r:
+                max_prec = precisions[i]
+        max_precs.append(max_prec)
+
+    average_precision = np.average(np.array(max_precs))
     return average_precision
 
 

@@ -210,8 +210,6 @@ if __name__ == "__main__":
     test_calculate_individual_image_result()
     test_calculate_precision_recall_all_images()
     test_get_precision_recall_curve()
-    """
     test_mean_average_precision()
     print("="*80)
-    """
     print("All tests OK.")
