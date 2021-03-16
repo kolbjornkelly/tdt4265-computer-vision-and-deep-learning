@@ -104,6 +104,7 @@ def get_all_box_matches(prediction_boxes, gt_boxes, iou_threshold):
     gt_matches = []
 
     # Find all possible matches with a IoU >= iou_threshold
+
     for gt in gt_boxes:
         max_iou = 0
         gt_match = None
