@@ -45,7 +45,7 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
             dataset_list, transform=augmentation_transform,
             target_transform=target_transform, is_train=is_train)
 
-        datasets = ConcatDataset([original_datasets, augmented_datasets])
+        datasets = ConcatDataset((original_datasets, augmented_datasets))
     else:
         datasets = original_datasets
 
@@ -74,7 +74,6 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
 
     if is_train:
         # during training, a single (possibly concatenated) data_loader is returned
-        data_loaders = data_loaders[0] + data_loaders[1]
         assert len(data_loaders) == 1
         return data_loaders[0]
     return data_loaders
