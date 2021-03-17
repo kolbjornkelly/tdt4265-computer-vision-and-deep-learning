@@ -27,7 +27,7 @@ class BasicModel(torch.nn.Module):
         self.padding = 1
         self.pool_stride = 2
 
-        self.backbone_1 = nn.sequential(
+        self.backbone_1 = nn.Sequential(
             nn.Conv2d(
                 in_channels=image_channels,
                 output_channels=32,
