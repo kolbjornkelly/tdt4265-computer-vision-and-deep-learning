@@ -46,6 +46,7 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
             target_transform=target_transform, is_train=is_train)
 
         datasets = ConcatDataset((original_datasets, augmented_datasets))
+        datasets = torch.utils.data.ChainDataset(datasets)
     else:
         datasets = original_datasets
 
