@@ -66,7 +66,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            ),
+            )
             # nn.BatchNorm2d(output_channels[0])
         )
 
@@ -86,7 +86,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            ),
+            )
             # nn.BatchNorm2d(output_channels[1])
         )
 
@@ -106,7 +106,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            ),
+            )
             # nn.BatchNorm2d(output_channels[2])
         )
 
@@ -126,7 +126,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            ),
+            )
             # nn.BatchNorm2d(output_channels[3])
         )
 
@@ -146,7 +146,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            ),
+            )
             # nn.BatchNorm2d(output_channels[4])
         )
 
@@ -166,7 +166,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=0
-            ),
+            )
             # nn.BatchNorm2d(output_channels[5])
         )
 

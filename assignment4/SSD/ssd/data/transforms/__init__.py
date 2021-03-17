@@ -16,7 +16,7 @@ def build_transforms(cfg, is_train=True, augment=False):
         if augment:
             transform.append(RandomSampleCrop)
             transform.append(RandomMirror)
-            transform.append(Expand)
+            # transform.append(Expand)
     else:
         transform = [
             Resize(cfg.INPUT.IMAGE_SIZE),
