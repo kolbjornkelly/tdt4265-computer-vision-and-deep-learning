@@ -51,6 +51,8 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
 
     shuffle = is_train
 
+    print("Datasets length: ", len(datasets))
+
     data_loaders = []
 
     for dataset in datasets:
