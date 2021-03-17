@@ -30,7 +30,7 @@ class SSDDetector(nn.Module):
 
 def build_backbone(cfg):
     backbone_name = cfg.MODEL.BACKBONE.NAME
-    if backbone_name == "basic":
+    if backbone_name == "improved_basic":
         model = BasicModel(cfg)
         return model
     if backbone_name == "vgg":

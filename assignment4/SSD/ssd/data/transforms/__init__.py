@@ -14,6 +14,7 @@ def build_transforms(cfg, is_train=True, augment=False):
             ToTensor(),
         ]
         if augment:
+            print("Using data augmentation")
             transform.append(RandomSampleCrop)
             transform.append(RandomMirror)
             # transform.append(Expand)
