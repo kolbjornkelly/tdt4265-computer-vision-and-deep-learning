@@ -66,8 +66,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            )
-            # nn.BatchNorm2d(output_channels[0])
+            ),
+            nn.BatchNorm2d(output_channels[0])
         )
 
         self.backbone_2 = nn.Sequential(
@@ -86,8 +86,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            )
-            # nn.BatchNorm2d(output_channels[1])
+            ),
+            nn.BatchNorm2d(output_channels[1])
         )
 
         self.backbone_3 = nn.Sequential(
@@ -106,8 +106,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            )
-            # nn.BatchNorm2d(output_channels[2])
+            ),
+            nn.BatchNorm2d(output_channels[2])
         )
 
         self.backbone_4 = nn.Sequential(
@@ -126,8 +126,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            )
-            # nn.BatchNorm2d(output_channels[3])
+            ),
+            nn.BatchNorm2d(output_channels[3])
         )
 
         self.backbone_5 = nn.Sequential(
@@ -146,8 +146,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
-            )
-            # nn.BatchNorm2d(output_channels[4])
+            ),
+            nn.BatchNorm2d(output_channels[4])
         )
 
         self.backbone_6 = nn.Sequential(
@@ -166,8 +166,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=0
-            )
-            # nn.BatchNorm2d(output_channels[5])
+            ),
+            nn.BatchNorm2d(output_channels[5])
         )
 
     def forward(self, x):
