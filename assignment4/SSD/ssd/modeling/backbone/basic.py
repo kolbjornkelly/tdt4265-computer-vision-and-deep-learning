@@ -30,7 +30,7 @@ class BasicModel(torch.nn.Module):
         self.backbone_1 = nn.Sequential(
             nn.Conv2d(
                 in_channels=image_channels,
-                output_channels=32,
+                out_channels=32,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -42,7 +42,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=32,
-                output_channels=64,
+                out_channels=64,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -54,7 +54,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=64,
-                output_channels=64,
+                out_channels=64,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -62,7 +62,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=64,
-                output_channels=self.output_channels[0],
+                out_channels=self.output_channels[0],
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
@@ -73,7 +73,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[0],
-                output_channels=128,
+                out_channels=128,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -81,7 +81,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                output_channels=self.output_channels[1],
+                out_channels=self.output_channels[1],
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
@@ -92,7 +92,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[1],
-                output_channels=256,
+                out_channels=256,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -100,7 +100,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=256,
-                output_channels=self.output_channels[2],
+                out_channels=self.output_channels[2],
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
@@ -111,7 +111,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[2],
-                output_channels=128,
+                out_channels=128,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -119,7 +119,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                output_channels=self.output_channels[3],
+                out_channels=self.output_channels[3],
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
@@ -130,7 +130,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[3],
-                output_channels=128,
+                out_channels=128,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -138,7 +138,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
-                output_channels=self.output_channels[4],
+                out_channels=self.output_channels[4],
                 kernel_size=self.conv_kernel,
                 stride=2,
                 padding=self.padding
@@ -149,7 +149,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=self.output_channels[4],
-                output_channels=128,
+                out_channels=128,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -157,7 +157,7 @@ class BasicModel(torch.nn.Module):
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=256,
-                output_channels=self.output_channels[5],
+                out_channels=self.output_channels[5],
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=0
