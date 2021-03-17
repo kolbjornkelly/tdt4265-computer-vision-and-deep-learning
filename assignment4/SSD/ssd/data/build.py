@@ -69,10 +69,10 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
         data_loader = DataLoader(dataset, num_workers=cfg.DATA_LOADER.NUM_WORKERS, batch_sampler=batch_sampler,
                                  pin_memory=cfg.DATA_LOADER.PIN_MEMORY, collate_fn=BatchCollator(is_train))
         data_loaders.append(data_loader)
-        print("Hei")
 
     if is_train:
         # during training, a single (possibly concatenated) data_loader is returned
+        data_loaders = ConcatDataset(data_loaders)
         assert len(data_loaders) == 1
         return data_loaders[0]
     return data_loaders
