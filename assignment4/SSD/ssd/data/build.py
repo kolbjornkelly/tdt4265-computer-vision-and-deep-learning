@@ -30,25 +30,22 @@ class BatchCollator:
 
 def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_iter=0):
     train_transform = build_transforms(cfg, is_train=is_train)
-    augmentation_transform = build_transforms(
-        cfg, is_train=is_train, augment=augment)
     target_transform = build_target_transform(cfg) if is_train else None
     dataset_list = cfg.DATASETS.TRAIN if is_train else cfg.DATASETS.TEST
-    original_datasets = build_dataset(
+    datasets = build_dataset(
         cfg.DATASET_DIR,
         dataset_list, transform=train_transform,
         target_transform=target_transform, is_train=is_train)
 
     if augment:
+        augmentation_transform = build_transforms(
+            cfg, is_train=is_train, augment=augment)
         augmented_datasets = build_dataset(
             cfg.DATASET_DIR,
             dataset_list, transform=augmentation_transform,
             target_transform=target_transform, is_train=is_train)
 
-        datasets = ConcatDataset((original_datasets, augmented_datasets))
-        datasets = torch.utils.data.ChainDataset(datasets)
-    else:
-        datasets = original_datasets
+        datasets = ConcatDataset((datasets, augmented_datasets))
 
     shuffle = is_train
 
