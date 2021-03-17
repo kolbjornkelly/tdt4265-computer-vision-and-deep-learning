@@ -72,6 +72,9 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
 
     if is_train:
         # during training, a single (possibly concatenated) data_loader is returned
+        if len(data_loaders) > 1:
+            torch.cat(data_loaders[0], data_loaders[1], 0)
+
         assert len(data_loaders) == 1
         return data_loaders[0]
     return data_loaders
