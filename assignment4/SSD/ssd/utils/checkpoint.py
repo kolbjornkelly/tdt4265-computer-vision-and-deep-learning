@@ -57,7 +57,8 @@ class CheckPointer:
         checkpoint = self._load_file(f)
         model = self.model
 
-        model.load_state_dict(checkpoint.pop("model"))
+        # TODO: consider removing strict option
+        model.load_state_dict(checkpoint.pop("model"), strict=False)
         if "optimizer" in checkpoint and self.optimizer:
             self.logger.info("Loading optimizer from {}".format(f))
             self.optimizer.load_state_dict(checkpoint.pop("optimizer"))
