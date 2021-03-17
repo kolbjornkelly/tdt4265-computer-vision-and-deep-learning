@@ -52,7 +52,7 @@ def start_train(cfg):
 
     max_iter = cfg.SOLVER.MAX_ITER
     train_loader = make_data_loader(
-        cfg, is_train=True, max_iter=max_iter, start_iter=arguments['iteration'])
+        cfg, is_train=True, augment=True max_iter=max_iter, start_iter=arguments['iteration'])
 
     model = do_train(
         cfg, model, train_loader, optimizer,

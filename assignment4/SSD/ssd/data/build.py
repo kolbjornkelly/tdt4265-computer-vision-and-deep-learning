@@ -38,12 +38,16 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
         cfg.DATASET_DIR,
         dataset_list, transform=train_transform,
         target_transform=target_transform, is_train=is_train)
-    augmented_datasets = build_dataset(
-        cfg.DATASET_DIR,
-        dataset_list, transform=augmentation_transform,
-        target_transform=target_transform, is_train=is_train)
 
-    datasets = ConcatDataset([original_datasets, augmented_datasets])
+    if augment:
+        augmented_datasets = build_dataset(
+            cfg.DATASET_DIR,
+            dataset_list, transform=augmentation_transform,
+            target_transform=target_transform, is_train=is_train)
+
+        datasets = ConcatDataset([original_datasets, augmented_datasets])
+    else:
+        datasets = original_datasets
 
     shuffle = is_train
 
