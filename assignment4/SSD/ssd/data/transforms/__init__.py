@@ -3,7 +3,8 @@ from .target_transform import SSDTargetTransform
 from .transforms import *
 
 
-def build_transforms(cfg, is_train=True):
+def build_transforms(cfg, is_train=True, augment=False):
+
     if is_train:
         transform = [
             ConvertFromInts(),
@@ -12,6 +13,10 @@ def build_transforms(cfg, is_train=True):
             SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
             ToTensor(),
         ]
+        if augment:
+            transform.append(RandomSampleCrop)
+            transform.append(RandomMirror)
+            transform.append(Expand)
     else:
         transform = [
             Resize(cfg.INPUT.IMAGE_SIZE),
