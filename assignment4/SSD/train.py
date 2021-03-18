@@ -37,14 +37,16 @@ def start_train(cfg):
     model = torch_utils.to_cuda(model)
 
     # Use SGD optimizer
+    """
     optimizer = torch.optim.SGD(
         model.parameters(),
         lr=cfg.SOLVER.LR,
         momentum=cfg.SOLVER.MOMENTUM,
         weight_decay=cfg.SOLVER.WEIGHT_DECAY
     )
-
-    # Use dynamic learning rate
+    """
+    # Use ADAM optimizer and dynamic learning rate
+    optimizer = torch.optim.Adam(model.parameters(), lr=cfg.SOLVER.LR)
     scheduler = StepLR(optimizer, step_size=30, gamma=cfg.SOLVER.MOMENTUM)
 
     arguments = {"iteration": 0}
@@ -60,7 +62,7 @@ def start_train(cfg):
         cfg, is_train=True, augment=False, max_iter=max_iter, start_iter=arguments['iteration'])
 
     model = do_train(
-        cfg, model, train_loader, optimizer, scheduler,
+        cfg, model, train_loader, scheduler,
         checkpointer, arguments)
     return model
 

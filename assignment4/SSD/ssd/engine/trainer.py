@@ -23,7 +23,6 @@ def write_metric(eval_result, prefix, summary_writer, global_step):
 def do_train(cfg, model,
              data_loader,
              optimizer,
-             scheduler,
              checkpointer,
              arguments):
     logger = logging.getLogger("SSD.trainer")
