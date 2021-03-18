@@ -241,7 +241,6 @@ class BasicModel(torch.nn.Module):
         out_features.append(self.backbone_4(out_features[-1]))
         out_features.append(self.backbone_5(out_features[-1]))
 
-        print("Layer 5:", out_features[-1].size())
         out_features.append(self.backbone_6(out_features[-1]))
 
         for idx, feature in enumerate(out_features):
