@@ -52,14 +52,6 @@ class PriorBox:
                         priors.append([cx, cy, w * ratio, h / ratio])
                         priors.append([cx, cy, w / ratio, h * ratio])
 
-                    # change h/w ratio of the big sized box
-                    sizeH = sqrt(self.min_sizes[k][1] * self.max_sizes[k][1])
-                    sizeW = sqrt(self.min_sizes[k][0] * self.max_sizes[k][0])
-                    for ratio in self.aspect_ratios[k]:
-                        ratio = sqrt(ratio)
-                        priors.append([cx, cy, sizeW * ratio, sizeH / ratio])
-                        priors.append([cx, cy, sizeW / ratio, sizeH * ratio])
-
         priors = torch.tensor(priors)
         if self.clip:
             priors.clamp_(max=1, min=0)

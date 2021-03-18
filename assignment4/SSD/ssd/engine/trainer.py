@@ -23,6 +23,7 @@ def write_metric(eval_result, prefix, summary_writer, global_step):
 def do_train(cfg, model,
              data_loader,
              optimizer,
+             scheduler,
              checkpointer,
              arguments):
     logger = logging.getLogger("SSD.trainer")
@@ -50,6 +51,8 @@ def do_train(cfg, model,
 
         optimizer.zero_grad()
         loss.backward()
+        # Dynamic learning rate
+        scheduler.step
         optimizer.step()
 
         batch_time = time.time() - end
@@ -66,7 +69,8 @@ def do_train(cfg, model,
                 f"eta: {eta_string}",
             ]
             if torch.cuda.is_available():
-                mem = round(torch.cuda.max_memory_allocated() / 1024.0 / 1024.0)
+                mem = round(torch.cuda.max_memory_allocated() /
+                            1024.0 / 1024.0)
                 to_log.append(f'mem: {mem}M')
             logger.info(meters.delimiter.join(to_log))
             global_step = iteration
@@ -87,7 +91,7 @@ def do_train(cfg, model,
             eval_results = do_evaluation(cfg, model, iteration=iteration)
             for eval_result, dataset in zip(eval_results, cfg.DATASETS.TEST):
                 write_metric(
-                    eval_result['metrics'], 'metrics/' + dataset,summary_writer, iteration)
+                    eval_result['metrics'], 'metrics/' + dataset, summary_writer, iteration)
             model.train()  # *IMPORTANT*: change to train mode after eval.
 
         if iteration >= cfg.SOLVER.MAX_ITER:
@@ -97,5 +101,6 @@ def do_train(cfg, model,
     # compute training time
     total_training_time = int(time.time() - start_training_time)
     total_time_str = str(datetime.timedelta(seconds=total_training_time))
-    logger.info("Total training time: {} ({:.4f} s / it)".format(total_time_str, total_training_time / max_iter))
+    logger.info("Total training time: {} ({:.4f} s / it)".format(total_time_str,
+                                                                 total_training_time / max_iter))
     return model
