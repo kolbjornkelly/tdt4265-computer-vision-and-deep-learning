@@ -59,8 +59,9 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(64),
+            # nn.BatchNorm2d(64),
             nn.ReLU(),
+            nn.BatchNorm2d(64),
             nn.Conv2d(
                 in_channels=64,
                 out_channels=self.output_channels[0],
@@ -72,6 +73,7 @@ class BasicModel(torch.nn.Module):
 
         self.backbone_2 = nn.Sequential(
             nn.ReLU(),
+            nn.BatchNorm2d(self.output_channels[0]),
             nn.Conv2d(
                 in_channels=self.output_channels[0],
                 out_channels=128,
@@ -79,8 +81,9 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128),
+            # nn.BatchNorm2d(128),
             nn.ReLU(),
+            nn.BatchNorm2d(128),
             nn.Conv2d(
                 in_channels=128,
                 out_channels=self.output_channels[1],
@@ -100,8 +103,9 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(256),
+            # nn.BatchNorm2d(256),
             nn.ReLU(),
+            nn.BatchNorm2d(256),
             nn.Conv2d(
                 in_channels=256,
                 out_channels=self.output_channels[2],
@@ -112,8 +116,9 @@ class BasicModel(torch.nn.Module):
         )
 
         self.backbone_4 = nn.Sequential(
-            nn.BatchNorm2d(output_channels[2]),
+            # nn.BatchNorm2d(output_channels[2]),
             nn.ReLU(),
+            nn.BatchNorm2d(self.output_channels[2]),
             nn.Conv2d(
                 in_channels=self.output_channels[2],
                 out_channels=128,
@@ -121,8 +126,9 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128),
+            # nn.BatchNorm2d(128),
             nn.ReLU(),
+            nn.BatchNorm2d(128),
             nn.Conv2d(
                 in_channels=128,
                 out_channels=self.output_channels[3],
@@ -133,8 +139,9 @@ class BasicModel(torch.nn.Module):
         )
 
         self.backbone_5 = nn.Sequential(
-            nn.BatchNorm2d(output_channels[3]),
+            # nn.BatchNorm2d(output_channels[3]),
             nn.ReLU(),
+            nn.BatchNorm2d(output_channels[3]),
             nn.Conv2d(
                 in_channels=self.output_channels[3],
                 out_channels=128,
@@ -142,8 +149,9 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128),
+            # nn.BatchNorm2d(128),
             nn.ReLU(),
+            nn.BatchNorm2d(128),
             nn.Conv2d(
                 in_channels=128,
                 out_channels=self.output_channels[4],
@@ -154,8 +162,9 @@ class BasicModel(torch.nn.Module):
         )
 
         self.backbone_6 = nn.Sequential(
-            nn.BatchNorm2d(output_channels[4]),
+            # nn.BatchNorm2d(output_channels[4]),
             nn.ReLU(),
+            nn.BatchNorm2d(output_channels[4]),
             nn.Conv2d(
                 in_channels=self.output_channels[4],
                 out_channels=128,
@@ -163,8 +172,9 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128),
+            # nn.BatchNorm2d(128),
             nn.ReLU(),
+            nn.BatchNorm2d(128),
             nn.Conv2d(
                 in_channels=128,
                 out_channels=self.output_channels[5],
