@@ -41,7 +41,7 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
             dataset_list, transform=augmentation_transform,
             target_transform=target_transform, is_train=is_train)
 
-    elif is_train:
+    else:
         train_transform = build_transforms(cfg, is_train=is_train)
         datasets = build_dataset(
             cfg.DATASET_DIR,
