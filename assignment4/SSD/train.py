@@ -45,7 +45,7 @@ def start_train(cfg):
     )
 
     # Use dynamic learning rate
-    scheduler = StepLR(optimizer, step_size=30, gamma=momentum)
+    scheduler = StepLR(optimizer, step_size=30, gamma=cfg.SOLVER.MOMENTUM)
 
     arguments = {"iteration": 0}
     save_to_disk = True
