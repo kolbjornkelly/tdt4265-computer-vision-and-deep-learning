@@ -62,7 +62,7 @@ def start_train(cfg):
         cfg, is_train=True, augment=False, max_iter=max_iter, start_iter=arguments['iteration'])
 
     model = do_train(
-        cfg, model, train_loader, scheduler,
+        cfg, model, train_loader, optimizer, scheduler,
         checkpointer, arguments)
     return model
 
