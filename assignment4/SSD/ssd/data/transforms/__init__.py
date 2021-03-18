@@ -11,8 +11,8 @@ def build_transforms(cfg, is_train=True, augment=False):
             ConvertFromInts(),
             ToPercentCoords(),
             Resize(cfg.INPUT.IMAGE_SIZE),
+            RandomSampleCrop(),
             SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
-            # RandomSampleCrop(),
             # RandomMirror(),
             ToTensor(),
         ]
