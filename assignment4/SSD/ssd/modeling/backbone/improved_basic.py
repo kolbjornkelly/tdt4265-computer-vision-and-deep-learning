@@ -63,31 +63,31 @@ class BasicModel(torch.nn.Module):
 
         self.backbone_1 = nn.Sequential(
             nn.Conv2d(
+                in_channels=image_channels,
+                out_channels=32,
+                kernel_size=self.conv_kernel,
+                stride=1,
+                padding=self.padding
+            ),
+            nn.MaxPool2d(
+                kernel_size=self.pool_kernel,
+                stride=self.pool_stride
+            ),
+            nn.ReLU(),
+            nn.Conv2d(
+                in_channels=32,
+                out_channels=64,
+                kernel_size=self.conv_kernel,
+                stride=1,
+                padding=self.padding
+            ),
+            nn.MaxPool2d(
+                kernel_size=self.pool_kernel,
+                stride=self.pool_stride
+            ),
+            nn.ReLU(),
+            nn.Conv2d(
                 in_channels=64,
-                out_channels=128,
-                kernel_size=self.conv_kernel,
-                stride=1,
-                padding=self.padding
-            ),
-            nn.MaxPool2d(
-                kernel_size=self.pool_kernel,
-                stride=self.pool_stride
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=128,
-                out_channels=256,
-                kernel_size=self.conv_kernel,
-                stride=1,
-                padding=self.padding
-            ),
-            nn.MaxPool2d(
-                kernel_size=self.pool_kernel,
-                stride=self.pool_stride
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=256,
                 out_channels=64,
                 kernel_size=self.conv_kernel,
                 stride=1,
@@ -234,8 +234,8 @@ class BasicModel(torch.nn.Module):
 
         out_features = []
         # Feed through network
-        backbone0 = self.backbone_0(x)
-        out_features.append(self.backbone_1(backbone0))
+        #backbone0 = self.backbone_0(x)
+        out_features.append(self.backbone_1(x))
         out_features.append(self.backbone_2(out_features[-1]))
         out_features.append(self.backbone_3(out_features[-1]))
         out_features.append(self.backbone_4(out_features[-1]))
