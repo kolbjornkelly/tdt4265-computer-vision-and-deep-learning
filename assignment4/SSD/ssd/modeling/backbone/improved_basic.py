@@ -142,7 +142,7 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128)
+            nn.BatchNorm2d(128),
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=128,
