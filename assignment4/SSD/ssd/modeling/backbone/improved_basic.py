@@ -240,6 +240,7 @@ class BasicModel(torch.nn.Module):
         out_features.append(self.backbone_3(out_features[-1]))
         out_features.append(self.backbone_4(out_features[-1]))
         out_features.append(self.backbone_5(out_features[-1]))
+        print("Num after layer 5: ". len(out_features[-1]))
         out_features.append(self.backbone_6(out_features[-1]))
 
         for idx, feature in enumerate(out_features):
