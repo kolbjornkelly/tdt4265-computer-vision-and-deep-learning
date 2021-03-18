@@ -52,8 +52,8 @@ def do_train(cfg, model,
         optimizer.zero_grad()
         loss.backward()
         # Dynamic learning rate
-        scheduler.step
-        # optimizer.step()
+        # scheduler.step
+        optimizer.step()
 
         batch_time = time.time() - end
         end = time.time()
