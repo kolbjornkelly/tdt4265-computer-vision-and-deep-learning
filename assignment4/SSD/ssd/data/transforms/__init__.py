@@ -15,8 +15,16 @@ def build_transforms(cfg, is_train=True, augment=False):
         ]
         if augment:
             print("Using data augmentation")
-            transform.append(RandomSampleCrop)
-            transform.append(RandomMirror)
+            transform = [
+                ConvertFromInts(),
+                ToPercentCoords(),
+                Resize(cfg.INPUT.IMAGE_SIZE),
+                SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
+                transform.append(RandomSampleCrop),
+                transform.append(RandomMirror),
+                ToTensor(),
+            ]
+
             # transform.append(Expand)
     else:
         transform = [

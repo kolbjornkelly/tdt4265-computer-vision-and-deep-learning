@@ -49,6 +49,7 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
 
     shuffle = is_train
 
+    print("Dataset length: ", len(datasets))
     data_loaders = []
 
     for dataset in datasets:
@@ -68,8 +69,6 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
                                  pin_memory=cfg.DATA_LOADER.PIN_MEMORY, collate_fn=BatchCollator(is_train))
         data_loaders.append(data_loader)
 
-    #data_loaders = ConcatDataset(data_loaders[0], data_loaders[1])
-    print("Dataloader length: ", len(data_loaders[1]))
     if is_train:
         # during training, a single (possibly concatenated) data_loader is returned
         assert len(data_loaders) == 1
