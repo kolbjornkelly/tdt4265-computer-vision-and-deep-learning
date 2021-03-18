@@ -5,7 +5,18 @@ from .transforms import *
 
 def build_transforms(cfg, is_train=True, augment=False):
 
-    if is_train:
+    if augment:
+        print("Using data augmentation")
+        transform = [
+            ConvertFromInts(),
+            ToPercentCoords(),
+            Resize(cfg.INPUT.IMAGE_SIZE),
+            SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
+            RandomSampleCrop(),
+            # RandomMirror(),
+            ToTensor(),
+        ]
+    elif is_train:
         transform = [
             ConvertFromInts(),
             ToPercentCoords(),
@@ -13,19 +24,7 @@ def build_transforms(cfg, is_train=True, augment=False):
             SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
             ToTensor(),
         ]
-        if augment:
-            print("Using data augmentation")
-            transform = [
-                ConvertFromInts(),
-                ToPercentCoords(),
-                Resize(cfg.INPUT.IMAGE_SIZE),
-                SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
-                RandomSampleCrop(),
-                RandomMirror(),
-                ToTensor(),
-            ]
 
-            # transform.append(Expand)
     else:
         transform = [
             Resize(cfg.INPUT.IMAGE_SIZE),
