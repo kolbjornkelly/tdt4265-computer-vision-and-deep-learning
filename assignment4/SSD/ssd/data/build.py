@@ -33,12 +33,6 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
     target_transform = build_target_transform(cfg) if is_train else None
     dataset_list = cfg.DATASETS.TRAIN if is_train else cfg.DATASETS.TEST
 
-    train_transform = build_transforms(cfg, is_train=is_train)
-    datasets = build_dataset(
-        cfg.DATASET_DIR,
-        dataset_list, transform=train_transform,
-        target_transform=target_transform, is_train=is_train)
-
     if augment:
         augmentation_transform = build_transforms(
             cfg, is_train=is_train, augment=augment)
@@ -47,7 +41,12 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
             dataset_list, transform=augmentation_transform,
             target_transform=target_transform, is_train=is_train)
 
-        datasets = datasets.expand(augmented_datasets)
+    elif is_train:
+        train_transform = build_transforms(cfg, is_train=is_train)
+        datasets = build_dataset(
+            cfg.DATASET_DIR,
+            dataset_list, transform=train_transform,
+            target_transform=target_transform, is_train=is_train)
 
     print("Dataset Length: ", len(datasets))
 
