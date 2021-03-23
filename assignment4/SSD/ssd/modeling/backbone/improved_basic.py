@@ -30,7 +30,7 @@ class BasicModel(torch.nn.Module):
         self.backbone_1 = nn.Sequential(
             nn.Conv2d(
                 in_channels=image_channels,
-                out_channels=32,
+                out_channels=2*32,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -43,8 +43,8 @@ class BasicModel(torch.nn.Module):
             # nn.Dropout(0.1),
 
             nn.Conv2d(
-                in_channels=32,
-                out_channels=64,
+                in_channels=32*2,
+                out_channels=2*64,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -57,8 +57,8 @@ class BasicModel(torch.nn.Module):
             # nn.Dropout(0.1),
 
             nn.Conv2d(
-                in_channels=64,
-                out_channels=64,
+                in_channels=2*64,
+                out_channels=4*64,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -69,7 +69,7 @@ class BasicModel(torch.nn.Module):
 
 
             nn.Conv2d(
-                in_channels=64,
+                in_channels=4*64,
                 out_channels=self.output_channels[0],
                 kernel_size=self.conv_kernel,
                 stride=2,
@@ -82,7 +82,7 @@ class BasicModel(torch.nn.Module):
             # nn.BatchNorm2d(self.output_channels[0]),
             nn.Conv2d(
                 in_channels=self.output_channels[0],
-                out_channels=128,
+                out_channels=2*128,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -92,7 +92,7 @@ class BasicModel(torch.nn.Module):
 
             # nn.BatchNorm2d(128),
             nn.Conv2d(
-                in_channels=128,
+                in_channels=2*128,
                 out_channels=self.output_channels[1],
                 kernel_size=self.conv_kernel,
                 stride=2,
@@ -106,7 +106,7 @@ class BasicModel(torch.nn.Module):
 
             nn.Conv2d(
                 in_channels=self.output_channels[1],
-                out_channels=256,
+                out_channels=2*256,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -116,7 +116,7 @@ class BasicModel(torch.nn.Module):
 
             # nn.BatchNorm2d(256),
             nn.Conv2d(
-                in_channels=256,
+                in_channels=2*256,
                 out_channels=self.output_channels[2],
                 kernel_size=self.conv_kernel,
                 stride=2,
@@ -131,7 +131,7 @@ class BasicModel(torch.nn.Module):
             # nn.BatchNorm2d(self.output_channels[2]),
             nn.Conv2d(
                 in_channels=self.output_channels[2],
-                out_channels=128,
+                out_channels=2*128,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -141,7 +141,7 @@ class BasicModel(torch.nn.Module):
 
             # nn.BatchNorm2d(128),
             nn.Conv2d(
-                in_channels=128,
+                in_channels=2*128,
                 out_channels=self.output_channels[3],
                 kernel_size=self.conv_kernel,
                 stride=2,
@@ -156,7 +156,7 @@ class BasicModel(torch.nn.Module):
             # nn.BatchNorm2d(output_channels[3]),
             nn.Conv2d(
                 in_channels=self.output_channels[3],
-                out_channels=128,
+                out_channels=2*128,
                 kernel_size=self.conv_kernel,
                 stride=1,
                 padding=self.padding
@@ -166,7 +166,7 @@ class BasicModel(torch.nn.Module):
 
             # nn.BatchNorm2d(128),
             nn.Conv2d(
-                in_channels=128,
+                in_channels=2*128,
                 out_channels=self.output_channels[4],
                 kernel_size=self.conv_kernel,
                 stride=2,
