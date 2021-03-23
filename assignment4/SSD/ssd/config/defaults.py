@@ -87,7 +87,7 @@ cfg.SOLVER.WEIGHT_DECAY = 5e-4
 # ---------------------------------------------------------------------------- #
 cfg.TEST = CN()
 cfg.TEST.NMS_THRESHOLD = 0.45
-cfg.TEST.CONFIDENCE_THRESHOLD = 0.001  # 0.01
+cfg.TEST.CONFIDENCE_THRESHOLD = 0.01
 cfg.TEST.MAX_PER_CLASS = -1
 cfg.TEST.MAX_PER_IMAGE = 100
 cfg.TEST.BATCH_SIZE = 10
