@@ -255,6 +255,8 @@ class BasicModel(torch.nn.Module):
         out_features.append(self.backbone_5(out_features[-1]))
         out_features.append(self.backbone_6(out_features[-1]))
 
+        out_features = nn.ModuleList(out_features)
+
         for idx, feature in enumerate(out_features):
             w, h = self.output_feature_shape[idx]
             expected_shape = (self.output_channels[idx], h, w)
