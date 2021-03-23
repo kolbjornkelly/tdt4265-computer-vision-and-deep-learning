@@ -200,10 +200,8 @@ class BasicModel(torch.nn.Module):
                 in_channels=128,
                 out_channels=self.output_channels[5],
                 kernel_size=self.conv_kernel,
-                # TODO stride was 2
-                stride=1,
-                # padding=self.padding
-                padding=2
+                stride=2,
+                padding=self.padding
             )
         )
 
