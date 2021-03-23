@@ -25,11 +25,13 @@ class VOCDataset(torch.utils.data.Dataset):
         self.split = split
         self.transform = transform
         self.target_transform = target_transform
-        image_sets_file = os.path.join(self.data_dir, "ImageSets", "Main", "%s.txt" % self.split)
+        image_sets_file = os.path.join(
+            self.data_dir, "ImageSets", "Main", "%s.txt" % self.split)
         self.ids = VOCDataset._read_image_ids(image_sets_file)
         self.keep_difficult = keep_difficult
 
-        self.class_dict = {class_name: i for i, class_name in enumerate(self.class_names)}
+        self.class_dict = {class_name: i for i,
+                           class_name in enumerate(self.class_names)}
 
     def __getitem__(self, index):
         image_id = self.ids[index]
@@ -64,7 +66,8 @@ class VOCDataset(torch.utils.data.Dataset):
         return ids
 
     def _get_annotation(self, image_id):
-        annotation_file = os.path.join(self.data_dir, "Annotations", "%s.xml" % image_id)
+        annotation_file = os.path.join(
+            self.data_dir, "Annotations", "%s.xml" % image_id)
         objects = ET.parse(annotation_file).findall("object")
         boxes = []
         labels = []
@@ -80,7 +83,8 @@ class VOCDataset(torch.utils.data.Dataset):
             boxes.append([x1, y1, x2, y2])
             labels.append(self.class_dict[class_name])
             is_difficult_str = obj.find('difficult').text
-            is_difficult.append(int(is_difficult_str) if is_difficult_str else 0)
+            is_difficult.append(int(is_difficult_str)
+                                if is_difficult_str else 0)
 
         return (np.array(boxes, dtype=np.float32),
                 np.array(labels, dtype=np.int64),
@@ -88,14 +92,17 @@ class VOCDataset(torch.utils.data.Dataset):
 
     def get_img_info(self, index):
         img_id = self.ids[index]
-        annotation_file = os.path.join(self.data_dir, "Annotations", "%s.xml" % img_id)
+        annotation_file = os.path.join(
+            self.data_dir, "Annotations", "%s.xml" % img_id)
         anno = ET.parse(annotation_file).getroot()
         size = anno.find("size")
-        im_info = tuple(map(int, (size.find("height").text, size.find("width").text)))
+        im_info = tuple(
+            map(int, (size.find("height").text, size.find("width").text)))
         return {"height": im_info[0], "width": im_info[1]}
 
     def _read_image(self, image_id):
-        image_file = os.path.join(self.data_dir, "JPEGImages", "%s.jpg" % image_id)
+        image_file = os.path.join(
+            self.data_dir, "JPEGImages", "%s.jpg" % image_id)
         image = Image.open(image_file).convert("RGB")
         image = np.array(image)
         return image
