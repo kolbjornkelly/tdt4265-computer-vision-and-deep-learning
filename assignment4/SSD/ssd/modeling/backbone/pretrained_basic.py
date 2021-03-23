@@ -51,20 +51,8 @@ class BasicModel(torch.nn.Module):
             shape(-1, output_channels[0], 38, 38),
         """
 
-        out_features = []
+        out_features = self.model(x)
         # Feed through network
         #backbone0 = self.backbone_0(x)
-        out_features.append(self.backbone_1(x))
-        out_features.append(self.backbone_2(out_features[-1]))
-        out_features.append(self.backbone_3(out_features[-1]))
-        out_features.append(self.backbone_4(out_features[-1]))
-        out_features.append(self.backbone_5(out_features[-1]))
 
-        out_features.append(self.backbone_6(out_features[-1]))
-
-        for idx, feature in enumerate(out_features):
-            w, h = self.output_feature_shape[idx]
-            expected_shape = (self.output_channels[idx], h, w)
-            assert feature.shape[1:] == expected_shape, \
-                f"Expected shape: {expected_shape}, got: {feature.shape[1:]} at output IDX: {idx}"
         return tuple(out_features)
