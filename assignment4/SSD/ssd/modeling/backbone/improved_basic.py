@@ -189,7 +189,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.conv_kernel,
                 # TODO stride was 2
                 stride=1,
-                padding=self.padding
+                # padding=self.padding
+                padding=2
             )
         )
 
