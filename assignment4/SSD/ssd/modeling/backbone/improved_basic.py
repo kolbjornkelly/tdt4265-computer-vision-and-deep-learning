@@ -64,7 +64,7 @@ class BasicModel(torch.nn.Module):
                 padding=self.padding
             ),
 
-            nn.BatchNorm2d(64),
+            nn.BatchNorm2d(2*64),
             nn.ReLU(),
 
 
@@ -87,7 +87,7 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128),
+            nn.BatchNorm2d(2*128),
             nn.ReLU(),
 
             # nn.BatchNorm2d(128),
@@ -111,7 +111,7 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(256),
+            nn.BatchNorm2d(2*256),
             nn.ReLU(),
 
             # nn.BatchNorm2d(256),
@@ -136,7 +136,7 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128),
+            nn.BatchNorm2d(2*128),
             nn.ReLU(),
 
             # nn.BatchNorm2d(128),
@@ -161,7 +161,7 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=self.padding
             ),
-            nn.BatchNorm2d(128),
+            nn.BatchNorm2d(2*128),
             nn.ReLU(),
 
             # nn.BatchNorm2d(128),
