@@ -62,7 +62,8 @@ class BasicModel(torch.nn.Module):
             ),
             nn.MaxPool2d(
                 kernel_size=self.pool_kernel,
-                stride=self.pool_stride
+                stride=1
+                # stride=self.pool_stride
             ),
             nn.ReLU(),
             # nn.Dropout(0.1),
@@ -79,12 +80,25 @@ class BasicModel(torch.nn.Module):
             ),
             nn.MaxPool2d(
                 kernel_size=self.pool_kernel,
-                stride=self.pool_stride
+                stride=1
+                # stride=self.pool_stride
             ),
             nn.ReLU(),
             # nn.Dropout(0.1),
 
-            # TODO: ADD STUFF BACK HERE!
+            nn.Conv2d(
+                in_channels=64,
+                out_channels=64,
+                kernel_size=2,
+                # kernel_size=self.conv_kernel,
+                stride=1,
+                padding=4,
+                # padding=2
+                # padding=self.padding
+            ),
+
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
 
 
             nn.Conv2d(
