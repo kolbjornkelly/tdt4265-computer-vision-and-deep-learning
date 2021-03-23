@@ -36,7 +36,7 @@ class BasicModel(torch.nn.Module):
                 stride=1,
                 padding=1
             ),
-            nn.BatchNorm2d(num_features=num_filters),
+            nn.BatchNorm2d(num_features=32),
             nn.ReLU(),
 
             nn.Conv2d(
