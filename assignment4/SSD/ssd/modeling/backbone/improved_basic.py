@@ -27,9 +27,31 @@ class BasicModel(torch.nn.Module):
         self.padding = 1
         self.pool_stride = 2
 
-        self.backbone_1 = nn.Sequential(
+        self.backbone_0 = nn.Sequential(
+            nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(
                 in_channels=image_channels,
+                out_channels=32,
+                kernel_size=3,
+                stride=1,
+                padding=1
+            ),
+            nn.BatchNorm2d(num_features=num_filters),
+            nn.ReLU(),
+
+            nn.Conv2d(
+                in_channels=32,
+                out_channels=64,
+                kernel_size=3,
+                stride=1,
+                padding=1
+            ),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+
+        self.backbone_1 = nn.Sequential(
+            nn.Conv2d(
+                in_channels=64,
                 out_channels=32,
                 kernel_size=self.conv_kernel,
                 stride=1,
@@ -40,6 +62,7 @@ class BasicModel(torch.nn.Module):
                 stride=self.pool_stride
             ),
             nn.ReLU(),
+            # nn.Dropout(0.1),
             nn.Conv2d(
                 in_channels=32,
                 out_channels=64,
@@ -52,6 +75,7 @@ class BasicModel(torch.nn.Module):
                 stride=self.pool_stride
             ),
             nn.ReLU(),
+            # nn.Dropout(0.1),
             nn.Conv2d(
                 in_channels=64,
                 out_channels=64,
@@ -210,12 +234,12 @@ class BasicModel(torch.nn.Module):
         out_features = []
         # Feed through network
         #backbone0 = self.backbone_0(x)
-        out_features.append(self.backbone_1(x))
+        out_features.append(self.backbone_0(x))
+        out_features.append(self.backbone_1(out_features[-1]))
         out_features.append(self.backbone_2(out_features[-1]))
         out_features.append(self.backbone_3(out_features[-1]))
         out_features.append(self.backbone_4(out_features[-1]))
         out_features.append(self.backbone_5(out_features[-1]))
-
         out_features.append(self.backbone_6(out_features[-1]))
 
         for idx, feature in enumerate(out_features):
