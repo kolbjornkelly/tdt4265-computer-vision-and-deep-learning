@@ -25,7 +25,7 @@ cfg.MODEL.BACKBONE.INPUT_CHANNELS = 3
 # -----------------------------------------------------------------------------
 cfg.MODEL.PRIORS = CN()
 # X, Y
-cfg.MODEL.PRIORS.FEATURE_MAPS = [[76, 76], [38, 38], [
+cfg.MODEL.PRIORS.FEATURE_MAPS = [[77, 77], [38, 38], [
     19, 19], [10, 10], [5, 5], [3, 3], [1, 1]]
 # X, Y
 cfg.MODEL.PRIORS.STRIDES = [[4, 4], [8, 8], [16, 16], [
