@@ -15,8 +15,8 @@ def build_transforms(cfg, is_train=True, augment=False):
             # RandomSampleCrop(),
             SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
             # RandomMirror(),
+            transforms.RandomCrop(cfg.INPUT.IMAGE_SIZE),
             ToTensor(),
-            transforms.RandomCrop(cfg.INPUT.IMAGE_SIZE)
         ]
     elif is_train:
         transform = [

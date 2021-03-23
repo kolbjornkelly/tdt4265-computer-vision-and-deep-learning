@@ -4,7 +4,7 @@ cfg = CN()
 
 cfg.MODEL = CN()
 # match default boxes to any ground truth with jaccard overlap higher than a threshold (0.5)
-cfg.MODEL.THRESHOLD = 0.5
+cfg.MODEL.THRESHOLD = 0.6  # 0.5
 cfg.MODEL.NUM_CLASSES = 21
 # Hard negative mining
 cfg.MODEL.NEG_POS_RATIO = 3
@@ -31,7 +31,7 @@ cfg.MODEL.PRIORS.FEATURE_MAPS = [[38, 38], [
 cfg.MODEL.PRIORS.STRIDES = [[8, 8], [16, 16], [
     32, 32], [64, 64], [100, 100], [300, 300]]
 # X, Y
-cfg.MODEL.PRIORS.MIN_SIZES = [[30, 30], [60, 60], [
+cfg.MODEL.PRIORS.MIN_SIZES = [[15, 15], [60, 60], [
     111, 111], [162, 162], [213, 213], [264, 264]]
 # X, Y
 cfg.MODEL.PRIORS.MAX_SIZES = [[60, 60], [111, 111], [
