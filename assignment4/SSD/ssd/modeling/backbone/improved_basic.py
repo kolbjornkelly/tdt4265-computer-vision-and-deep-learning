@@ -85,7 +85,7 @@ class BasicModel(torch.nn.Module):
             nn.Conv2d(
                 in_channels=64,
                 out_channels=64,
-                kernel_size=1,
+                kernel_size=2,
                 # kernel_size=self.conv_kernel,
                 stride=1,
                 padding=4,
@@ -98,7 +98,7 @@ class BasicModel(torch.nn.Module):
             nn.Conv2d(
                 in_channels=64,
                 out_channels=self.output_channels[1],
-                kernel_size=1,
+                kernel_size=3,
                 # kernel_size=self.conv_kernel,
                 stride=1,
                 # stride=2,
