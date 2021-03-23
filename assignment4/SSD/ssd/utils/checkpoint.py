@@ -5,7 +5,7 @@ from ssd.utils.model_zoo import cache_url
 
 
 class CheckPointer:
-    _last_checkpoint_name = 'dropout2.txt'
+    _last_checkpoint_name = 'conservative.txt'
 
     def __init__(self,
                  model,
