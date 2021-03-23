@@ -34,8 +34,7 @@ class BasicModel(torch.nn.Module):
                 out_channels=32,
                 kernel_size=3,
                 stride=1,
-                padding=4,
-                # padding=2
+                padding=2
             ),
             nn.BatchNorm2d(num_features=32),
             nn.ReLU(),
@@ -57,7 +56,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=1,
                 # kernel_size=self.conv_kernel,
                 stride=1,
-                padding=2
+                padding=4,
+                # padding=2
                 # padding=self.padding
             ),
             nn.MaxPool2d(
