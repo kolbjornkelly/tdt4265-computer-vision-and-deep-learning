@@ -27,40 +27,6 @@ class BasicModel(torch.nn.Module):
         self.padding = 1
         self.pool_stride = 2
 
-        self.backbone_0 = nn.Sequential(
-            nn.Conv2d(
-                in_channels=image_channels,
-                out_channels=32,
-                kernel_size=self.conv_kernel,
-                stride=1,
-                padding=self.padding
-            ),
-            nn.MaxPool2d(
-                kernel_size=self.pool_kernel,
-                stride=self.pool_stride
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=32,
-                out_channels=64,
-                kernel_size=self.conv_kernel,
-                stride=1,
-                padding=self.padding
-            ),
-            nn.MaxPool2d(
-                kernel_size=self.pool_kernel,
-                stride=self.pool_stride
-            ),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels=64,
-                out_channels=64,
-                kernel_size=self.conv_kernel,
-                stride=1,
-                padding=self.padding
-            ),
-        )
-
         self.backbone_1 = nn.Sequential(
             nn.Conv2d(
                 in_channels=image_channels,
@@ -73,6 +39,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.pool_kernel,
                 stride=self.pool_stride
             ),
+            nn.Dropout(0.7),
             nn.ReLU(),
             nn.Conv2d(
                 in_channels=32,

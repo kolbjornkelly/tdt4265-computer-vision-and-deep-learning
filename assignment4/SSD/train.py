@@ -46,8 +46,8 @@ def start_train(cfg):
     )
     """
     # Use ADAM optimizer and dynamic learning rate
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
-    scheduler = StepLR(optimizer, step_size=500, gamma=0.5)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.003)
+    scheduler = StepLR(optimizer, step_size=500, gamma=0.9)
 
     arguments = {"iteration": 0}
     save_to_disk = True
