@@ -64,7 +64,7 @@ class BasicModel(torch.nn.Module):
                 padding=self.padding
             ),
 
-            nn.BatchNorm2d(2*64),
+            nn.BatchNorm2d(4*64),
             nn.ReLU(),
 
 
