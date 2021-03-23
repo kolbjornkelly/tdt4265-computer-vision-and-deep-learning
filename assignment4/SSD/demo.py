@@ -4,7 +4,7 @@ import tqdm
 from PIL import Image
 from vizer.draw import draw_boxes
 from ssd.config.defaults import cfg
-from ssd.data.datasets import VOCDataset, MNISTDetection
+from ssd.data.datasets import VOCDataset, MNISTDetection, TDT4265Dataset
 import argparse
 import numpy as np
 from ssd import torch_utils
@@ -17,8 +17,8 @@ from ssd.utils.checkpoint import CheckPointer
 def run_demo(cfg, ckpt, score_threshold, images_dir: pathlib.Path, output_dir: pathlib.Path, dataset_type):
     if dataset_type == "voc":
         class_names = VOCDataset.class_names
-    elif dataset_type == "mnist": 
-        class_names = MNISTDetection.class_names 
+    elif dataset_type == "mnist":
+        class_names = MNISTDetection.class_names
         class_names = TDT4265Dataset.class_names
     else:
         raise NotImplementedError('Not implemented now.')
@@ -30,7 +30,8 @@ def run_demo(cfg, ckpt, score_threshold, images_dir: pathlib.Path, output_dir: p
     weight_file = ckpt if ckpt else checkpointer.get_checkpoint_file()
     print('Loaded weights from {}'.format(weight_file))
 
-    image_paths = list(images_dir.glob("*.png")) + list(images_dir.glob("*.jpg"))
+    image_paths = list(images_dir.glob("*.png")) + \
+        list(images_dir.glob("*.jpg"))
 
     output_dir.mkdir(exist_ok=True, parents=True)
 
@@ -70,10 +71,13 @@ def main():
         help="path to config file",
         type=str,
     )
-    parser.add_argument("--ckpt", type=str, default=None, help="Trained weights.")
+    parser.add_argument("--ckpt", type=str, default=None,
+                        help="Trained weights.")
     parser.add_argument("--score_threshold", type=float, default=0.7)
-    parser.add_argument("--images_dir", default='demo/voc', type=str, help='Specify a image dir to do prediction.')
-    parser.add_argument("--dataset_type", default="voc", type=str, help='Specify dataset type. Currently support voc and coco.')
+    parser.add_argument("--images_dir", default='demo/voc',
+                        type=str, help='Specify a image dir to do prediction.')
+    parser.add_argument("--dataset_type", default="voc", type=str,
+                        help='Specify dataset type. Currently support voc and coco.')
 
     parser.add_argument(
         "opts",
