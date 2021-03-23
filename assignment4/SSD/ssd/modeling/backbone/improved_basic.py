@@ -66,7 +66,7 @@ class BasicModel(torch.nn.Module):
             ),
             nn.ReLU(),
             # nn.Dropout(0.1),
-            '''
+
             nn.Conv2d(
                 in_channels=32,
                 out_channels=64,
@@ -83,20 +83,10 @@ class BasicModel(torch.nn.Module):
             ),
             nn.ReLU(),
             # nn.Dropout(0.1),
-            '''
-            nn.Conv2d(
-                in_channels=64,
-                out_channels=64,
-                kernel_size=2,
-                # kernel_size=self.conv_kernel,
-                stride=1,
-                padding=4,
-                # padding=2
-                # padding=self.padding
-            ),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            # nn.BatchNorm2d(64),
+
+            # TODO: ADD STUFF BACK HERE!
+
+
             nn.Conv2d(
                 in_channels=64,
                 out_channels=self.output_channels[1],
