@@ -5,7 +5,7 @@ from ssd.utils.model_zoo import cache_url
 
 
 class CheckPointer:
-    _last_checkpoint_name = 'extra_layer1_slow.txt'
+    _last_checkpoint_name = 'extra_layer1_altered.txt'
 
     def __init__(self,
                  model,
