@@ -56,7 +56,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=3,
                 # kernel_size=self.conv_kernel,
                 stride=1,
-                padding=1,
+                padding=0,
                 # padding=2
                 # padding=self.padding
             ),
@@ -74,7 +74,7 @@ class BasicModel(torch.nn.Module):
                 kernel_size=3,
                 # kernel_size=self.conv_kernel,
                 stride=1,
-                padding=1,
+                padding=0,
                 # padding=2
                 # padding=self.padding
             ),
