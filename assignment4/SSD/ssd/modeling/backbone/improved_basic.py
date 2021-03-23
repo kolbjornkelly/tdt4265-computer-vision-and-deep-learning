@@ -53,9 +53,11 @@ class BasicModel(torch.nn.Module):
             nn.Conv2d(
                 in_channels=self.output_channels[0],
                 out_channels=32,
-                kernel_size=self.conv_kernel,
+                kernel_size=1,
+                # kernel_size=self.conv_kernel,
                 stride=1,
-                padding=self.padding
+                padding=2
+                # padding=self.padding
             ),
             nn.MaxPool2d(
                 kernel_size=self.pool_kernel,
