@@ -5,7 +5,7 @@ from ssd.utils.model_zoo import cache_url
 
 
 class CheckPointer:
-    _last_checkpoint_name = 'scheduler_larger_network.txt'
+    _last_checkpoint_name = 'scheduler_tuned.txt'
 
     def __init__(self,
                  model,
