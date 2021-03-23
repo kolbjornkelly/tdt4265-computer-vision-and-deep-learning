@@ -72,7 +72,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=1,
                 # kernel_size=self.conv_kernel,
                 stride=1,
-                padding=2
+                padding=4,
+                # padding=2
                 # padding=self.padding
             ),
             nn.MaxPool2d(
@@ -87,7 +88,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=1,
                 # kernel_size=self.conv_kernel,
                 stride=1,
-                padding=2
+                padding=4,
+                # padding=2
                 # padding=self.padding
             ),
             nn.BatchNorm2d(64),
@@ -100,7 +102,8 @@ class BasicModel(torch.nn.Module):
                 # kernel_size=self.conv_kernel,
                 stride=1,
                 # stride=2,
-                padding=2,
+                padding=4,
+                # padding=2
                 # padding=self.padding
             )
         )
