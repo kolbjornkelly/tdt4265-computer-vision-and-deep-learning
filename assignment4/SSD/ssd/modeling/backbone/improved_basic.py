@@ -244,9 +244,8 @@ class BasicModel(torch.nn.Module):
             shape(-1, output_channels[0], 38, 38),
         """
 
-        out_features = []
+        out_features = nn.ParameterList()
         # Feed through network
-        #backbone0 = self.backbone_0(x)
         out_features.append(self.backbone_0(x))
         out_features.append(self.backbone_1(out_features[-1]))
         out_features.append(self.backbone_2(out_features[-1]))
