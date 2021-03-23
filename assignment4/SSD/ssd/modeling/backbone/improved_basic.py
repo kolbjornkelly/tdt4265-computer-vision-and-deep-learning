@@ -39,8 +39,8 @@ class BasicModel(torch.nn.Module):
                 kernel_size=self.pool_kernel,
                 stride=self.pool_stride
             ),
-            nn.Dropout(0.7),
             nn.ReLU(),
+            nn.Dropout(0.2),
             nn.Conv2d(
                 in_channels=32,
                 out_channels=64,
@@ -53,6 +53,7 @@ class BasicModel(torch.nn.Module):
                 stride=self.pool_stride
             ),
             nn.ReLU(),
+            nn.Dropout(0.2),
             nn.Conv2d(
                 in_channels=64,
                 out_channels=64,
