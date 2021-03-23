@@ -51,7 +51,7 @@ class BasicModel(torch.nn.Module):
 
         self.backbone_1 = nn.Sequential(
             nn.Conv2d(
-                in_channels=self.out_channels[0],
+                in_channels=self.output_channels[0],
                 out_channels=32,
                 kernel_size=self.conv_kernel,
                 stride=1,
