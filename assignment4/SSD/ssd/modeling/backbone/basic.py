@@ -177,7 +177,7 @@ class BasicModel(torch.nn.Module):
         where out_features[0] should have the shape:
             shape(-1, output_channels[0], 38, 38),
         """
-        # TODO: fjern denne kommentaren
+
         out_features = []
         # Feed through network
         out_features.append(self.backbone_1(x))

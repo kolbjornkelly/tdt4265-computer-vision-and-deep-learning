@@ -56,7 +56,7 @@ def calculate_precision(num_tp, num_fp, num_fn):
     Returns:
         float: value of precision
     """
-    # TODO: finn ut hvorfor FN er input her
+
     if (num_tp + num_fp > 0):
         return num_tp / (num_tp + num_fp)
     else:
@@ -171,25 +171,7 @@ def calculate_precision_recall_all_images(
     Returns:
         tuple: (precision, recall). Both float.
     """
-    """
-    precision = 0
-    recall = 0
 
-    # Loop over all images
-    for pred, gt in zip(all_prediction_boxes, all_gt_boxes):
-        # Compute data
-
-        data = calculate_individual_image_result(pred, gt, iou_threshold)
-        # Compute precision and recall
-        precision += calculate_precision(
-            data["true_pos"], data["false_pos"], data["false_neg"])
-        recall += calculate_recall(
-            data["true_pos"], data["false_pos"], data["false_neg"])
-
-    # Compute average
-    precision /= len(all_prediction_boxes)
-    recall /= len(all_prediction_boxes)
-    """
     tps = 0
     fps = 0
     fns = 0
@@ -234,7 +216,6 @@ def get_precision_recall_curve(
     # Instead of going over every possible confidence score threshold to compute the PR
     # curve, we will use an approximation
     confidence_thresholds = np.linspace(0, 1, 500)
-    # YOUR CODE HERE
 
     precisions = []
     recalls = []
@@ -259,28 +240,6 @@ def get_precision_recall_curve(
         # Append to final arrays
         precisions.append(precision)
         recalls.append(recall)
-        # TODO: Dette er den gamle versjonen:
-        #       Finn ut om noe herfra er bedre
-        """
-        # Loop over every image
-        for i in range(len(confidence_scores)):
-            conf_preds = []
-            # Loop over every prediction for the current image
-            for j in range(all_prediction_boxes[i].shape[0]):
-                if confidence_scores[i][j] > threshold:
-                    # Add prediction if confident
-                    conf_preds.append(all_prediction_boxes[i][j])
-            if (len(conf_preds) > 0):
-                preds.append(np.array(conf_preds))
-
-        if len(preds) > 0:
-            # Compute average precision and recall
-            precision, recall = calculate_precision_recall_all_images(
-                preds, all_gt_boxes, iou_threshold)
-            # Append to final arrays
-            precisions.append(precision)
-            recalls.append(recall)
-        """
     return np.array(precisions), np.array(recalls)
 
 
@@ -316,7 +275,6 @@ def calculate_mean_average_precision(precisions, recalls):
     """
     # Calculate the mean average precision given these recall levels.
     recall_levels = np.linspace(0, 1.0, 11)
-    # YOUR CODE HERE
 
     precision = 0
     for r in recall_levels:

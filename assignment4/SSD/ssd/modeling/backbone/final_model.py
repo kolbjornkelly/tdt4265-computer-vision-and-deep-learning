@@ -73,7 +73,6 @@ class BasicModel(torch.nn.Module):
 
         self.backbone_2 = nn.Sequential(
             nn.ReLU(),
-            # nn.BatchNorm2d(self.output_channels[0]),
             nn.Conv2d(
                 in_channels=self.output_channels[0],
                 out_channels=256,
