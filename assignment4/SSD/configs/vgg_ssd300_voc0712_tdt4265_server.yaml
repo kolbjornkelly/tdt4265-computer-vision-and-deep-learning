@@ -11,7 +11,7 @@ SOLVER:
   BATCH_SIZE: 16
   LR: 5e-4
 
-OUTPUT_DIR: "outputs/vgg_VOC"
+OUTPUT_DIR: "outputs/vgg_VOC_final"
 EVAL_STEP: 2500
 MODEL_SAVE_STEP: 2500
 DATASET_DIR: "/work/datasets/"
