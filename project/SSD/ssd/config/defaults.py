@@ -15,7 +15,9 @@ cfg.MODEL.SIZE_VARIANCE = 0.2
 # Backbone
 # ---------------------------------------------------------------------------- #
 cfg.MODEL.BACKBONE = CN()
-cfg.MODEL.BACKBONE.NAME = 'vgg'
+cfg.MODEL.BACKBONE.NAME = 'resNet101'
+# TODO: find out what this is supposed to be
+#cfg.MODEL.BACKBONE.OUT_CHANNELS = (256, 512, 1024, 2048, 256)
 cfg.MODEL.BACKBONE.OUT_CHANNELS = (512, 1024, 512, 256, 256, 256)
 cfg.MODEL.BACKBONE.PRETRAINED = True
 cfg.MODEL.BACKBONE.INPUT_CHANNELS = 3
@@ -25,7 +27,8 @@ cfg.MODEL.BACKBONE.INPUT_CHANNELS = 3
 # -----------------------------------------------------------------------------
 cfg.MODEL.PRIORS = CN()
 # X, Y 
-cfg.MODEL.PRIORS.FEATURE_MAPS = [[38, 38], [19, 19], [10, 10], [5, 5], [3, 3], [1, 1]]
+cfg.MODEL.PRIORS.FEATURE_MAPS = [[56, 56], [28, 28], [14, 14], [7, 7], [1, 1]]
+#cfg.MODEL.PRIORS.FEATURE_MAPS = [[38, 38], [19, 19], [10, 10], [5, 5], [3, 3], [1, 1]]
 # X, Y
 cfg.MODEL.PRIORS.STRIDES = [[8, 8], [16, 16], [32, 32], [64, 64], [100, 100], [300, 300]]
 # X, Y
