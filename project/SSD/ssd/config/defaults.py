@@ -1,5 +1,8 @@
 from yacs.config import CfgNode as CN
 
+# TODO: no changes should have been made here
+#       Move all of these to the .yaml config files
+
 cfg = CN()
 
 cfg.MODEL = CN()
@@ -16,9 +19,7 @@ cfg.MODEL.SIZE_VARIANCE = 0.2
 # ---------------------------------------------------------------------------- #
 cfg.MODEL.BACKBONE = CN()
 cfg.MODEL.BACKBONE.NAME = 'resNet101'
-# TODO: find out what this is supposed to be
-#cfg.MODEL.BACKBONE.OUT_CHANNELS = (256, 512, 1024, 2048, 256)
-cfg.MODEL.BACKBONE.OUT_CHANNELS = (512, 1024, 512, 256, 256, 256)
+cfg.MODEL.BACKBONE.OUT_CHANNELS = (256, 512, 1024, 2048, 256)
 cfg.MODEL.BACKBONE.PRETRAINED = True
 cfg.MODEL.BACKBONE.INPUT_CHANNELS = 3
 
@@ -30,13 +31,13 @@ cfg.MODEL.PRIORS = CN()
 cfg.MODEL.PRIORS.FEATURE_MAPS = [[150, 150], [150, 150], [150, 150], [75, 75], [75, 75], [38, 38], [19, 19], [10,10], [1, 1]]
 #cfg.MODEL.PRIORS.FEATURE_MAPS = [[38, 38], [19, 19], [10, 10], [5, 5], [3, 3], [1, 1]]
 # X, Y
-cfg.MODEL.PRIORS.STRIDES = [[8, 8], [16, 16], [32, 32], [64, 64], [100, 100], [300, 300],[400, 400], [450, 450], [500, 500], [500, 500]]
+cfg.MODEL.PRIORS.STRIDES = [[8, 8], [16, 16], [32, 32], [64, 64], [100, 100], [300, 300], [300, 300], [300, 300], [300, 300], [300, 300]]
 #cfg.MODEL.PRIORS.STRIDES = [[8, 8], [16, 16], [32, 32], [64, 64], [100, 100], [300, 300]]
 # X, Y
-cfg.MODEL.PRIORS.MIN_SIZES = [[30, 30], [60, 60], [111, 111], [162, 162], [213, 213], [264, 264], [312, 312], [364, 364], [380, 380], [380, 380]]
+cfg.MODEL.PRIORS.MIN_SIZES = [[30, 30], [60, 60], [111, 111], [162, 162], [213, 213], [264, 264], [264, 264], [264, 264], [264, 264], [264, 264]]
 # cfg.MODEL.PRIORS.MIN_SIZES = [[30, 30], [60, 60], [111, 111], [162, 162], [213, 213], [264, 264]]
 # X, Y
-cfg.MODEL.PRIORS.MAX_SIZES = [[60, 60], [111, 111], [162, 162], [213, 213], [264, 264], [315, 315], [360, 360], [380, 380], [400, 400], [420, 420]]
+cfg.MODEL.PRIORS.MAX_SIZES = [[60, 60], [111, 111], [162, 162], [213, 213], [264, 264], [315, 315], [315, 315], [315, 315], [315, 315], [315, 315]]
 #cfg.MODEL.PRIORS.MAX_SIZES = [[60, 60], [111, 111], [162, 162], [213, 213], [264, 264], [315, 315]]
 cfg.MODEL.PRIORS.ASPECT_RATIOS = [[2], [2, 3], [2, 3], [2, 3], [2], [2], [2], [2], [2], [2]]
 #cfg.MODEL.PRIORS.ASPECT_RATIOS = [[2], [2, 3], [2, 3], [2, 3], [2], [2]]
