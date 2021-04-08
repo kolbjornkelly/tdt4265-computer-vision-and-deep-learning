@@ -26,12 +26,11 @@ class ResNet101(nn.Module):
         # Define remaining layers
         # TODO: see if we can add one more layer
         layers = nn.Sequential(*(list(self.model.children())[1:8]))
-        idx_counter = 1
+
         # Pass through remaining layers
         for layer in layers:
             out_features.append(layer(out_features[-1]))
-            print("Layer counter: ", idx_counter)
-            idx_counter += 1
+
         
         # Ensure correct shapes
         for idx, feature in enumerate(out_features):
