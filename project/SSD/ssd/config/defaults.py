@@ -1,8 +1,5 @@
 from yacs.config import CfgNode as CN
 
-# TODO: no changes should have been made here
-#       Move all of these to the .yaml config files
-
 cfg = CN()
 
 cfg.MODEL = CN()
