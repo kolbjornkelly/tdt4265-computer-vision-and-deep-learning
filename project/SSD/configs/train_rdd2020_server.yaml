@@ -73,5 +73,5 @@ SOLVER:
   GAMMA: 0.1
   BATCH_SIZE: 16
   LR: 1e-3
-OUTPUT_DIR: "outputs/rdd2020_resnet_v1"
+OUTPUT_DIR: "outputs/rdd2020_resnet_v2"
 DATASET_DIR: "/work/datasets"
