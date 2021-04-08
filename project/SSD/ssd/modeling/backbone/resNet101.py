@@ -12,19 +12,17 @@ class ResNet101(nn.Module):
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
 
+        # Freeze all parameters
+        for param in self.model.parameters():  
+            param.requires_grad = False
+
     def forward(self, x):
+
+        # TODO: Add documentation
         out_features = []
-        """
-        out_features.append(self.model.conv1(x))
-        out_features.append(self.model.conv2_x(out_features[-1]))
-        out_features.append(self.model.conv3_x(out_features[-1]))
-        out_features.append(self.model.conv4_x(out_features[-1]))
-        out_features.append(self.model.conv5_x(out_features[-1]))
-        """
         # Pass through first layer
         out_features.append(self.model.conv1(x))
         # Define remaining layers
-        # TODO: see if we can add one more layer
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
         # Pass through remaining layers
