@@ -26,6 +26,7 @@ class ResNet101(nn.Module):
         # Define remaining layers
         layers = nn.Sequential(*(list(self.model.children())[1:]))
         idx_counter = 1
+        # Pass through remaining layers
         for layer in layers:
             out_features.append(layer(out_features[-1]))
             print("Layer counter: ", idx_counter)

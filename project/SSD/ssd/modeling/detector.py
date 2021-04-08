@@ -42,5 +42,7 @@ def build_backbone(cfg):
             model.init_from_pretrain(state_dict)
         return model
     if backbone_name == "resnet101":
-        return(ResNet101(cfg))
+        model = ResNet101(cfg)
+        print("Model type: ", type(model))
+        return(model)
         
