@@ -41,6 +41,6 @@ def build_backbone(cfg):
                 "https://s3.amazonaws.com/amdegroot-models/vgg16_reducedfc.pth")
             model.init_from_pretrain(state_dict)
         return model
-    if backbone_name = "resnet101":
+    if backbone_name == "resnet101":
         return(ResNet101(cfg))
         
