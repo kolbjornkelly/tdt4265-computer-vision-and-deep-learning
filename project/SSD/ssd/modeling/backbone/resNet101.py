@@ -24,7 +24,7 @@ class ResNet101(nn.Module):
         # Pass through first layer
         out_features.append(self.model.conv1(x))
         # Define remaining layers
-        layers = nn.Sequential(*(list(self.model.children())[1:]))
+        layers = nn.Sequential(*(list(self.model.children())[1:8]))
         idx_counter = 1
         # Pass through remaining layers
         for layer in layers:
