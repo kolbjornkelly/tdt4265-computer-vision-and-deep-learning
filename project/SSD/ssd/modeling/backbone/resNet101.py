@@ -40,10 +40,11 @@ class ResNet101(nn.Module):
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
         for layer in layers:
+            idx_counter += 1
             x = layer(x)
             if idx_counter in layers_to_use:
                 out_features.append(x)
-            idx_counter += 1
+            
 
 
         
