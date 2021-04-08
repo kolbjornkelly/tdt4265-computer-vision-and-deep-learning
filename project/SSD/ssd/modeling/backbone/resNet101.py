@@ -20,6 +20,8 @@ class ResNet101(nn.Module):
 
         # TODO: Add documentation
         out_features = []
+
+        # Old implementation, using features from all layers
         """
         # Pass through first layer
         out_features.append(self.model.conv1(x))
@@ -33,9 +35,10 @@ class ResNet101(nn.Module):
             if idx_counter == 
             out_features.append(layer(out_features[-1]))
         """
+        # New implementation, using features from some layers
         x = self.model.conv1(x)
         idx_counter = 0
-        layers_to_use = [2,4,5,6,7,8]
+        layers_to_use = [4,5,6,7,8]
 
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
