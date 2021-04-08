@@ -25,7 +25,7 @@ class ResNet101(nn.Module):
         out_features.append(self.model.conv1(x))
         # Define remaining layers
         # TODO: see if we can add one more layer
-        layers = nn.Sequential(*(list(self.model.children())[1:8]))
+        layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
         # Pass through remaining layers
         for layer in layers:
