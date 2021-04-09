@@ -35,9 +35,9 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
         print("Generating augmented dataset")
         augmentation_transforms = build_transforms(
             cfg, is_train=is_train, augment=augment)
-        augmented_datasets = build_dataset(
+        datasets = build_dataset(
             cfg.DATASET_DIR,
-            dataset_list, transform=augmentation_transform,
+            dataset_list, transform=augmentation_transforms,
             target_transform=target_transform, is_train=is_train)
 
     else:
