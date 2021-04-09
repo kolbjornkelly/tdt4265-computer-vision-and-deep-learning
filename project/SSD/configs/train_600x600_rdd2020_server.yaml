@@ -1,0 +1,29 @@
+MODEL:
+  NUM_CLASSES: 5
+  THRESHOLD: 0.9
+  BACKBONE:
+    NAME: "resNet101"
+    PRETRAINED: True
+    OUT_CHANNELS: [256, 512, 1024, 2048, 2048]
+    INPUT_CHANNELS: 3
+  PRIORS:
+    FEATURE_MAPS: [[150, 150], [76, 76], [38, 38], [20, 20], [2, 2]]
+    STRIDES: [[16, 16], [32, 32], [64, 64], [128, 128], [200, 200], [400, 400]]
+    MIN_SIZES:
+      [[60, 60], [120, 120], [222, 222], [324, 324], [428, 428], [528, 528]]
+    MAX_SIZES:
+      [[120, 120], [222, 222], [324, 324], [426, 426], [528, 528], [600, 600]]
+    ASPECT_RATIOS: [[2], [2, 3], [2, 3], [2, 3], [2], [2]]
+    BOXES_PER_LOCATION: [4, 6, 6, 6, 4, 4]
+INPUT:
+  IMAGE_SIZE: [600, 600]
+DATASETS:
+  TRAIN: ("rdd2020_train",)
+  TEST: ("rdd2020_val", )
+SOLVER:
+  MAX_ITER: 120000
+  GAMMA: 0.1
+  BATCH_SIZE: 16
+  LR: 1e-3
+OUTPUT_DIR: "outputs/rdd2020_augmented_resnet_v0"
+DATASET_DIR: "/work/datasets"
