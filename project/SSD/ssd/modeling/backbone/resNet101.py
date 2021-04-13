@@ -12,6 +12,7 @@ class ResNet101(nn.Module):
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
 
+        # The following code can freeze layers
         """
         # Freeze all parameters
         for param in self.model.parameters():  
