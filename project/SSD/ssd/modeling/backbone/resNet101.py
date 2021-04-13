@@ -12,6 +12,7 @@ class ResNet101(nn.Module):
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
 
+        """
         # Freeze all parameters
         for param in self.model.parameters():  
             param.requires_grad = False
@@ -20,6 +21,7 @@ class ResNet101(nn.Module):
             param.requires_grad = True 
         for param in self.model.layer4.parameters():
             param.requires_grad = True 
+        """
 
     def forward(self, x):
 
