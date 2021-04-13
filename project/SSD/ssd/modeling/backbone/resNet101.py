@@ -15,6 +15,11 @@ class ResNet101(nn.Module):
         # Freeze all parameters
         for param in self.model.parameters():  
             param.requires_grad = False
+        # Unfreeze some parameters
+        for param in self.model.fc.parameters(): 
+            param.requires_grad = True 
+        for param in self.model.layer4.parameters():
+            param.requires_grad = True 
 
     def forward(self, x):
 
@@ -38,7 +43,8 @@ class ResNet101(nn.Module):
         # New implementation, using features from some layers
         x = self.model.conv1(x)
         idx_counter = 0
-        layers_to_use = [4,5,6,7,8]
+        # Removed: 4
+        layers_to_use = [5,6,7,8]
 
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
