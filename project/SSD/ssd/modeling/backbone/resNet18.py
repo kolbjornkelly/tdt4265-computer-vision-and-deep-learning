@@ -13,7 +13,7 @@ class ResNet18(nn.Module):
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
         self.model = torchvision.models.resnet18(pretrained=True)
 
-        self.model.fc = nn.Linear(512, 10)  # No need to apply softmax,
+        #self.model.fc = nn.Linear(512, 10)  # No need to apply softmax,
         # as this is done in nn.CrossEntropyLoss
 
         for param in self.model.parameters():  # Freeze all parameters
