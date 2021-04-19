@@ -7,11 +7,11 @@ import numpy as np
 class ResNet18(nn.Module):
 
     def __init__(self):
-         super().__init__()
-
+        super().__init__()
+        self.model = torchvision.models.resnet18(pretrained=True)
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
-        self.model = torchvision.models.resnet18(pretrained=True)
+        
 
         #self.model.fc = nn.Linear(512, 10)  # No need to apply softmax,
         # as this is done in nn.CrossEntropyLoss
