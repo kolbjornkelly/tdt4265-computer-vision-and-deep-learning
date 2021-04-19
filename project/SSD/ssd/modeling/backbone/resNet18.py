@@ -27,9 +27,6 @@ class ResNet18(nn.Module):
 
 
     def forward(self, x):
-        x = self.model(x)
-        return x
-    def forward(self, x):
         # TODO: Add documentation
 
         out_features = []
