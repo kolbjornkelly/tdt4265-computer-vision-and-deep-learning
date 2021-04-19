@@ -4,45 +4,35 @@ from torch import nn
 import numpy as np
 
 
-class ResNet101(nn.Module):
+class ResNet18(nn.Module):
 
-    def __init__(self, cfg):
-        super().__init__()
-        self.model = torchvision.models.resnet101(pretrained=True)
+    def __init__(self):
+         super().__init__()
+
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
+        self.model = torchvision.models.resnet18(pretrained=True)
 
-        # The following code can freeze layers
-        """
-        # Freeze all parameters
-        for param in self.model.parameters():  
+        self.model.fc = nn.Linear(512, 10)  # No need to apply softmax,
+        # as this is done in nn.CrossEntropyLoss
+
+        for param in self.model.parameters():  # Freeze all parameters
             param.requires_grad = False
-        # Unfreeze some parameters
-        for param in self.model.fc.parameters(): 
-            param.requires_grad = True 
-        for param in self.model.layer4.parameters():
-            param.requires_grad = True 
-        """
+        for param in self.model.fc.parameters():  # Unfreeze the last fully-connected
+            param.requires_grad = True  # layer
+        for param in self.model.layer4.parameters():  # Unfreeze the last 5 convolutional
+            param.requires_grad = True  # layers
+
 
     def forward(self, x):
-
+        x = self.model(x)
+        return x
+    def forward(self, x):
         # TODO: Add documentation
+        
         out_features = []
 
-        # Old implementation, using features from all layers
-        """
-        # Pass through first layer
-        out_features.append(self.model.conv1(x))
-        # Define remaining layers
-        layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
-        # Pass through remaining layers
-        idx_counter = 0
-        layers_to_use = []
-        for layer in layers:
-            if idx_counter == 
-            out_features.append(layer(out_features[-1]))
-        """
         # New implementation, using features from some layers
         x = self.model.conv1(x)
         idx_counter = 0
@@ -64,5 +54,3 @@ class ResNet101(nn.Module):
             assert feature.shape[1:] == expected_shape, \
                 f"Expected shape: {expected_shape}, got: {feature.shape[1:]} at output IDX: {idx}"
         return tuple(out_features)
-
-            
