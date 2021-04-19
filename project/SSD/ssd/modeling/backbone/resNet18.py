@@ -29,22 +29,19 @@ class ResNet18(nn.Module):
         return x
     def forward(self, x):
         # TODO: Add documentation
-        
+
         out_features = []
 
-
-        # New implementation, using features from some layers
         x = self.model.conv1(x)
         idx_counter = 0
-        # Removed: 4
-        layers_to_use = [5,6,7,8]
 
-        layers = nn.Sequential(*(list(self.model.children())[1:9]))
+        layers = nn.Sequential(*(list(self.model.children())[1:]))
 
+        feature_layers = [5,6,7,8]
         for layer in layers:
             idx_counter += 1
             x = layer(x)
-            if idx_counter in layers_to_use:
+            if idx_counter in feature_layers:
                 out_features.append(x)
             
         # Ensure correct shapes
