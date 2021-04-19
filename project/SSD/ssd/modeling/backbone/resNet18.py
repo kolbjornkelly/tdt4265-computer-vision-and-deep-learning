@@ -8,6 +8,7 @@ class ResNet18(nn.Module):
 
     def __init__(self, cfg):
         super().__init__()
+        print("Initializing backbone")
         self.model = torchvision.models.resnet18(pretrained=True)
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
