@@ -6,7 +6,7 @@ import numpy as np
 
 class ResNet18(nn.Module):
 
-    def __init__(self):
+    def __init__(self, cfg):
         super().__init__()
         self.model = torchvision.models.resnet18(pretrained=True)
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
