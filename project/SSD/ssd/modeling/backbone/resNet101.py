@@ -12,9 +12,17 @@ class ResNet101(nn.Module):
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
 
+        # The following code can freeze layers
+        """
         # Freeze all parameters
         for param in self.model.parameters():  
             param.requires_grad = False
+        # Unfreeze some parameters
+        for param in self.model.fc.parameters(): 
+            param.requires_grad = True 
+        for param in self.model.layer4.parameters():
+            param.requires_grad = True 
+        """
 
     def forward(self, x):
 
@@ -38,7 +46,8 @@ class ResNet101(nn.Module):
         # New implementation, using features from some layers
         x = self.model.conv1(x)
         idx_counter = 0
-        layers_to_use = [4,5,6,7,8]
+        # Removed: 4
+        layers_to_use = [5,6,7,8]
 
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
@@ -48,9 +57,6 @@ class ResNet101(nn.Module):
             if idx_counter in layers_to_use:
                 out_features.append(x)
             
-
-
-        
         # Ensure correct shapes
         for idx, feature in enumerate(out_features):
             w, h = self.output_feature_shape[idx]
