@@ -35,7 +35,7 @@ class ResNet18(nn.Module):
         x = self.model.conv1(x)
         idx_counter = 0
 
-        layers = nn.Sequential(*(list(self.model.children())[1:]))
+        layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
         feature_layers = [5,6,7,8]
         for layer in layers:
