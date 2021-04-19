@@ -18,8 +18,10 @@ class ResNet18(nn.Module):
 
         for param in self.model.parameters():  # Freeze all parameters
             param.requires_grad = False
+        """
         for param in self.model.fc.parameters():  # Unfreeze the last fully-connected
             param.requires_grad = True  # layer
+        """
         for param in self.model.layer4.parameters():  # Unfreeze the last 5 convolutional
             param.requires_grad = True  # layers
 
