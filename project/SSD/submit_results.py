@@ -70,7 +70,7 @@ def get_detections(cfg, ckpt):
 def dump_detections(cfg, detections, path):
     path.parent.mkdir(exist_ok=True, parents=True)
     with open(path, "w") as fp:
-        json.dump(detections, fp)
+        json.dump(detections, str(fp))
     print("Detections saved to:", path)
     print("Abolsute path:", path.absolute())
     print("Go to: https://tdt4265-annotering.idi.ntnu.no/submissions/ to submit your result")
