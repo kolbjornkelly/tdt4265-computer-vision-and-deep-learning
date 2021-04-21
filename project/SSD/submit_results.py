@@ -70,7 +70,7 @@ def get_detections(cfg, ckpt):
 def dump_detections(cfg, detections, path):
     path.parent.mkdir(exist_ok=True, parents=True)
     with open(path, "w") as fp:
-        json.dump(detections, str(fp))
+        json.dump(detections, fp)
     print("Detections saved to:", path)
     print("Abolsute path:", path.absolute())
     print("Go to: https://tdt4265-annotering.idi.ntnu.no/submissions/ to submit your result")
@@ -100,8 +100,8 @@ def main():
     detections = get_detections(
         cfg=cfg,
         ckpt=args.ckpt)
-    json_path = pathlib.Path(cfg.OUTPUT_DIR, "test_detected_boxes.json")
-    dump_detections(cfg, detections, json_path)
+    path = pathlib.Path(cfg.OUTPUT_DIR, "test_detected_boxes.json")
+    dump_detections(cfg, detections, path)
 
 
 if __name__ == '__main__':
