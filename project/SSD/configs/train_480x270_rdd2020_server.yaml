@@ -15,9 +15,9 @@ MODEL:
     #FEATURE_MAPS: [[120, 68], [60, 34], [30, 17], [15, 9], [1, 1]]
     STRIDES: [[13, 7], [26, 14], [51, 29], [102, 58], [160, 90]]
     #STRIDES: [[13, 7], [26, 14], [51, 29], [102, 58], [160, 90], [320, 180]]
-    MIN_SIZES: [[30, 20], [20, 30], [150, 100], [100, 150], [300, 200], [200, 300]]
+    MIN_SIZES: [[30, 30], [20, 30], [70, 20], [100, 50], [100, 150], [300, 200]]
     #MIN_SIZES:[[48, 30], [96, 54], [178, 100], [260, 146], [341, 192], [422, 238]]
-    MAX_SIZES: [[60, 40], [40, 60], [300, 200], [220, 300], [600, 400], [400, 600]]
+    MAX_SIZES: [[90, 90], [60, 180], [210, 60], [300, 150], [300, 450], [600, 400]]
     #MAX_SIZES:[[96, 54], [178, 100], [260, 146], [341, 192], [422, 238], [480, 243]]
     ASPECT_RATIOS: [[2], [2, 3], [2, 3], [2, 3], [2]]
     BOXES_PER_LOCATION: [4, 6, 6, 6, 4]
@@ -33,5 +33,5 @@ SOLVER:
   LR: 1e-3
 EVAL_STEP: 5000
 MODEL_SAVE_STEP: 5000
-OUTPUT_DIR: "outputs/rdd2020_resnet18_longitudinal_and_lateral_rectangles_priors"
+OUTPUT_DIR: "outputs/rdd2020_resnet18_small_squares_longitudinal_and_lateral_rectangles_priors"
 DATASET_DIR: "/work/datasets"
