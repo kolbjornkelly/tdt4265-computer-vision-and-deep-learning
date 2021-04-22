@@ -32,6 +32,7 @@ def create_feature_maps(cfg, ckpt):
     # TODO: clean up these loops
     images = []
     for im in dataset:
+        print("image length:", len(im))
         images.append(im)
         break
 
