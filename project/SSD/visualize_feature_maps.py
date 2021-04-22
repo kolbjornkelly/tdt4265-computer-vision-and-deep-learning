@@ -34,7 +34,7 @@ def create_feature_maps(cfg, ckpt):
     image = None
     for im in dataset:
         print("Image length:", len(im))
-        image = im
+        image = torch_utils.to_cuda(im)
         break
 
     print("Image 1:", image[0])
