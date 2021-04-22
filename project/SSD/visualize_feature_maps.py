@@ -18,7 +18,7 @@ def create_feature_maps(cfg, ckpt):
     model = torch_utils.to_cuda(model)
     checkpointer.load(ckpt, use_latest=ckpt is None)
 
-    dataset_list = cfg.DATASET.TEST
+    dataset_list = cfg.DATASETS.TEST
     dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False)
 
     images = dataset[1]
