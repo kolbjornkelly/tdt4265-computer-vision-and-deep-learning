@@ -42,7 +42,7 @@ def create_feature_maps(cfg, ckpt):
     print("Image shape ", images[0].size)
     """
     images = []
-    for i, (im, _) in enumerate(data_loader):
+    for i, (im, _, _) in enumerate(data_loader):
         images.append(im)
         break
 
