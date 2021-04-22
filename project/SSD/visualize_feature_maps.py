@@ -22,7 +22,7 @@ def create_feature_maps(cfg, ckpt):
     dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False)
     """
     data_loaders = make_data_loader(cfg, is_train=False)
-    #data_loader = data_loaders[0]
+    data_loader = data_loaders
     """
     print("Data loader type: ", type(data_loader))
     print("Data loader shape ", data_loader.size)
@@ -42,7 +42,7 @@ def create_feature_maps(cfg, ckpt):
     print("Image shape ", images[0].size)
     """
     images = []
-    for i, (im, _) in enumerate(data_loaders):
+    for i, (im, _) in enumerate(data_loader):
         images.append(im)
         break
 
