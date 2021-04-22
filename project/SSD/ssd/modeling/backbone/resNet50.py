@@ -37,7 +37,7 @@ class ResNet50(nn.Module):
 
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
-        feature_layers = [5,6,7,8]
+        feature_layers = [3,5,6,7,8]
         for layer in layers:
             idx_counter += 1
             x = layer(x)
