@@ -37,11 +37,13 @@ def create_feature_maps(cfg, ckpt):
         image = im
         break
 
+    features = model.backbone(image)
+    """
     features = []
     for image in images:
         features.append(model.backbone(image))
         break
-    
+    """
 
     return images, features
 
