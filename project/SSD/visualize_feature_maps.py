@@ -33,10 +33,10 @@ def create_feature_maps(cfg, ckpt):
     
     image = None
     for im in dataset:
-        print("image length:", len(im))
+        print("Image length:", len(im))
         image = im
         break
-    print("Image shape: ", image.shape)
+
     print("Image 1:", image[0])
     print("Image 2:", image[1])
     print("Image 3:", image[2])
