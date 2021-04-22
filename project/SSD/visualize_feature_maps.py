@@ -36,7 +36,10 @@ def create_feature_maps(cfg, ckpt):
         print("image length:", len(im))
         image = im
         break
-
+    print("Image shape: ", image.shape)
+    print("Image 1:", image[0])
+    print("Image 2:", image[1])
+    print("Image 3:", image[2])
     features = model.backbone(image)
     """
     features = []
