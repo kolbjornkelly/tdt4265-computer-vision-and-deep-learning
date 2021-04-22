@@ -29,5 +29,5 @@ SOLVER:
   LR: 1e-4
 EVAL_STEP: 5000
 MODEL_SAVE_STEP: 5000
-OUTPUT_DIR: "outputs/rdd2020_augmented_resnet18_300x300_ADAMv6"
+OUTPUT_DIR: "outputs/rdd2020_augmented_resnet18_300x300_ADAMv7"
 DATASET_DIR: "/work/datasets"
