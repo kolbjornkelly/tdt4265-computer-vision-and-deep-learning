@@ -21,7 +21,7 @@ def create_feature_maps(cfg, ckpt, num_visualizations):
     dataset_list = cfg.DATASET.TEST
     dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False):
 
-    images = dataset[0:num_visualizations]
+    images = dataset[1]
     features = []
     for image in images:
         features.append(model.backbone(image))
@@ -39,7 +39,7 @@ def visualize_feature_maps(images, features):
 
 
 
-def main(num_visualizations)
+def main()
     parser = argparse.ArgumentParser(description='SSD Visulization of Feature Maps')
     parser.add_argument(
         "config_file",
@@ -80,4 +80,4 @@ def main(num_visualizations)
     visualize_feature_maps(images,features)
 
 if __name__ == '__main__':
-    main(num_visualizations)
+    main()
