@@ -22,7 +22,7 @@ def create_feature_maps(cfg, ckpt):
     dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False)
     """
     data_loaders = make_data_loader(cfg, is_train=False)
-    data_loader = data_loader[0]
+    data_loader = data_loaders[0]
     dataset = data_loader.dataset
     
     images = dataset[1]
