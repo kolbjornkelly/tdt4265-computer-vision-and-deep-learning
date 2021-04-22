@@ -66,7 +66,7 @@ def main()
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
     cfg.freeze()
-
+    """
     logger = setup_logger("SSD", cfg.OUTPUT_DIR)
     logger.info(args)
 
@@ -75,7 +75,7 @@ def main()
         config_str = "\n" + cf.read()
         logger.info(config_str)
     logger.info("Running with config:\n{}".format(cfg))
-
+    """
     images, features = create_feature_maps(cfg, ckpt=args.ckpt, num_visualizations)
     visualize_feature_maps(images,features)
 
