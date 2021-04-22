@@ -19,7 +19,7 @@ def create_feature_maps(cfg, ckpt, num_visualizations):
     checkpointer.load(ckpt, use_latest=ckpt is None)
 
     dataset_list = cfg.DATASET.TEST
-    dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False):
+    dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False)
 
     images = dataset[1]
     features = []
