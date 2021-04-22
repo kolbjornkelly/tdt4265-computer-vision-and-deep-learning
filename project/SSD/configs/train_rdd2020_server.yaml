@@ -12,9 +12,9 @@ MODEL:
     FEATURE_MAPS: [[38, 38], [19, 19], [10, 10], [1, 1]]
     STRIDES: [[16, 16], [32, 32], [64, 64], [100, 100], [200, 200]]
     #MIN_SIZES: [[60, 60], [111, 111], [162, 162], [213, 213], [264, 264]]
-    MIN_SIZES: [[30, 30], [111, 111], [162, 162], [213, 213], [264, 264]]
+    MIN_SIZES: [[30, 30], [60, 60], [162, 162], [213, 213], [264, 264]]
     #MAX_SIZES: [[111, 111], [162, 162], [213, 213], [264, 264], [300, 300]]
-    MAX_SIZES: [[60, 60], [162, 162], [213, 213], [264, 264], [300, 300]]
+    MAX_SIZES: [[60, 60], [111, 111], [213, 213], [264, 264], [300, 300]]
     ASPECT_RATIOS: [[2], [2, 3], [2, 3], [2, 3], [2]]
     BOXES_PER_LOCATION: [4, 6, 6, 6, 4]
 INPUT:
@@ -29,5 +29,5 @@ SOLVER:
   LR: 1e-4
 EVAL_STEP: 5000
 MODEL_SAVE_STEP: 5000
-OUTPUT_DIR: "outputs/rdd2020_augmented_resnet18_300x300_ADAMv3"
+OUTPUT_DIR: "outputs/rdd2020_augmented_resnet18_300x300_ADAMv4"
 DATASET_DIR: "/work/datasets"
