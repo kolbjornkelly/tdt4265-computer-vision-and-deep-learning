@@ -25,7 +25,11 @@ def create_feature_maps(cfg, ckpt):
     data_loader = data_loaders[0]
     dataset = data_loader.dataset
     
-    images = dataset[1]
+    # TODO: clean up these loops
+    images = []
+    for im in dataset:
+        images.append(im)
+
     features = []
     for image in images:
         features.append(model.backbone(image))
