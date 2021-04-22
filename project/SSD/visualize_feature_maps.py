@@ -37,9 +37,7 @@ def visualize_feature_maps(images, features):
                 f"visualization/layer{layer}_channel{channel}.png")
 
 
-
-
-def main()
+def main():
     parser = argparse.ArgumentParser(description='SSD Visulization of Feature Maps')
     parser.add_argument(
         "config_file",
