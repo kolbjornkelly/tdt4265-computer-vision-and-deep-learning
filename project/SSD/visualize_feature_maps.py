@@ -10,7 +10,7 @@ from ssd.data.datasets import build_dataset
 from torchvision.utils import save_image
 
 
-def create_feature_maps(cfg, ckpt, num_visualizations):
+def create_feature_maps(cfg, ckpt):
     logger = logging.getLogger("SSD.inference")
 
     model = SSDDetector(cfg)
@@ -74,7 +74,7 @@ def main():
         logger.info(config_str)
     logger.info("Running with config:\n{}".format(cfg))
     """
-    images, features = create_feature_maps(cfg, ckpt=args.ckpt, num_visualizations)
+    images, features = create_feature_maps(cfg, ckpt=args.ckpt)
     visualize_feature_maps(images,features)
 
 if __name__ == '__main__':
