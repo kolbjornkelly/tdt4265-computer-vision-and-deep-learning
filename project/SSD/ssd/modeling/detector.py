@@ -49,5 +49,9 @@ def build_backbone(cfg):
     if backbone_name == "resNet18":
         model = ResNet18(cfg)
         print("Model type: ", type(model))
+        return (model)
+    if backbone_name == "resNet50":
+        model = ResNet50(cfg)
+        print("Model type: ", type(model))
         return(model)
         
