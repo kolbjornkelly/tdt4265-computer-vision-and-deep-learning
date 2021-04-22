@@ -1,5 +1,6 @@
 import argparse
 import logging
+import torch
 from ssd.config.defaults import cfg
 from ssd.engine.inference import do_evaluation
 from ssd.modeling.detector import SSDDetector
