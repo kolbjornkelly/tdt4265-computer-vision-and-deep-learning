@@ -6,7 +6,7 @@ from ssd.modeling.detector import SSDDetector
 from ssd.utils.checkpoint import CheckPointer
 from ssd.utils.logger import setup_logger
 from ssd import torch_utils
-from ssd.data.datasets import build_dataset
+from ssd.data.build import make_data_loader
 from torchvision.utils import save_image
 
 
@@ -17,10 +17,14 @@ def create_feature_maps(cfg, ckpt):
     checkpointer = CheckPointer(model, save_dir=cfg.OUTPUT_DIR, logger=logger)
     model = torch_utils.to_cuda(model)
     checkpointer.load(ckpt, use_latest=ckpt is None)
-
+    """
     dataset_list = cfg.DATASETS.TEST
     dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False)
-
+    """
+    data_loaders = make_data_loader(cfg, is_train=False)
+    data_loader = data_loader[0]
+    dataset = data_loader.dataset
+    
     images = dataset[1]
     features = []
     for image in images:
