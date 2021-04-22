@@ -31,7 +31,7 @@ def create_feature_maps(cfg, ckpt, num_visualizations):
 def visualize_feature_maps(images, features):
 
     for layer in features:
-        for channel in ftr[0]:
+        for channel in layer[0]:
             torchvision.utils.save_image(
                 channel[0][-1],
                 f"visualization/layer{layer}_channel{channel}.png")
