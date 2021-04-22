@@ -23,17 +23,18 @@ def create_feature_maps(cfg, ckpt):
     """
     data_loaders = make_data_loader(cfg, is_train=False)
 
+    # TODO: clean up these loops
     for dl in data_loaders:
         data_loader = dl
         break
 
     dataset = data_loader.dataset
 
-    # TODO: clean up these loops
-    images = []
+    
+    image = None
     for im in dataset:
         print("image length:", len(im))
-        images.append(im)
+        image = im
         break
 
     features = []
