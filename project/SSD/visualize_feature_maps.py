@@ -23,16 +23,28 @@ def create_feature_maps(cfg, ckpt):
     """
     data_loaders = make_data_loader(cfg, is_train=False)
     data_loader = data_loaders[0]
+
+    print("Data loader type: ", type(data_loader))
+    print("Data loader shape ", data_loader.size)
+
     dataset = data_loader.dataset
+
+    print("Dataset type: ", type(dataset))
+    print("Dataset shape ", dataset.size)
     
     # TODO: clean up these loops
     images = []
     for im in dataset:
         images.append(im)
+        break
+    
+    print("Image type: ", type(images[0]))
+    print("Image shape ", images[0].size)
 
     features = []
     for image in images:
         features.append(model.backbone(image))
+        break
 
     return images, features
 
