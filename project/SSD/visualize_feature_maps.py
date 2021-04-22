@@ -42,8 +42,9 @@ def create_feature_maps(cfg, ckpt):
     print("Image shape ", images[0].size)
     """
     images = []
-    for im, target in enumerate(data_loader):
-        images.append(im)
+    start_iter = 0
+    for iteration, (images, targets, _) in enumerate(data_loader, start_iter):
+        print("Image shape: ", images.shape)
         break
 
     images = torch_utils.to_cuda(images)
