@@ -23,32 +23,13 @@ def create_feature_maps(cfg, ckpt):
     dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False)
     """
     data_loaders = make_data_loader(cfg, is_train=False)
-
-    # TODO: clean up these loops
-    for dl in data_loaders:
-        data_loader = dl
-        break
-
+    if isinstance(data_loader, list):
+        data_loader = data_loader[0]
     dataset = data_loader.dataset
 
-    
-    image = None
-    for im in dataset:
-        print("Image length:", len(im))
-        image = torch.tensor(im)
-        break
+    image = dataset._read_image(idx)
 
-    print("Image 1:", image[0])
-    print("Image 2:", image[1])
-    print("Image 3:", image[2])
     features = model.backbone(image)
-    """
-    features = []
-    for image in images:
-        features.append(model.backbone(image))
-        break
-    """
-
     return images, features
 
 def visualize_feature_maps(images, features):
