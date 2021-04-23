@@ -28,7 +28,7 @@ def create_feature_maps(cfg, ckpt):
         data_loader = data_loader[0]
     dataset = data_loader.dataset
 
-    image = dataset._read_image(idx)
+    image = dataset._read_image(1)
 
     features = model.backbone(image)
     return images, features
