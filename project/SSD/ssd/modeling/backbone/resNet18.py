@@ -20,7 +20,7 @@ class ResNet18(nn.Module):
             stride=1,
             padding=1,
             #groups=[1,300, 3, 3, 3])
-            groups=x.size(1))
+            groups=1)
         )
         
         
