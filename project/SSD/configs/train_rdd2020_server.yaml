@@ -1,6 +1,6 @@
 MODEL:
   NUM_CLASSES: 5
-  THRESHOLD: 0.5
+  THRESHOLD: 0.3
   BACKBONE:
     NAME: "resNet18"
     PRETRAINED: True
@@ -29,5 +29,5 @@ SOLVER:
   LR: 1e-4
 EVAL_STEP: 5000
 MODEL_SAVE_STEP: 5000
-OUTPUT_DIR: "outputs/rdd2020_resnet18_sobel"
+OUTPUT_DIR: "outputs/rdd2020_resnet18_jac_v0"
 DATASET_DIR: "/work/datasets"

@@ -12,6 +12,7 @@ class ResNet18(nn.Module):
         self.model = torchvision.models.resnet18(pretrained=True)
         self.output_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
+        """
         channels = 3
         depth = 1 #4
         sobel_filter = [[1, 2, 1], [0, 0, 0], [-1, -2, -1]]
@@ -26,6 +27,7 @@ class ResNet18(nn.Module):
                 kernel_size=3
             )
         )
+        """
         
         
 
@@ -47,7 +49,7 @@ class ResNet18(nn.Module):
 
         out_features = []
 
-        x = self.sobel(x)
+        #x = self.sobel(x)
         x = self.model.conv1(x)
         idx_counter = 0
 
