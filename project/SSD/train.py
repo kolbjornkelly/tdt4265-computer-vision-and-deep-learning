@@ -45,7 +45,7 @@ def start_train(cfg):
     """
 
     optimizer = torch.optim.Adam(model.parameters(), lr=cfg.SOLVER.LR)
-
+    scheduler = StepLR(optimizer, step_size=3000, gamma=0.5)
 
     arguments = {"iteration": 0}
     save_to_disk = True
@@ -59,7 +59,7 @@ def start_train(cfg):
     train_loader = make_data_loader(cfg, is_train=True, augment=True, max_iter=max_iter, start_iter=arguments['iteration'])
 
     model = do_train(
-        cfg, model, train_loader, optimizer,
+        cfg, model, train_loader, optimizer, scheduler,
         checkpointer, arguments)
     return model
 
