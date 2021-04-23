@@ -22,7 +22,8 @@ def create_feature_maps(cfg, ckpt):
     dataset_list = cfg.DATASETS.TEST
     dataset = build_dataset(cfg.DATASET_DIR, dataset_list, is_train=False)
     """
-    data_loaders = make_data_loader(cfg, is_train=False)
+    data_loader = make_data_loader(cfg, is_train=False)
+
     if isinstance(data_loader, list):
         data_loader = data_loader[0]
     dataset = data_loader.dataset
