@@ -34,5 +34,5 @@ SOLVER:
   STEP_SIZE: 5000
 EVAL_STEP: 5000
 MODEL_SAVE_STEP: 5000
-OUTPUT_DIR: "outputs/rdd2020_resnet50_tester_v2"
+OUTPUT_DIR: "outputs/rdd2020_resnet50_tester_v2000"
 DATASET_DIR: "/work/datasets"
