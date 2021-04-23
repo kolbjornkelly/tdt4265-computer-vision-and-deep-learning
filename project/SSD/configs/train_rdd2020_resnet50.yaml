@@ -4,7 +4,7 @@ MODEL:
   BACKBONE:
     NAME: "resNet50"
     PRETRAINED: True
-    OUT_CHANNELS: [256, 512, 1024, 2048, 2048]
+    OUT_CHANNELS: [64, 512, 1024, 2048, 2048]
     INPUT_CHANNELS: 3
   PRIORS:
     FEATURE_MAPS: [[75, 75], [38, 38], [19, 19], [10, 10], [1, 1]]
@@ -14,7 +14,7 @@ MODEL:
     MAX_SIZES:
       [[60, 60], [111, 111], [162, 162], [213, 213], [264, 264], [300, 300]]
     ASPECT_RATIOS: [[2], [2], [4, 2], [2, 3], [2, 3], [2]]
-    BOXES_PER_LOCATION: [2, 6, 6, 6, 4, 4]
+    BOXES_PER_LOCATION: [4, 6, 6, 6, 4, 4]
 INPUT:
   IMAGE_SIZE: [300, 300]
 DATASETS:
@@ -27,6 +27,5 @@ SOLVER:
   LR: 3e-4
 EVAL_STEP: 5000
 MODEL_SAVE_STEP: 5000
-OUTPUT_DIR: "outputs/rdd2020_final_model"
+OUTPUT_DIR: "outputs/rdd2020_resnet50_tester_v2000"
 DATASET_DIR: "/work/datasets"
-#
