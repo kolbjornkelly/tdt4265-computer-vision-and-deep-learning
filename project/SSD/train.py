@@ -3,6 +3,7 @@ import logging
 import torch
 import pathlib
 import numpy as np
+from torch.optim.lr_scheduler import StepLR
 from ssd.engine.inference import do_evaluation
 from ssd.config.defaults import cfg
 from ssd.data.build import make_data_loader
@@ -45,7 +46,7 @@ def start_train(cfg):
     """
 
     optimizer = torch.optim.Adam(model.parameters(), lr=cfg.SOLVER.LR)
-    scheduler = torch.optim.StepLR(optimizer, step_size=5000, gamma=0.9)
+    scheduler = StepLR(optimizer, step_size=5000, gamma=0.9)
 
     arguments = {"iteration": 0}
     save_to_disk = True
