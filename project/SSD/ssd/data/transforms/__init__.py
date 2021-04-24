@@ -10,8 +10,8 @@ def build_transforms(cfg, is_train=True, augment=False):
         print("Building augmented transforms")
         transform = [
             ConvertFromInts(),
-            #RandomSampleCrop(),
-            #RandomMirror(),
+            RandomSampleCrop(),
+            RandomMirror(),
             ToPercentCoords(),
             Resize(cfg.INPUT.IMAGE_SIZE),
             SubtractMeans(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD),
