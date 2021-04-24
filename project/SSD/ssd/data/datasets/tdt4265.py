@@ -18,6 +18,7 @@ class TDT4265Dataset(torch.utils.data.Dataset):
     def __init__(self, data_dir: str, split: str, transform=None, target_transform=None):
         data_dir = pathlib.Path(data_dir)
         self.data_dir = data_dir
+        print("Data Dir: ", data_dir)
         self.transform = transform
         self.target_transform = target_transform
         if split == "test":
