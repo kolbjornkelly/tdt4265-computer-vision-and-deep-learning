@@ -32,4 +32,4 @@ SOLVER:
 EVAL_STEP: -1
 MODEL_SAVE_STEP: 500
 OUTPUT_DIR: "outputs/rdd2020_resnet18_final_v4"
-DATASET_DIR: "/work/datasets"
+DATASET_DIR: "/datasets"
