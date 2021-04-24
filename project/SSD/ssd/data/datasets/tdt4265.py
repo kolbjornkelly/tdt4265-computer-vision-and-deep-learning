@@ -4,6 +4,7 @@ import numpy as np
 import json
 from ssd.container import Container
 from PIL import Image
+import os
 
 
 class TDT4265Dataset(torch.utils.data.Dataset):
@@ -19,7 +20,7 @@ class TDT4265Dataset(torch.utils.data.Dataset):
         data_dir = pathlib.Path(data_dir)
         self.data_dir = data_dir
         print("Data Dir: ", data_dir)
-        print("Absolute path: ", data_dir.absolute)
+        print("Absolute path: ", os.getcwd())
         self.transform = transform
         self.target_transform = target_transform
         if split == "test":
