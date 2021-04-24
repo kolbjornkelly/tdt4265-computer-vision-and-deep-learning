@@ -27,5 +27,5 @@ SOLVER:
   LR: 1e-4
 EVAL_STEP: -1
 MODEL_SAVE_STEP: 5000
-OUTPUT_DIR: "outputs/rdd2020_resnet50_final_v0"
+OUTPUT_DIR: "outputs/rdd2020_resnet50_tester_v2000"
 DATASET_DIR: "/work/datasets"

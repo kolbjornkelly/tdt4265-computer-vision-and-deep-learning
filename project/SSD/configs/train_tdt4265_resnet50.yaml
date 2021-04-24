@@ -18,8 +18,8 @@ MODEL:
 INPUT:
   IMAGE_SIZE: [300, 300]
 DATASETS:
-  TRAIN: ("tdt4265_train",)
-  TEST: ("tdt4265_val", )
+  TRAIN: ("rdd_train",)
+  TEST: ("rdd_val", )
 SOLVER:
   MAX_ITER: 120000
   GAMMA: 0.9
