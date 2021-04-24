@@ -6,7 +6,6 @@ from ssd.container import Container
 from PIL import Image
 
 
-
 class TDT4265Dataset(torch.utils.data.Dataset):
 
     class_names = ('__background__',
