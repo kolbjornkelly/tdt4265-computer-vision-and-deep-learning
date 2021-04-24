@@ -28,8 +28,8 @@ SOLVER:
   MAX_ITER: 2000000
   GAMMA: 0.9
   BATCH_SIZE: 16
-  LR: 6e-3
+  LR: 6e-4
 EVAL_STEP: -1
 MODEL_SAVE_STEP: 500
-OUTPUT_DIR: "outputs/rdd2020_resnet18_final_v3"
+OUTPUT_DIR: "outputs/rdd2020_resnet18_final_v4"
 DATASET_DIR: "/work/datasets"
