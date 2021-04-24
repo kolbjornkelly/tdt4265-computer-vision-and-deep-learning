@@ -26,10 +26,10 @@ DATASETS:
   TEST: ("rdd2020_val", )
 SOLVER:
   MAX_ITER: 2000000
-  GAMMA: 0.95
+  GAMMA: 0.9
   BATCH_SIZE: 16
-  LR: 3e-4
+  LR: 4e-3
 EVAL_STEP: -1
-MODEL_SAVE_STEP: 10000
-OUTPUT_DIR: "outputs/rdd2020_resnet18_final"
+MODEL_SAVE_STEP: 500
+OUTPUT_DIR: "outputs/rdd2020_resnet18_final_v1"
 DATASET_DIR: "/work/datasets"
