@@ -19,7 +19,7 @@ if __name__ == "__main__":
    # Copy checkpoint
    new_output_dir.mkdir()
    new_checkpoint_path = new_output_dir.joinpath("rdd2020_model.pth")
-   previous_checkpoint_path = pathlib.Path(cfg.OUTPUT_DIR, "model_final.pth")
+   previous_checkpoint_path = pathlib.Path(cfg.OUTPUT_DIR, "model_025000.pth")
    assert previous_checkpoint_path.is_file()
    # Only keep the parameters for the model
    new_checkpoint = {
