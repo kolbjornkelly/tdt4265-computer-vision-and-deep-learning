@@ -28,9 +28,11 @@ def evaluation(cfg, ckpt, N_images: int):
         # warmup
         print("Checking runtime for image shape:", imshape)
         for i in range(10):
+            print("Iteration: ", i, "/", 10)
             model(images)
         start_time = time.time()
         for i in range(N_images):
+            print("Iteration: ", i, "/", N_images)
             outputs = model(images)
         total_time = time.time() - start_time
         print("Runtime for image shape:", imshape)
