@@ -25,6 +25,7 @@ class TDT4265Dataset(torch.utils.data.Dataset):
             self.labels = self.read_labels(data_dir.parent.joinpath("labels_test.json"))
         else:
             self.split = split
+            print("Data dir parent: ", data_dir.parent)
             self.labels = self.read_labels(data_dir.parent.joinpath("labels.json"))
             self.image_ids = self.split_dataset(split)
             self.image_ids = self.filter_image_ids()
