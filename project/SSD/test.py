@@ -12,7 +12,7 @@ def evaluation(cfg, ckpt):
     logger = logging.getLogger("SSD.inference")
 
     model = SSDDetector(cfg)
-    print(list(model.children()))
+    print(list(model.children())[:9])
     checkpointer = CheckPointer(model, save_dir=cfg.OUTPUT_DIR, logger=logger)
     model = torch_utils.to_cuda(model)
     checkpointer.load(ckpt, use_latest=ckpt is None)
