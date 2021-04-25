@@ -1,6 +1,6 @@
 MODEL:
   NUM_CLASSES: 5
-  THRESHOLD: 0.5
+  THRESHOLD: 0.3
   BACKBONE:
     NAME: "resNet101"
     PRETRAINED: True
@@ -33,5 +33,5 @@ SOLVER:
   LR: 1e-3
 EVAL_STEP: 2000
 MODEL_SAVE_STEP: 2000
-OUTPUT_DIR: "outputs/rdd2020_resnet101_final"
+OUTPUT_DIR: "outputs/rdd2020_resnet101_plots"
 DATASET_DIR: "/work/datasets"
