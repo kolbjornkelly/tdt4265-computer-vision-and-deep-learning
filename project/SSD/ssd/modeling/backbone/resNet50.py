@@ -23,7 +23,8 @@ class ResNet50(nn.Module):
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
         # Select layers for feature map extraction
-        feature_layers = [4,5,6,7,8]
+        # TODO: add 4 in front of this array
+        feature_layers = [5,6,7,8]
         for layer in layers:
             idx_counter += 1
             x = layer(x)
