@@ -24,7 +24,7 @@ SOLVER:
   MAX_ITER: 120000
   GAMMA: 0.9
   BATCH_SIZE: 16
-  LR: 1e-4
+  LR: 3e-4
 EVAL_STEP: -2
 MODEL_SAVE_STEP: 2000
 OUTPUT_DIR: "outputs/rdd2020_resnet50_tester_v2000"
