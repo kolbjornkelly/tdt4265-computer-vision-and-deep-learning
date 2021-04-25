@@ -14,22 +14,7 @@ class ResNet50(nn.Module):
         self.output_feature_shape = cfg.MODEL.PRIORS.FEATURE_MAPS
         
 
-        #self.model.fc = nn.Linear(512, 10)  # No need to apply softmax,
-        # as this is done in nn.CrossEntropyLoss
-        """
-        for param in self.model.parameters():  # Freeze all parameters
-            param.requires_grad = False
-        
-        for param in self.model.fc.parameters():  # Unfreeze the last fully-connected
-            param.requires_grad = True  # layer
-        
-        for param in self.model.layer4.parameters():  # Unfreeze the last 5 convolutional
-            param.requires_grad = True  # layers
-        """
-
     def forward(self, x):
-        # TODO: Add documentation
-
         out_features = []
 
         x = self.model.conv1(x)
@@ -37,6 +22,7 @@ class ResNet50(nn.Module):
 
         layers = nn.Sequential(*(list(self.model.children())[1:9]))
 
+        # Select layers for feature map extraction
         feature_layers = [4,5,6,7,8]
         for layer in layers:
             idx_counter += 1

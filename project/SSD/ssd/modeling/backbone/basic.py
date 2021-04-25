@@ -4,7 +4,7 @@ from torch import nn
 
 class BasicModel(torch.nn.Module):
     """
-    This is a basic backbone for SSD.
+    This is the solution from assignment 4.
     The feature extractor outputs a list of 6 feature maps, with the sizes:
     [shape(-1, output_channels[0], 38, 38),
      shape(-1, output_channels[1], 19, 19),

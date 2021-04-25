@@ -6,8 +6,6 @@ from .transforms import *
 def build_transforms(cfg, is_train=True, augment=False):
     
     if augment:
-        # TODO: remove this print
-        print("Building augmented transforms")
         transform = [
             ConvertFromInts(),
             RandomSampleCrop(),

@@ -31,8 +31,6 @@ def make_data_loader(cfg, is_train=True, augment=False, max_iter=None, start_ite
     dataset_list = cfg.DATASETS.TRAIN if is_train else cfg.DATASETS.TEST
     
     if augment:
-        # TODO: remove this print
-        print("Generating augmented dataset")
         augmentation_transforms = build_transforms(
             cfg, is_train=is_train, augment=augment)
         datasets = build_dataset(
