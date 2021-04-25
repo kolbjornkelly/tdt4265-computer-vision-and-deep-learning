@@ -9,7 +9,7 @@ MODEL:
     #ResNet50:
     #OUT_CHANNELS: [256, 512, 1024, 2048, 2048]
     # ResNet18:
-    OUT_CHANNELS: [64, 128, 256, 512, 512]
+    OUT_CHANNELS: [128, 256, 512, 512]
     INPUT_CHANNELS: 3
   PRIORS:
     # ResNet101:
